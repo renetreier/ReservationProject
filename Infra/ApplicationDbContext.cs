@@ -9,7 +9,7 @@ namespace Infra
             : base(options) {
         }
         public DbSet<Worker> Workers { get; set; }
-        public DbSet<ReservationTime> ReservationTimes { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Room> Rooms { get; set; }
         
         
@@ -20,7 +20,7 @@ namespace Infra
            
             modelBuilder.Entity<Room>().ToTable("Room");
             modelBuilder.Entity<Worker>().ToTable("Worker");
-            modelBuilder.Entity<ReservationTime>().ToTable("ReservationTime");
+            modelBuilder.Entity<Reservation>().ToTable("Reservation");
         }
     }
 }

@@ -6,7 +6,7 @@ namespace ReservationProject.Data
 {
     public class Worker
     {
-        public int PersonId { get; set; }
+        public int Id { get; set; }
         [Required]
         [StringLength(50)]
         [Display(Name = "Last Name")]
