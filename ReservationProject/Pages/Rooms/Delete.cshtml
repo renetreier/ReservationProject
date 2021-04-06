@@ -1,16 +1,12 @@
 ﻿@page
-@model ReservationProject.Soft.Pages.Rooms.DeleteModel
+@model ReservationProject.Soft.Pages.Rooms.RoomsModel
 
 @{
     ViewData["Title"] = "Delete";
+    Layout = "_Delete";
+    ViewData["ItemID"] = Model.Room.RoomId;
 }
 
-<h1>Delete</h1>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Room</h4>
-    <hr />
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Room.RoomName)
@@ -25,10 +21,8 @@
             @Html.DisplayFor(model => model.Room.BuildingAddress)
         </dd>
     </dl>
-    
-    <form method="post">
-        <input type="hidden" asp-for="Room.RoomId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
-    </form>
-</div>
+@section DeleteBinding {
+    <input type="hidden" asp-for="@ViewData["ItemId"]" />
+}
+
+@section ErrorMessage{}

@@ -1,0 +1,21 @@
+﻿@using ReservationProject.Data
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Details";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <h4>@ViewData["Page"]</h4>
+    <hr />
+    <dl class="row">
+
+        @RenderBody()
+
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-handler="Edit" asp-route-id="@ViewData["ItemID"]">Edit</a> |
+    <a asp-page="./Index" asp-route-handler="Index">Back to List</a>
+</div>

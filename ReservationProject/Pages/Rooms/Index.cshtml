@@ -1,29 +1,25 @@
 ﻿@page
-@model ReservationProject.Soft.Pages.Rooms.IndexModel
+@model ReservationProject.Soft.Pages.Rooms.RoomsModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Rooms";
+    Layout = "_Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Room[0].RoomName)
+                @Html.DisplayNameFor(model => model.Rooms[0].RoomName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Room[0].BuildingAddress)
+                @Html.DisplayNameFor(model => model.Rooms[0].BuildingAddress)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Room) {
+@foreach (var item in Model.Rooms) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.RoomName)
@@ -32,9 +28,9 @@
                 @Html.DisplayFor(modelItem => item.BuildingAddress)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.RoomId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.RoomId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.RoomId">Delete</a>
+                <a asp-page="./Edit" asp-route-handler="Edit" asp-route-id="@item.RoomId">Edit</a> |
+                <a asp-page="./Details" asp-route-handler="Details" asp-route-id="@item.RoomId">Details</a> |
+                <a asp-page="./Delete" asp-route-handler="Delete" asp-route-id="@item.RoomId">Delete</a>
             </td>
         </tr>
 }

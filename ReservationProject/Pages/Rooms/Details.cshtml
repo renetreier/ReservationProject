@@ -1,15 +1,12 @@
 ﻿@page
-@model ReservationProject.Soft.Pages.Rooms.DetailsModel
+@model ReservationProject.Soft.Pages.Rooms.RoomsModel
 
 @{
     ViewData["Title"] = "Details";
+    Layout = "_Details";
+    ViewData["ItemID"] = Model.Room.RoomId;
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>Room</h4>
-    <hr />
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Room.RoomName)
@@ -24,8 +21,4 @@
             @Html.DisplayFor(model => model.Room.BuildingAddress)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Room.RoomId">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
-</div>
+

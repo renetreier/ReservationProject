@@ -16,7 +16,7 @@ namespace ReservationProject.Tests
         [TestMethod]
         public void TestMethod3()
         {
-            var aa = new Room();
+            //var aa = new Room();
             //Assert.AreEqual(9, Room.Liida(3, 6));
         }
     }
