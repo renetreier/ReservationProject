@@ -5,7 +5,7 @@ namespace ReservationProject.Data
     public class Room
     {
         [Display(Name = "Room Number")]
-        public int RoomId { get; set; }
+        public string RoomId { get; set; }
         [Required]
         [StringLength(50, MinimumLength = 3)]
         [Display(Name = "Room Name")]
@@ -13,6 +13,11 @@ namespace ReservationProject.Data
         [Display(Name = "Address")]
         [StringLength(50, MinimumLength = 3)]
         public string BuildingAddress { get; set; }
+
+        internal static int Liida(int a, int b)
+        {
+            return a + b;
+        }
 
     }
 }

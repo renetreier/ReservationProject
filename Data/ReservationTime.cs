@@ -12,7 +12,7 @@ namespace ReservationProject.Data
         [Display(Name = "Reservation Date")]
         public DateTime ReservationDate { get; set; }
         [Required]
-        public int RoomId { get; set; }
+        public string RoomId { get; set; }
         [Required]
         public int WorkerId { get; set; }
         

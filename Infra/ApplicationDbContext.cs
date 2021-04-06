@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ReservationProject.Data;
 
-namespace Infra
+namespace ReservationProject.Infra
 {
     public class ApplicationDbContext :IdentityDbContext {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -21,6 +21,7 @@ namespace Infra
             modelBuilder.Entity<Room>().ToTable("Room");
             modelBuilder.Entity<Worker>().ToTable("Worker");
             modelBuilder.Entity<Reservation>().ToTable("Reservation");
+            modelBuilder.Entity<Reservation>().HasKey(r => new { r.WorkerId, r.RoomId });
         }
     }
 }

@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>ReservationProject.Infra</AssemblyName>
+    <RootNamespace>ReservationProject.Infra</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
