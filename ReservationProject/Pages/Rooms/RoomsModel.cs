@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ReservationProject.Data;
 using ReservationProject.Infra;
-
+//TODO Vaja puhastada ja refaktoorida
 namespace ReservationProject.Soft.Pages.Rooms
 {
     public class RoomsModel:PageModel

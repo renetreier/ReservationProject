@@ -230,9 +230,6 @@ namespace ReservationProject.Infra.Migrations
                     b.Property<DateTime>("ReservationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ReservationTimeId")
-                        .HasColumnType("int");
-
                     b.HasKey("WorkerId", "RoomId");
 
                     b.ToTable("Reservation");

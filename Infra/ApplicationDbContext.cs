@@ -13,7 +13,7 @@ namespace ReservationProject.Infra
         public DbSet<Room> Rooms { get; set; }
         
         
-
+        //TODO VAJA DBINITIALIZER KA TEHA
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -21,6 +21,7 @@ namespace ReservationProject.Infra
             modelBuilder.Entity<Room>().ToTable("Room");
             modelBuilder.Entity<Worker>().ToTable("Worker");
             modelBuilder.Entity<Reservation>().ToTable("Reservation");
+            //Todo Kas teha võtmeks kolmene komplekt worker/room/date?
             modelBuilder.Entity<Reservation>().HasKey(r => new { r.WorkerId, r.RoomId });
         }
     }

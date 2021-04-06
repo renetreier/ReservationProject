@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReservationProject.Data
 {
+    //TODO "ID" Teha GUID-tüüpi(vaata roomi pealt)
+    //TODO vaja scaoffilda 
     public class Worker
     {
         public int Id { get; set; }

@@ -10,8 +10,8 @@ using ReservationProject.Infra;
 namespace ReservationProject.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210406133344_Test")]
-    partial class Test
+    [Migration("20210406201925_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -231,9 +231,6 @@ namespace ReservationProject.Infra.Migrations
 
                     b.Property<DateTime>("ReservationDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("ReservationTimeId")
-                        .HasColumnType("int");
 
                     b.HasKey("WorkerId", "RoomId");
 

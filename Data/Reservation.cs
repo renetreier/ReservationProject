@@ -5,8 +5,7 @@ namespace ReservationProject.Data
 {
     public class Reservation
     {
-   
-        public int ReservationTimeId { get; set; }
+        //TODO vaja scaffoldida 
         [Required]
         [DataType(DataType.DateTime)]
         [Display(Name = "Reservation Date")]

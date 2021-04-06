@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ReservationProject;
 using ReservationProject.Data;
 
+//TODO Vaja lisada Igale poole Assemblyinfo, et testid ligi saaks
 namespace ReservationProject.Tests
 {
     [TestClass]
