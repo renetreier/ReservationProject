@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReservationProject.Data
 {
@@ -14,8 +12,9 @@ namespace ReservationProject.Data
         [Display(Name = "Reservation Time")]
         public DateTime ReservationDate { get; set; }
         [Required]
-        [Display(Name = "Room")]
-        public string RoomName { get; set; }
+        public int RoomId { get; set; }
+        [Required]
+        public int WorkerId { get; set; }
         
     }
 }
