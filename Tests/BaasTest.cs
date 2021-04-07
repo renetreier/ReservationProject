@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReservationProject.Data;
+using ReservationProject.Infra;
 
 //TODO Vaja lisada Igale poole Assemblyinfo, et testid ligi saaks
 namespace ReservationProject.Tests
@@ -7,6 +8,7 @@ namespace ReservationProject.Tests
     [TestClass]
     public class BaasTest
     {
+        
         [TestMethod]
         public void TestMethod1()
         {
