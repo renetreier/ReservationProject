@@ -1,0 +1,21 @@
+﻿@page
+@model ReservationProject.Soft.Pages.Workers.WorkersModel
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@{
+    Layout = "_Delete";
+    ViewData["Page"] = "worker";
+    ViewData["ItemID"] = Model.Worker.Id;
+}
+
+<partial name="_ShowWorker.cshtml" />
+
+@section DeleteBinding {
+    <input type="hidden" asp-for="@ViewData["ItemId"]" />
+}
+
+@section ErrorMessage{}

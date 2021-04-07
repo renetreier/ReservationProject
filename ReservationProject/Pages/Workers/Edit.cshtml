@@ -1,0 +1,10 @@
+﻿@page
+@model ReservationProject.Soft.Pages.Workers.WorkersModel
+
+@{
+    Layout = "_Create";
+    ViewData["Page"] = "Workers";
+    ViewData["ItemID"] = Model.Worker.Id;
+}
+
+<partial name="_EditWorker.cshtml" />
