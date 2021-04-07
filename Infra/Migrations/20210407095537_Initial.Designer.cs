@@ -10,8 +10,8 @@ using ReservationProject.Infra;
 namespace ReservationProject.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210407093629_initial")]
-    partial class initial
+    [Migration("20210407095537_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -223,8 +223,8 @@ namespace ReservationProject.Infra.Migrations
 
             modelBuilder.Entity("ReservationProject.Data.Reservation", b =>
                 {
-                    b.Property<int>("WorkerId")
-                        .HasColumnType("int");
+                    b.Property<string>("WorkerId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("RoomId")
                         .HasColumnType("nvarchar(450)");

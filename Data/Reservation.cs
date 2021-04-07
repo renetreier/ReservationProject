@@ -5,7 +5,7 @@ namespace ReservationProject.Data
 {
     public class Reservation
     {
-        //TODO vaja scaffoldida 
+        //TODO key vajalik
         [Required]
         [DataType(DataType.DateTime)]
         [Display(Name = "Reservation Date")]
@@ -13,7 +13,7 @@ namespace ReservationProject.Data
         [Required]
         public string RoomId { get; set; }
         [Required]
-        public int WorkerId { get; set; }
+        public string WorkerId { get; set; }
         
     }
 }

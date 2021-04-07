@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ReservationProject.Data;
 using ReservationProject.Infra;
@@ -10,7 +11,7 @@ using ReservationProject.Pages;
 //TODO Vaja puhastada ja refaktoorida
 namespace ReservationProject.Soft.Pages.Rooms
 {
-    public class RoomsModel:BasePageModel
+    public class RoomsModel:PageModel
     {
         private readonly ApplicationDbContext db;
 
@@ -37,9 +38,9 @@ namespace ReservationProject.Soft.Pages.Rooms
 
             return RedirectToPage("./Index");
         }
-        public async Task<IActionResult> OnGetDeleteAsync(string id = "")
+        public async Task<IActionResult> OnGetDeleteAsync(string id)
         {
-            if (id == null)
+            if (id == "")
             {
                 return NotFound();
             }
@@ -53,9 +54,9 @@ namespace ReservationProject.Soft.Pages.Rooms
             return Page();
         }
 
-        public async Task<IActionResult> OnPostDeleteAsync(string id = "")
+        public async Task<IActionResult> OnPostDeleteAsync(string id)
         {
-            if (id == null)
+            if (id == "")
             {
                 return NotFound();
             }
@@ -70,9 +71,9 @@ namespace ReservationProject.Soft.Pages.Rooms
 
             return RedirectToPage("./Index");
         }
-        public async Task<IActionResult> OnGetDetailsAsync(string id = "")
+        public async Task<IActionResult> OnGetDetailsAsync(string id)
         {
-            if (id == null)
+            if (id =="")
             {
                 return NotFound();
             }
@@ -85,9 +86,9 @@ namespace ReservationProject.Soft.Pages.Rooms
             }
             return Page();
         }
-        public async Task<IActionResult> OnGetEditAsync(string id = "")
+        public async Task<IActionResult> OnGetEditAsync(string id)
         {
-            if (id == null)
+            if (id == "")
             {
                 return NotFound();
             }
@@ -103,43 +104,34 @@ namespace ReservationProject.Soft.Pages.Rooms
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostEditAsync()
+        public async Task<IActionResult> OnPostEditAsync(string id)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            if (id == "")
+                return NotFound();
 
-            db.Attach(Room).State = EntityState.Modified;
+            var roomToUpdate = await db.Rooms.FindAsync(id);
 
-            try
+            if (roomToUpdate == null)
+                return NotFound();
+
+            if (await TryUpdateModelAsync(roomToUpdate, "room",
+                c => c.RoomName, c => c.BuildingAddress))
             {
                 await db.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RoomExists(Room.RoomId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
             return RedirectToPage("./Index");
         }
 
-        private bool RoomExists(string id = "")
+        private bool RoomExists(string id)
         {
             return db.Rooms.Any(e => e.RoomId == id);
         }
-        public IList<Room> Rooms { get; set; }
+        public IList<Room> RoomList { get; set; }
 
-        public async Task OnGetIndexAsync()
+        public async Task OnGetAsync()
         {
-            Rooms = await db.Rooms.ToListAsync();
+            RoomList = await db.Rooms.ToListAsync();
         }
     }
 }

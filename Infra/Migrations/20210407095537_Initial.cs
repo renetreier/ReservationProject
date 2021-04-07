@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ReservationProject.Infra.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -51,7 +51,7 @@ namespace ReservationProject.Infra.Migrations
                 columns: table => new
                 {
                     RoomId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    WorkerId = table.Column<int>(type: "int", nullable: false),
+                    WorkerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ReservationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
