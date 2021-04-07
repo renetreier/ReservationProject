@@ -51,31 +51,22 @@ namespace ReservationProject.Soft.Pages.Workers
             return Page();
         }
 
-        public async Task<IActionResult> OnPostEditAsync()
+        public async Task<IActionResult> OnPostEditAsync(int? id)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            if (id == null)
+                return NotFound();
 
-            _context.Attach(Worker).State = EntityState.Modified;
+            var workerToUpdate = await _context.Workers.FindAsync(id);
 
-            try
+            if (workerToUpdate == null)
+                return NotFound();
+
+            if (await TryUpdateModelAsync(workerToUpdate, "worker",
+                c => c.FirstName, c => c.LastName, c => c.Email, c => c.Salary))
             {
                 await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!WorkerExists(Worker.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
             return RedirectToPage("./Index");
         }
 
