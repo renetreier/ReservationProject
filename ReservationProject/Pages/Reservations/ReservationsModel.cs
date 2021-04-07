@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -7,22 +6,27 @@ using Microsoft.EntityFrameworkCore;
 using ReservationProject.Data;
 using ReservationProject.Infra;
 using ReservationProject.Pages;
-//TODO Vaja puhastada ja refaktoorida
-namespace ReservationProject.Soft.Pages.Rooms
+
+namespace ReservationProject.Soft.Pages.Reservations
 {
-    public class RoomsModel:BasePageModel
+    public class ReservationsModel:BasePageModel
     {
         private readonly ApplicationDbContext db;
 
-        public RoomsModel(ApplicationDbContext context)=> db = context;
+        public ReservationsModel(ApplicationDbContext context)
+        {
+            db = context;
+        }
+
         public IActionResult OnGetCreate()
         {
             return Page();
         }
 
         [BindProperty]
-        public Room Room { get; set; }
+        public Reservation Reservation { get; set; }
 
+        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostCreateAsync()
         {
             if (!ModelState.IsValid)
@@ -30,9 +34,7 @@ namespace ReservationProject.Soft.Pages.Rooms
                 return Page();
             }
 
-            Room.RoomId = Guid.NewGuid().ToString();
-
-            db.Rooms.Add(Room);
+            db.Reservations.Add(Reservation);
             await db.SaveChangesAsync();
 
             return RedirectToPage("./Index");
@@ -44,9 +46,9 @@ namespace ReservationProject.Soft.Pages.Rooms
                 return NotFound();
             }
 
-            Room = await db.Rooms.FirstOrDefaultAsync(m => m.RoomId == id);
+            Reservation = await db.Reservations.FirstOrDefaultAsync(m => m.WorkerId == id);
 
-            if (Room == null)
+            if (Reservation == null)
             {
                 return NotFound();
             }
@@ -60,11 +62,11 @@ namespace ReservationProject.Soft.Pages.Rooms
                 return NotFound();
             }
 
-            Room = await db.Rooms.FindAsync(id);
+            Reservation = await db.Reservations.FindAsync(id);
 
-            if (Room != null)
+            if (Reservation != null)
             {
-                db.Rooms.Remove(Room);
+                db.Reservations.Remove(Reservation);
                 await db.SaveChangesAsync();
             }
 
@@ -77,24 +79,24 @@ namespace ReservationProject.Soft.Pages.Rooms
                 return NotFound();
             }
 
-            Room = await db.Rooms.FirstOrDefaultAsync(m => m.RoomId == id);
+            Reservation = await db.Reservations.FirstOrDefaultAsync(m => m.WorkerId == id);
 
-            if (Room == null)
+            if (Reservation == null)
             {
                 return NotFound();
             }
             return Page();
         }
-        public async Task<IActionResult> OnGetEditAsync(string id = "")
+        public async Task<IActionResult> OnGetAsync(string id = "")
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            Room = await db.Rooms.FirstOrDefaultAsync(m => m.RoomId == id);
+            Reservation = await db.Reservations.FirstOrDefaultAsync(m => m.WorkerId == id);
 
-            if (Room == null)
+            if (Reservation == null)
             {
                 return NotFound();
             }
@@ -103,14 +105,14 @@ namespace ReservationProject.Soft.Pages.Rooms
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostEditAsync()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            db.Attach(Room).State = EntityState.Modified;
+            db.Attach(Reservation).State = EntityState.Modified;
 
             try
             {
@@ -118,7 +120,7 @@ namespace ReservationProject.Soft.Pages.Rooms
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RoomExists(Room.RoomId))
+                if (!ReservationExists(Reservation.WorkerId))
                 {
                     return NotFound();
                 }
@@ -131,15 +133,15 @@ namespace ReservationProject.Soft.Pages.Rooms
             return RedirectToPage("./Index");
         }
 
-        private bool RoomExists(string id = "")
+        private bool ReservationExists(string id)
         {
-            return db.Rooms.Any(e => e.RoomId == id);
+            return db.Reservations.Any(e => e.WorkerId == id);
         }
-        public IList<Room> Rooms { get; set; }
+        public IList<Reservation> Reservations { get; set; }
 
         public async Task OnGetIndexAsync()
         {
-            Rooms = await db.Rooms.ToListAsync();
+            Reservations = await db.Reservations.ToListAsync();
         }
     }
 }
