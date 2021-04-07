@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Pages
+namespace ReservationProject.Pages
 { public class BasePageModel : PageModel
     {
-        //todo kas siia ei saaks kokku tuua asju Clients ja Workermodelist näiteks? mingid meetodid ma mõtlen
+        
         //protected readonly Infra.ApplicationDbContext dataBase;
         //public BasePageModel(Infra.ApplicationDbContext context) => dataBase = context;
         //private Client Client { get; set; }
