@@ -221,8 +221,8 @@ namespace ReservationProject.Infra.Migrations
 
             modelBuilder.Entity("ReservationProject.Data.Reservation", b =>
                 {
-                    b.Property<int>("WorkerId")
-                        .HasColumnType("int");
+                    b.Property<string>("WorkerId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("RoomId")
                         .HasColumnType("nvarchar(450)");

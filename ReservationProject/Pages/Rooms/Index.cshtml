@@ -2,24 +2,29 @@
 @model ReservationProject.Soft.Pages.Rooms.RoomsModel
 
 @{
-    ViewData["Title"] = "Rooms";
-    Layout = "_Index";
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+<h1>Index</h1>
+
+<p>
+    <a asp-page-handler="Create" asp-page="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Rooms[0].RoomName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rooms[0].BuildingAddress)
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RoomList[0].RoomName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RoomList[0].BuildingAddress)
+        </th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Rooms) {
+    @foreach (var item in Model.RoomList) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.RoomName)
@@ -33,6 +38,6 @@
                 <a asp-page="./Delete" asp-route-handler="Delete" asp-route-id="@item.RoomId">Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>

@@ -33,7 +33,7 @@ namespace ReservationProject.Soft.Pages.Reservations
             {
                 return Page();
             }
-
+            //TODO kontroll kas olemas?
             db.Reservations.Add(Reservation);
             await db.SaveChangesAsync();
 

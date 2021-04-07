@@ -3,24 +3,17 @@
 
 @{
     ViewData["Title"] = "Delete";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@{
     Layout = "_Delete";
+    ViewData["Page"] = "room";
     ViewData["ItemID"] = Model.Room.RoomId;
 }
-@* TODO Midagi siin vaatega pekkis, näitab koledalt *@
-<dl class="row">
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.Room.RoomName)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.Room.RoomName)
-    </dd>
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.Room.BuildingAddress)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.Room.BuildingAddress)
-    </dd>
-</dl>
+
+<partial name="_ShowRoom.cshtml" />
+
 @section DeleteBinding {
     <input type="hidden" asp-for="@ViewData["ItemId"]" />
 }
