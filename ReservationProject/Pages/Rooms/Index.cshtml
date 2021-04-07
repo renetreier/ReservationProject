@@ -1,0 +1,38 @@
+﻿@page
+@model ReservationProject.Soft.Pages.Rooms.RoomsModel
+
+@{
+    ViewData["Title"] = "Rooms";
+    Layout = "_Index";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Rooms[0].RoomName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rooms[0].BuildingAddress)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Rooms) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BuildingAddress)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-handler="Edit" asp-route-id="@item.RoomId">Edit</a> |
+                <a asp-page="./Details" asp-route-handler="Details" asp-route-id="@item.RoomId">Details</a> |
+                <a asp-page="./Delete" asp-route-handler="Delete" asp-route-id="@item.RoomId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
