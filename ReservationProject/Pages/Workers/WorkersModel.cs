@@ -29,15 +29,17 @@ namespace ReservationProject.Soft.Pages.Workers
                 return Page();
             }
 
+            Worker.Id = Guid.NewGuid().ToString();
+
             _context.Workers.Add(Worker);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
 
-        public async Task<IActionResult> OnGetEditAsync(int? id)
+        public async Task<IActionResult> OnGetEditAsync(string id)
         {
-            if (id == null)
+            if (id == "")
             {
                 return NotFound();
             }
@@ -51,9 +53,9 @@ namespace ReservationProject.Soft.Pages.Workers
             return Page();
         }
 
-        public async Task<IActionResult> OnPostEditAsync(int? id)
+        public async Task<IActionResult> OnPostEditAsync(string id)
         {
-            if (id == null)
+            if (id == "")
                 return NotFound();
 
             var workerToUpdate = await _context.Workers.FindAsync(id);
@@ -70,14 +72,14 @@ namespace ReservationProject.Soft.Pages.Workers
             return RedirectToPage("./Index");
         }
 
-        private bool WorkerExists(int id)
+        private bool WorkerExists(string id)
         {
             return _context.Workers.Any(e => e.Id == id);
         }
 
-        public async Task<IActionResult> OnGetDeleteAsync(int? id)
+        public async Task<IActionResult> OnGetDeleteAsync(string id)
         {
-            if (id == null)
+            if (id == "")
             {
                 return NotFound();
             }
@@ -91,9 +93,9 @@ namespace ReservationProject.Soft.Pages.Workers
             return Page();
         }
 
-        public async Task<IActionResult> OnPostDeleteAsync(int? id)
+        public async Task<IActionResult> OnPostDeleteAsync(string id)
         {
-            if (id == null)
+            if (id == "")
             {
                 return NotFound();
             }
@@ -109,9 +111,9 @@ namespace ReservationProject.Soft.Pages.Workers
             return RedirectToPage("./Index");
         }
 
-        public async Task<IActionResult> OnGetDetailsAsync(int? id)
+        public async Task<IActionResult> OnGetDetailsAsync(string id)
         {
-            if (id == null)
+            if (id == "")
             {
                 return NotFound();
             }

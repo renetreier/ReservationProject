@@ -7,7 +7,7 @@ namespace ReservationProject.Data
     //TODO vaja scaoffilda 
     public class Worker
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         [Required]
         [StringLength(50)]
         [Display(Name = "Last Name")]
