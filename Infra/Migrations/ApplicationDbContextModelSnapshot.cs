@@ -221,16 +221,21 @@ namespace ReservationProject.Infra.Migrations
 
             modelBuilder.Entity("ReservationProject.Data.Reservation", b =>
                 {
-                    b.Property<string>("WorkerId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("RoomId")
+                    b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("ReservationDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("WorkerId", "RoomId");
+                    b.Property<string>("RoomId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WorkerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Reservation");
                 });

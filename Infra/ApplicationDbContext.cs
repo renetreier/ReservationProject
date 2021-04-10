@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ReservationProject.Data;
 
@@ -21,8 +22,9 @@ namespace ReservationProject.Infra
             modelBuilder.Entity<Room>().ToTable("Room");
             modelBuilder.Entity<Worker>().ToTable("Worker");
             modelBuilder.Entity<Reservation>().ToTable("Reservation");
-            //Todo Kas teha võtmeks kolmene komplekt worker/room/date?
-            modelBuilder.Entity<Reservation>().HasKey(r => new { r.WorkerId, r.RoomId });
+
+            //TODO SIIN ON VAJA TEHA, ET TA SAAKS ARU, ET RESERVATIONIL ON FOREIGN KEY-D
+
         }
     }
 }
