@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -26,22 +27,22 @@ namespace ReservationProject.Soft.Pages.Reservations
         [BindProperty]
         public Reservation Reservation { get; set; }
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostCreateAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
+            Reservation.Id = Guid.NewGuid().ToString();
             //TODO kontroll kas olemas?
             db.Reservations.Add(Reservation);
             await db.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
-        public async Task<IActionResult> OnGetDeleteAsync(string id = "")
+        public async Task<IActionResult> OnGetDeleteAsync(string id)
         {
-            if (id == null)
+            if (id == "")
             {
                 return NotFound();
             }
@@ -55,9 +56,9 @@ namespace ReservationProject.Soft.Pages.Reservations
             return Page();
         }
 
-        public async Task<IActionResult> OnPostDeleteAsync(string id = "")
+        public async Task<IActionResult> OnPostDeleteAsync(string id)
         {
-            if (id == null)
+            if (id == "")
             {
                 return NotFound();
             }
@@ -72,9 +73,9 @@ namespace ReservationProject.Soft.Pages.Reservations
 
             return RedirectToPage("./Index");
         }
-        public async Task<IActionResult> OnGetDetailsAsync(string id = "")
+        public async Task<IActionResult> OnGetDetailsAsync(string id)
         {
-            if (id == null)
+            if (id == "")
             {
                 return NotFound();
             }
@@ -87,9 +88,9 @@ namespace ReservationProject.Soft.Pages.Reservations
             }
             return Page();
         }
-        public async Task<IActionResult> OnGetAsync(string id = "")
+        public async Task<IActionResult> OnGetEditAsync(string id)
         {
-            if (id == null)
+            if (id == "")
             {
                 return NotFound();
             }
@@ -103,33 +104,46 @@ namespace ReservationProject.Soft.Pages.Reservations
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostEditAsync(string id)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
 
-            db.Attach(Reservation).State = EntityState.Modified;
+            //db.Attach(Reservation).State = EntityState.Modified;
 
-            try
+            //try
+            //{
+            //    await db.SaveChangesAsync();
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{
+            //    if (!ReservationExists(Reservation.WorkerId))
+            //    {
+            //        return NotFound();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            //}
+
+            //return RedirectToPage("./Index");
+            if (id == "")
+                return NotFound();
+
+            var reservationToUpdate = await db.Reservations.FindAsync(id);
+
+            if (reservationToUpdate == null)
+                return NotFound();
+
+            if (await TryUpdateModelAsync(reservationToUpdate, "reservation",
+                c => c.ReservationDate, c => c.RoomId, c => c.WorkerId))
             {
                 await db.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ReservationExists(Reservation.WorkerId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
             return RedirectToPage("./Index");
         }
 
@@ -137,11 +151,11 @@ namespace ReservationProject.Soft.Pages.Reservations
         {
             return db.Reservations.Any(e => e.WorkerId == id);
         }
-        public IList<Reservation> Reservations { get; set; }
+        public IList<Reservation> ReservationsList { get; set; }
 
-        public async Task OnGetIndexAsync()
+        public async Task OnGetAsync()
         {
-            Reservations = await db.Reservations.ToListAsync();
+            ReservationsList = await db.Reservations.ToListAsync();
         }
     }
 }

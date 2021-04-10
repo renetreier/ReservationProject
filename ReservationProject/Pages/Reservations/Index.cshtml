@@ -6,32 +6,75 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+@*<h1>Index</h1>
+
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Reservations[0].ReservationDate)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model.Reservations) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReservationDate)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>*@
+
 <h1>Index</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page-handler="Create" asp-page="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Reservations[0].ReservationDate)
+                @Html.DisplayNameFor(model => model.ReservationsList[0].ReservationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReservationsList[0].RoomId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReservationsList[0].WorkerId)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Reservations) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReservationDate)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.ReservationsList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReservationDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoomId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkerId)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-handler="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-handler="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-handler="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
