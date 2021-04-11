@@ -16,5 +16,6 @@ namespace ReservationProject.Data
         public string RoomId { get; set; }
         [Required]
         public string WorkerId { get; set; }
+
     }
 }

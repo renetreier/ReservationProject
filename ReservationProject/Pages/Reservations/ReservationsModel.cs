@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ReservationProject.Data;
 using ReservationProject.Infra;
@@ -19,8 +20,12 @@ namespace ReservationProject.Soft.Pages.Reservations
             db = context;
         }
 
+        public SelectList Workers { get; set; }
+        public SelectList Rooms { get; set; }
         public IActionResult OnGetCreate()
         {
+            LoadRooms(db);
+            LoadWorkers(db);
             return Page();
         }
 
@@ -132,6 +137,20 @@ namespace ReservationProject.Soft.Pages.Reservations
         public async Task OnGetAsync()
         {
             ReservationsList = await db.Reservations.ToListAsync();
+        }
+
+        public void LoadWorkers(object selectedWorker = null)
+        {
+            var q = from d in db.Workers orderby d.LastName select d;
+            Workers = new SelectList(q.AsNoTracking(),
+                "WorkerId", "FullName", selectedWorker);
+        }
+
+        public void LoadRooms(object selectedRoom = null)
+        {
+            var q = from d in db.Rooms orderby d.RoomName select d;
+            Rooms = new SelectList(q.AsNoTracking(),
+                "RoomId", "RoomName", selectedRoom);
         }
     }
 }

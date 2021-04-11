@@ -24,6 +24,7 @@
     <tbody>
         @foreach (var item in Model.ReservationsList)
         {
+            //TODO tahaks näha ruumi nime ja töötaja nime, mitte ID
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.ReservationDate)

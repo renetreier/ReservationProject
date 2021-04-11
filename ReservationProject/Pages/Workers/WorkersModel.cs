@@ -95,6 +95,7 @@ namespace ReservationProject.Soft.Pages.Workers
 
         public async Task<IActionResult> OnPostDeleteAsync(string id)
         {
+            //TODO kui kustutad töötaja, kustutaks ka kõik temaga seotud reserveeringud
             if (id == "")
             {
                 return NotFound();
