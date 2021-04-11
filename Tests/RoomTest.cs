@@ -1,11 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ReservationProject.Data;
-using System;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using ReservationProject.Infra;
-using ReservationProject.Soft.Pages;
-using ReservationProject.Soft.Pages.Rooms;
+using ReservationProject.Pages;
+
 
 
 namespace ReservationProject.Tests

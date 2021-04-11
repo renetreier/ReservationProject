@@ -1,31 +1,17 @@
 ﻿@page
-@model ReservationProject.Soft.Pages.Workers.WorkersModel
+@using ReservationProject.Pages.Extensions
+@model ReservationProject.Pages.WorkersModel
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Pages/Shared/_Layout.cshtml";
+    Layout = "_Index";
 }
-
-<h1>Index</h1>
-
-<p>
-    <a asp-page-handler="Create" asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.WorkerList[0].LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WorkerList[0].FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WorkerList[0].Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WorkerList[0].Salary)
-            </th>
+            @Html.TableHeader(model => model.WorkerList[0].FullName)
+            @Html.TableHeader(model => model.WorkerList[0].Email)
+            @Html.TableHeader(model => model.WorkerList[0].Salary)
             <th></th>
         </tr>
     </thead>
@@ -33,23 +19,10 @@
         @foreach (var item in Model.WorkerList)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Salary)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-page-handler="Edit" asp-route-id="@item.WorkerId">Edit</a> |
-                    <a asp-page="./Details" asp-page-handler="Details" asp-route-id="@item.WorkerId">Details</a> |
-                    <a asp-page="./Delete" asp-page-handler="Delete" asp-route-id="@item.WorkerId">Delete</a>
-                </td>
+                @Html.RowData(modelItem => item.FullName)
+                @Html.RowData(modelItem => item.Email)
+                @Html.RowData(modelItem => item.Salary)
+                @Html.RowButtons("Workers", $"{item.WorkerId}")
             </tr>
         }
     </tbody>

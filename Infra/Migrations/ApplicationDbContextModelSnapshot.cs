@@ -237,6 +237,8 @@ namespace ReservationProject.Infra.Migrations
 
                     b.HasKey("ReservationId");
 
+                    b.HasAlternateKey("ReservationDate", "RoomId");
+
                     b.HasIndex("RoomId");
 
                     b.HasIndex("WorkerId");

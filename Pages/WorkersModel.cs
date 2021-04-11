@@ -1,20 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ReservationProject.Data;
 using ReservationProject.Infra;
 
-namespace ReservationProject.Soft.Pages.Workers
+namespace ReservationProject.Pages
 {
-    public class WorkersModel : PageModel
+    public class WorkersModel : BasePageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext db;
 
-        public WorkersModel(ApplicationDbContext context) => _context = context;
+        public WorkersModel(ApplicationDbContext context) => db = context;
 
         public IActionResult OnGetCreate()
         {
@@ -31,9 +29,8 @@ namespace ReservationProject.Soft.Pages.Workers
 
             Worker.WorkerId = Guid.NewGuid().ToString();
 
-            _context.Workers.Add(Worker);
-            await _context.SaveChangesAsync();
-
+            db.Workers.Add(Worker);
+            await db.SaveChangesAsync();
             return RedirectToPage("./Index");
         }
 
@@ -44,7 +41,7 @@ namespace ReservationProject.Soft.Pages.Workers
                 return NotFound();
             }
 
-            Worker = await _context.Workers.FirstOrDefaultAsync(m => m.WorkerId == id);
+            Worker = await db.Workers.FirstOrDefaultAsync(m => m.WorkerId == id);
 
             if (Worker == null)
             {
@@ -58,7 +55,7 @@ namespace ReservationProject.Soft.Pages.Workers
             if (id == "")
                 return NotFound();
 
-            var workerToUpdate = await _context.Workers.FindAsync(id);
+            var workerToUpdate = await db.Workers.FindAsync(id);
 
             if (workerToUpdate == null)
                 return NotFound();
@@ -66,15 +63,9 @@ namespace ReservationProject.Soft.Pages.Workers
             if (await TryUpdateModelAsync(workerToUpdate, "worker",
                 c => c.FirstName, c => c.LastName, c => c.Email, c => c.Salary))
             {
-                await _context.SaveChangesAsync();
-                return RedirectToPage("./Index");
+                await db.SaveChangesAsync();
             }
             return RedirectToPage("./Index");
-        }
-
-        private bool WorkerExists(string id)
-        {
-            return _context.Workers.Any(e => e.WorkerId == id);
         }
 
         public async Task<IActionResult> OnGetDeleteAsync(string id)
@@ -84,7 +75,7 @@ namespace ReservationProject.Soft.Pages.Workers
                 return NotFound();
             }
 
-            Worker = await _context.Workers.FirstOrDefaultAsync(m => m.WorkerId == id);
+            Worker = await db.Workers.FirstOrDefaultAsync(m => m.WorkerId == id);
 
             if (Worker == null)
             {
@@ -95,19 +86,21 @@ namespace ReservationProject.Soft.Pages.Workers
 
         public async Task<IActionResult> OnPostDeleteAsync(string id)
         {
+
             //TODO kui kustutad töötaja, kustutaks ka kõik temaga seotud reserveeringud
+            // TODO "Rene" mulle tundub et see töötab, kui kustutad ära siis reserveering kustub ka
 
             if (id == "")
             {
                 return NotFound();
             }
 
-            Worker = await _context.Workers.FindAsync(id);
+            Worker = await db.Workers.FindAsync(id);
 
             if (Worker != null)
             {
-                _context.Workers.Remove(Worker);
-                await _context.SaveChangesAsync();
+                db.Workers.Remove(Worker);
+                await db.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");
@@ -120,7 +113,7 @@ namespace ReservationProject.Soft.Pages.Workers
                 return NotFound();
             }
 
-            Worker = await _context.Workers.FirstOrDefaultAsync(m => m.WorkerId == id);
+            Worker = await db.Workers.FirstOrDefaultAsync(m => m.WorkerId == id);
 
             if (Worker == null)
             {
@@ -133,7 +126,7 @@ namespace ReservationProject.Soft.Pages.Workers
 
         public async Task OnGetAsync()
         {
-            WorkerList = await _context.Workers.ToListAsync();
+            WorkerList = await db.Workers.ToListAsync();
         }
     }
 }
