@@ -15,10 +15,7 @@ namespace ReservationProject.Soft.Pages.Reservations
     {
         private readonly ApplicationDbContext db;
 
-        public ReservationsModel(ApplicationDbContext context)
-        {
-            db = context;
-        }
+        public ReservationsModel(ApplicationDbContext context) => db = context;
 
         public SelectList Workers { get; set; }
         public SelectList Rooms { get; set; }
@@ -47,17 +44,7 @@ namespace ReservationProject.Soft.Pages.Reservations
         }
         public async Task<IActionResult> OnGetDeleteAsync(string id)
         {
-            if (id == "")
-            {
-                return NotFound();
-            }
-
-            Reservation = await db.Reservations.FirstOrDefaultAsync(m => m.ReservationId == id);
-
-            if (Reservation == null)
-            {
-                return NotFound();
-            }
+            await LoadReservation(id);
             return Page();
         }
 
@@ -80,26 +67,19 @@ namespace ReservationProject.Soft.Pages.Reservations
         }
         public async Task<IActionResult> OnGetDetailsAsync(string id)
         {
-            if (id == "")
-            {
-                return NotFound();
-            }
-
-            Reservation = await db.Reservations.FirstOrDefaultAsync(m => m.ReservationId == id);
-
-            if (Reservation == null)
-            {
-                return NotFound();
-            }
+            await LoadReservation(id);
             return Page();
         }
         public async Task<IActionResult> OnGetEditAsync(string id)
         {
+
             if (id == "")
             {
                 return NotFound();
             }
 
+            LoadRooms(db);
+            LoadWorkers(db);
             Reservation = await db.Reservations.FirstOrDefaultAsync(m => m.ReservationId == id);
 
             if (Reservation == null)
@@ -136,7 +116,10 @@ namespace ReservationProject.Soft.Pages.Reservations
 
         public async Task OnGetAsync()
         {
-            ReservationsList = await db.Reservations.ToListAsync();
+            ReservationsList = await db.Reservations
+                .Include(c => c.ReservedRoom)
+                .Include(c => c.ReservedWorker)
+                .ToListAsync();
         }
 
         public void LoadWorkers(object selectedWorker = null)
@@ -151,6 +134,17 @@ namespace ReservationProject.Soft.Pages.Reservations
             var q = from d in db.Rooms orderby d.RoomName select d;
             Rooms = new SelectList(q.AsNoTracking(),
                 "RoomId", "RoomName", selectedRoom);
+        }
+
+        public async Task<bool> LoadReservation(string id)
+        {
+            if (id == "") return false;
+            Reservation = await db.Reservations
+                .AsNoTracking()
+                .Include(c => c.ReservedRoom)
+                .Include(c=>c.ReservedWorker)
+                .FirstOrDefaultAsync(m => m.ReservationId == id);
+            return Reservation != null;
         }
     }
 }
