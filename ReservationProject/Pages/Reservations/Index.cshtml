@@ -24,16 +24,15 @@
     <tbody>
         @foreach (var item in Model.ReservationsList)
         {
-            //TODO tahaks näha ruumi nime ja töötaja nime, mitte ID
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.ReservationDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RoomId)
+                    @Html.DisplayFor(modelItem => item.ReservedRoom.RoomName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.WorkerId)
+                    @Html.DisplayFor(modelItem => item.ReservedWorker.FullName)
                 </td>
                 <td>
                     <a asp-page="./Edit" asp-route-handler="Edit" asp-route-id="@item.ReservationId">Edit</a> |

@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Delete";
     Layout = "_Delete";
+    ViewData["ItemID"] = Model.Reservation.ReservationId;
 }
 
 <partial name="_ShowReservation.cshtml" />
