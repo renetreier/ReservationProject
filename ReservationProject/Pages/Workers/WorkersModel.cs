@@ -29,7 +29,7 @@ namespace ReservationProject.Soft.Pages.Workers
                 return Page();
             }
 
-            Worker.Id = Guid.NewGuid().ToString();
+            Worker.WorkerId = Guid.NewGuid().ToString();
 
             _context.Workers.Add(Worker);
             await _context.SaveChangesAsync();
@@ -44,7 +44,7 @@ namespace ReservationProject.Soft.Pages.Workers
                 return NotFound();
             }
 
-            Worker = await _context.Workers.FirstOrDefaultAsync(m => m.Id == id);
+            Worker = await _context.Workers.FirstOrDefaultAsync(m => m.WorkerId == id);
 
             if (Worker == null)
             {
@@ -74,7 +74,7 @@ namespace ReservationProject.Soft.Pages.Workers
 
         private bool WorkerExists(string id)
         {
-            return _context.Workers.Any(e => e.Id == id);
+            return _context.Workers.Any(e => e.WorkerId == id);
         }
 
         public async Task<IActionResult> OnGetDeleteAsync(string id)
@@ -84,7 +84,7 @@ namespace ReservationProject.Soft.Pages.Workers
                 return NotFound();
             }
 
-            Worker = await _context.Workers.FirstOrDefaultAsync(m => m.Id == id);
+            Worker = await _context.Workers.FirstOrDefaultAsync(m => m.WorkerId == id);
 
             if (Worker == null)
             {
@@ -95,6 +95,7 @@ namespace ReservationProject.Soft.Pages.Workers
 
         public async Task<IActionResult> OnPostDeleteAsync(string id)
         {
+            //TODO kui kustutad töötaja, kustutaks ka kõik temaga seotud reserveeringud
             if (id == "")
             {
                 return NotFound();
@@ -118,7 +119,7 @@ namespace ReservationProject.Soft.Pages.Workers
                 return NotFound();
             }
 
-            Worker = await _context.Workers.FirstOrDefaultAsync(m => m.Id == id);
+            Worker = await _context.Workers.FirstOrDefaultAsync(m => m.WorkerId == id);
 
             if (Worker == null)
             {

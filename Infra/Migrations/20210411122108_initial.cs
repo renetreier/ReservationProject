@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ReservationProject.Infra.Migrations
 {
-    public partial class AddFK : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -50,14 +50,14 @@ namespace ReservationProject.Infra.Migrations
                 name: "Reservation",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ReservationId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ReservationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RoomId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     WorkerId = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reservation", x => x.Id);
+                    table.PrimaryKey("PK_Reservation", x => x.ReservationId);
                 });
 
             migrationBuilder.CreateTable(
@@ -77,7 +77,7 @@ namespace ReservationProject.Infra.Migrations
                 name: "Worker",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    WorkerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -85,7 +85,7 @@ namespace ReservationProject.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Worker", x => x.Id);
+                    table.PrimaryKey("PK_Worker", x => x.WorkerId);
                 });
 
             migrationBuilder.CreateTable(

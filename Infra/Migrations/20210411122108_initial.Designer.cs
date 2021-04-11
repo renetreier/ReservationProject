@@ -10,8 +10,8 @@ using ReservationProject.Infra;
 namespace ReservationProject.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210410162044_AddFK")]
-    partial class AddFK
+    [Migration("20210411122108_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -223,7 +223,7 @@ namespace ReservationProject.Infra.Migrations
 
             modelBuilder.Entity("ReservationProject.Data.Reservation", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("ReservationId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("ReservationDate")
@@ -237,7 +237,7 @@ namespace ReservationProject.Infra.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ReservationId");
 
                     b.ToTable("Reservation");
                 });
@@ -263,7 +263,7 @@ namespace ReservationProject.Infra.Migrations
 
             modelBuilder.Entity("ReservationProject.Data.Worker", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("WorkerId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
@@ -284,7 +284,7 @@ namespace ReservationProject.Infra.Migrations
                     b.Property<double>("Salary")
                         .HasColumnType("float");
 
-                    b.HasKey("Id");
+                    b.HasKey("WorkerId");
 
                     b.ToTable("Worker");
                 });

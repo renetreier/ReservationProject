@@ -2,14 +2,9 @@
 @model ReservationProject.Soft.Pages.Workers.WorkersModel
 
 @{
-    ViewData["Title"] = "Delete";
-    Layout = "~/Pages/Shared/_Layout.cshtml";
-}
-
-@{
     Layout = "_Delete";
     ViewData["Page"] = "worker";
-    ViewData["ItemID"] = Model.Worker.Id;
+    ViewData["ItemID"] = Model.Worker.WorkerId;
 }
 
 <partial name="_ShowWorker.cshtml" />

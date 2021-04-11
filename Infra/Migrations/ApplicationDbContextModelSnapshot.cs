@@ -221,7 +221,7 @@ namespace ReservationProject.Infra.Migrations
 
             modelBuilder.Entity("ReservationProject.Data.Reservation", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("ReservationId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("ReservationDate")
@@ -235,7 +235,7 @@ namespace ReservationProject.Infra.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ReservationId");
 
                     b.ToTable("Reservation");
                 });
@@ -261,7 +261,7 @@ namespace ReservationProject.Infra.Migrations
 
             modelBuilder.Entity("ReservationProject.Data.Worker", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("WorkerId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
@@ -282,7 +282,7 @@ namespace ReservationProject.Infra.Migrations
                     b.Property<double>("Salary")
                         .HasColumnType("float");
 
-                    b.HasKey("Id");
+                    b.HasKey("WorkerId");
 
                     b.ToTable("Worker");
                 });

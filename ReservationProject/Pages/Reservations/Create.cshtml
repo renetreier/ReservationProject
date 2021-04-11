@@ -2,44 +2,8 @@
 @model ReservationProject.Soft.Pages.Reservations.ReservationsModel
 
 @{
-    ViewData["Title"] = "Create";
     Layout = "_Create";
+    ViewData["Page"] = "Reservations";
 }
 
-<h1>Create</h1>
-
-<h4>Reservation</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Reservation.ReservationDate" class="control-label"></label>
-                <input asp-for="Reservation.ReservationDate" class="form-control" />
-                <span asp-validation-for="Reservation.ReservationDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Reservation.RoomId" class="control-label"></label>
-                <input asp-for="Reservation.RoomId" class="form-control" />
-                <span asp-validation-for="Reservation.RoomId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Reservation.WorkerId" class="control-label"></label>
-                <input asp-for="Reservation.WorkerId" class="form-control" />
-                <span asp-validation-for="Reservation.WorkerId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+<partial name="_EditReservation.cshtml"/>

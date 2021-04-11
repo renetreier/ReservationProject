@@ -6,18 +6,16 @@ namespace ReservationProject.Data
 {
     public class Reservation
     {
-        //TODO key vajalik
-        [Key]
-        public string Id { get; set; }
+        [Display(Name = "Reservation number")]
+        public string ReservationId { get; set; }
         [Required]
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
         [Display(Name = "Reservation Date")]
         public DateTime ReservationDate { get; set; }
         [Required]
         public string RoomId { get; set; }
         [Required]
         public string WorkerId { get; set; }
-
 
     }
 }
