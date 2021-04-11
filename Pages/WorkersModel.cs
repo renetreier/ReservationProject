@@ -10,7 +10,7 @@ using ReservationProject.Infra;
 
 namespace ReservationProject.Pages
 {
-    public class WorkersModel : PageModel
+    public class WorkersModel : BasePageModel
     {
         private readonly ApplicationDbContext db;
 

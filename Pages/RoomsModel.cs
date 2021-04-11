@@ -11,7 +11,7 @@ using ReservationProject.Pages;
 //TODO Vaja puhastada ja refaktoorida
 namespace ReservationProject.Pages
 {
-    public class RoomsModel:PageModel
+    public class RoomsModel:BasePageModel
     {
         private readonly ApplicationDbContext db;
 
