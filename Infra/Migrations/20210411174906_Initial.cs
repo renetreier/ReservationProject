@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ReservationProject.Infra.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,20 +44,6 @@ namespace ReservationProject.Infra.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Reservation",
-                columns: table => new
-                {
-                    ReservationId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ReservationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RoomId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    WorkerId = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reservation", x => x.ReservationId);
                 });
 
             migrationBuilder.CreateTable(
@@ -194,6 +180,33 @@ namespace ReservationProject.Infra.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Reservation",
+                columns: table => new
+                {
+                    ReservationId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ReservationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RoomId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    WorkerId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reservation", x => x.ReservationId);
+                    table.UniqueConstraint("AK_Reservation_ReservationDate_RoomId", x => new { x.ReservationDate, x.RoomId });
+                    table.ForeignKey(
+                        name: "FK_Reservation_Room_RoomId",
+                        column: x => x.RoomId,
+                        principalTable: "Room",
+                        principalColumn: "RoomId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reservation_Worker_WorkerId",
+                        column: x => x.WorkerId,
+                        principalTable: "Worker",
+                        principalColumn: "WorkerId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -232,6 +245,16 @@ namespace ReservationProject.Infra.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reservation_RoomId",
+                table: "Reservation",
+                column: "RoomId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reservation_WorkerId",
+                table: "Reservation",
+                column: "WorkerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -255,16 +278,16 @@ namespace ReservationProject.Infra.Migrations
                 name: "Reservation");
 
             migrationBuilder.DropTable(
-                name: "Room");
-
-            migrationBuilder.DropTable(
-                name: "Worker");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Room");
+
+            migrationBuilder.DropTable(
+                name: "Worker");
         }
     }
 }

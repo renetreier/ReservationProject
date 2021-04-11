@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,7 +10,7 @@ using ReservationProject.Data;
 using ReservationProject.Infra;
 using ReservationProject.Pages;
 
-namespace ReservationProject.Soft.Pages.Reservations
+namespace ReservationProject.Pages
 {
     public class ReservationsModel:BasePageModel
     {
@@ -39,7 +40,6 @@ namespace ReservationProject.Soft.Pages.Reservations
             //TODO kontroll kas olemas?
             db.Reservations.Add(Reservation);
             await db.SaveChangesAsync();
-
             return RedirectToPage("./Index");
         }
         public async Task<IActionResult> OnGetDeleteAsync(string id)
@@ -98,28 +98,19 @@ namespace ReservationProject.Soft.Pages.Reservations
 
             if (reservationToUpdate == null)
                 return NotFound();
-
             if (await TryUpdateModelAsync(reservationToUpdate, "reservation",
-                c => c.ReservationDate, c => c.RoomId, c => c.WorkerId))
+                    c => c.ReservationDate, c => c.RoomId, c => c.WorkerId))
             {
-                await db.SaveChangesAsync();
-                return RedirectToPage("./Index");
+                    await db.SaveChangesAsync();
             }
             return RedirectToPage("./Index");
         }
 
-        private bool ReservationExists(string id)
-        {
-            return db.Reservations.Any(e => e.ReservationId == id);
-        }
         public IList<Reservation> ReservationsList { get; set; }
 
         public async Task OnGetAsync()
         {
-            ReservationsList = await db.Reservations
-                .Include(c => c.ReservedRoom)
-                .Include(c => c.ReservedWorker)
-                .ToListAsync();
+            await LoadReservations();
         }
 
         public void LoadWorkers(object selectedWorker = null)
@@ -146,5 +137,13 @@ namespace ReservationProject.Soft.Pages.Reservations
                 .FirstOrDefaultAsync(m => m.ReservationId == id);
             return Reservation != null;
         }
+        public async Task LoadReservations()
+        {
+            ReservationsList = await db.Reservations
+                .Include(c => c.ReservedRoom)
+                .Include(c => c.ReservedWorker)
+                .ToListAsync();
+        }
+
     }
 }

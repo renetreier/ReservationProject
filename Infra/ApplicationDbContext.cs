@@ -22,6 +22,7 @@ namespace ReservationProject.Infra
             modelBuilder.Entity<Room>().ToTable("Room");
             modelBuilder.Entity<Worker>().ToTable("Worker");
             modelBuilder.Entity<Reservation>().ToTable("Reservation");
+            modelBuilder.Entity<Reservation>().HasAlternateKey(r => new {r.ReservationDate, r.RoomId});
 
             //TODO SIIN ON VAJA TEHA, ET TA SAAKS ARU, ET RESERVATIONIL ON FOREIGN KEY-D
 
