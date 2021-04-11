@@ -14,7 +14,7 @@ namespace ReservationProject.Infra
         public DbSet<Room> Rooms { get; set; }
         
         
-        //TODO VAJA DBINITIALIZER KA TEHA
+        //TODO VAJA DBINITIALIZER KA TEHA, "Rene" - Ei saa vist enne teha kui see foreign key jama korda tehtud
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

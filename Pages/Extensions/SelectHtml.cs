@@ -21,10 +21,10 @@ namespace ReservationProject.Pages.Extensions
         public static IHtmlContent Select<TModel, TResult>(this IHtmlHelper<TModel> h,
             Expression<Func<TModel, TResult>> e, IEnumerable<SelectListItem> selectList, string optionLabel, string displayName)
         {
-            var s = htmlStrings(h, e, selectList, optionLabel, displayName);
+            var s = HtmlStrings(h, e, selectList, optionLabel, displayName);
             return new HtmlContentBuilder(s);
         }
-        internal static List<object> htmlStrings<TModel, TResult>(IHtmlHelper<TModel> h, Expression<Func<TModel, TResult>> e, 
+        internal static List<object> HtmlStrings<TModel, TResult>(IHtmlHelper<TModel> h, Expression<Func<TModel, TResult>> e, 
             IEnumerable<SelectListItem> selectList, string optionLabel, string displayName)
         {
             return new List<object> {

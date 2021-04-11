@@ -11,6 +11,7 @@ namespace ReservationProject.Data
         public string ReservationId { get; set; }
         [Required]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Reservation Date")]
         public DateTime ReservationDate { get; set; }
         [Required]
