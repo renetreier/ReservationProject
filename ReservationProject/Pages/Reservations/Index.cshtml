@@ -1,4 +1,5 @@
 ﻿@page
+@using ReservationProject.Pages.Extensions
 @model ReservationProject.Pages.ReservationsModel
 
 @{
@@ -9,15 +10,9 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ReservationsList[0].ReservationDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReservationsList[0].RoomId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReservationsList[0].WorkerId)
-            </th>
+            @Html.TableHeader(model => model.ReservationsList[0].ReservationDate)
+            @Html.TableHeader(model => model.ReservationsList[0].RoomId)
+            @Html.TableHeader(model => model.ReservationsList[0].WorkerId)
             <th></th>
         </tr>
     </thead>
@@ -25,20 +20,10 @@
         @foreach (var item in Model.ReservationsList)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReservationDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReservedRoom.RoomName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReservedWorker.FullName)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-handler="Edit" asp-route-id="@item.ReservationId">Edit</a> |
-                    <a asp-page="./Details" asp-route-handler="Details" asp-route-id="@item.ReservationId">Details</a> |
-                    <a asp-page="./Delete" asp-route-handler="Delete" asp-route-id="@item.ReservationId">Delete</a>
-                </td>
+                @Html.RowData(modelItem => item.ReservationDate)
+                @Html.RowData(modelItem => item.ReservedRoom.RoomName)
+                @Html.RowData(modelItem => item.ReservedWorker.FullName)
+                @Html.RowButtons("Reservations", $"{item.ReservationId}")
             </tr>
         }
     </tbody>
