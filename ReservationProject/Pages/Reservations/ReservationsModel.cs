@@ -33,7 +33,7 @@ namespace ReservationProject.Soft.Pages.Reservations
             {
                 return Page();
             }
-            Reservation.Id = Guid.NewGuid().ToString();
+            Reservation.ReservationId = Guid.NewGuid().ToString();
             //TODO kontroll kas olemas?
             db.Reservations.Add(Reservation);
             await db.SaveChangesAsync();
@@ -47,7 +47,7 @@ namespace ReservationProject.Soft.Pages.Reservations
                 return NotFound();
             }
 
-            Reservation = await db.Reservations.FirstOrDefaultAsync(m => m.WorkerId == id);
+            Reservation = await db.Reservations.FirstOrDefaultAsync(m => m.ReservationId == id);
 
             if (Reservation == null)
             {
@@ -80,7 +80,7 @@ namespace ReservationProject.Soft.Pages.Reservations
                 return NotFound();
             }
 
-            Reservation = await db.Reservations.FirstOrDefaultAsync(m => m.WorkerId == id);
+            Reservation = await db.Reservations.FirstOrDefaultAsync(m => m.ReservationId == id);
 
             if (Reservation == null)
             {
@@ -95,7 +95,7 @@ namespace ReservationProject.Soft.Pages.Reservations
                 return NotFound();
             }
 
-            Reservation = await db.Reservations.FirstOrDefaultAsync(m => m.WorkerId == id);
+            Reservation = await db.Reservations.FirstOrDefaultAsync(m => m.ReservationId == id);
 
             if (Reservation == null)
             {
@@ -106,30 +106,6 @@ namespace ReservationProject.Soft.Pages.Reservations
 
         public async Task<IActionResult> OnPostEditAsync(string id)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return Page();
-            //}
-
-            //db.Attach(Reservation).State = EntityState.Modified;
-
-            //try
-            //{
-            //    await db.SaveChangesAsync();
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    if (!ReservationExists(Reservation.WorkerId))
-            //    {
-            //        return NotFound();
-            //    }
-            //    else
-            //    {
-            //        throw;
-            //    }
-            //}
-
-            //return RedirectToPage("./Index");
             if (id == "")
                 return NotFound();
 
@@ -149,7 +125,7 @@ namespace ReservationProject.Soft.Pages.Reservations
 
         private bool ReservationExists(string id)
         {
-            return db.Reservations.Any(e => e.WorkerId == id);
+            return db.Reservations.Any(e => e.ReservationId == id);
         }
         public IList<Reservation> ReservationsList { get; set; }
 

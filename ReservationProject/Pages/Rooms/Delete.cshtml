@@ -2,11 +2,6 @@
 @model ReservationProject.Soft.Pages.Rooms.RoomsModel
 
 @{
-    ViewData["Title"] = "Delete";
-    Layout = "~/Pages/Shared/_Layout.cshtml";
-}
-
-@{
     Layout = "_Delete";
     ViewData["Page"] = "room";
     ViewData["ItemID"] = Model.Room.RoomId;

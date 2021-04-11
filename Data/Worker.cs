@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReservationProject.Data
 { 
     public class Worker
     {
-        public string Id { get; set; }
+        public string WorkerId { get; set; }
         [Required]
         [StringLength(50)]
         [Display(Name = "Last Name")]
@@ -32,7 +33,6 @@ namespace ReservationProject.Data
                 return LastName + ", " + FirstName;
             }
         }
-        
- 
+
     }
 }
