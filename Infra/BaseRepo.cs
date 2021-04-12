@@ -11,7 +11,7 @@ namespace ReservationProject.Infra {
 
     
     public abstract class BaseRepo<T> :IRepo<T> where T : class, IEntity, new() {
-        private readonly DbSet<T> set;
+        protected readonly DbSet<T> set;
         private readonly DatabaseFacade db;
 
         protected BaseRepo(DbContext c = null, DbSet<T> s = null) {
@@ -19,7 +19,7 @@ namespace ReservationProject.Infra {
             db = c?.Database;
         }
 
-        public async Task<List<T>> Get() => await set.AsNoTracking().ToListAsync();
+        public virtual async Task<List<T>> Get() => await set.AsNoTracking().ToListAsync();
 
         public async Task<T> Get(string id)
         {
@@ -33,6 +33,7 @@ namespace ReservationProject.Infra {
         public T GetById(string id)=> throw new NotImplementedException();
 
     }
+
 }
 
 
