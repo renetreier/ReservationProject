@@ -10,7 +10,7 @@ using ReservationProject.Infra;
 namespace ReservationProject.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210411190822_Initial")]
+    [Migration("20210412072824_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -64,7 +64,7 @@ namespace ReservationProject.Infra {
                     ReservationDate = DateTime.Parse("2021-04-01"),
                     RoomId = rooms.Single(r=>r.RoomName=="Aroomi Tuba").RoomId,
                     WorkerId = workers.Single(w=>w.LastName=="Pilli").WorkerId,
-                    ReservationId="1001",
+                    ReservationId="2001",
                     ReservedRoom = rooms.Single(r=>r.RoomName=="Aroomi Tuba"),
                     ReservedWorker = workers.Single(w=>w.LastName=="Pilli")
                 },
@@ -73,7 +73,7 @@ namespace ReservationProject.Infra {
                     ReservationDate = DateTime.Parse("2021-04-02"),
                     RoomId = rooms.Single(r=>r.RoomName=="Aroomi Tuba").RoomId,
                     WorkerId = workers.Single(w=>w.LastName=="Pilli").WorkerId,
-                    ReservationId="1001",
+                    ReservationId="2002",
                     ReservedRoom = rooms.Single(r=>r.RoomName=="Aroomi Tuba"),
                     ReservedWorker = workers.Single(w=>w.LastName=="Pilli")
                 },
@@ -82,7 +82,7 @@ namespace ReservationProject.Infra {
                     ReservationDate = DateTime.Parse("2021-04-03"),
                     RoomId = rooms.Single(r=>r.RoomName=="Aroomi Tuba").RoomId,
                     WorkerId = workers.Single(w=>w.LastName=="Pilli").WorkerId,
-                    ReservationId="1001",
+                    ReservationId="2003",
                     ReservedRoom = rooms.Single(r=>r.RoomName=="Aroomi Tuba"),
                     ReservedWorker = workers.Single(w=>w.LastName=="Pilli")
                 },
@@ -91,7 +91,7 @@ namespace ReservationProject.Infra {
                     ReservationDate = DateTime.Parse("2021-04-04"),
                     RoomId = rooms.Single(r=>r.RoomName=="India Tuba").RoomId,
                     WorkerId = workers.Single(w=>w.LastName=="Kask").WorkerId,
-                    ReservationId="1001",
+                    ReservationId="3001",
                     ReservedRoom = rooms.Single(r=>r.RoomName=="India Tuba"),
                     ReservedWorker = workers.Single(w=>w.LastName=="Kask")
                 },
