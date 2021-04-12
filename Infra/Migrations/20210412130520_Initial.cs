@@ -50,20 +50,20 @@ namespace ReservationProject.Infra.Migrations
                 name: "Room",
                 columns: table => new
                 {
-                    RoomId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RoomName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     BuildingAddress = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Room", x => x.RoomId);
+                    table.PrimaryKey("PK_Room", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Worker",
                 columns: table => new
                 {
-                    WorkerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -71,7 +71,7 @@ namespace ReservationProject.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Worker", x => x.WorkerId);
+                    table.PrimaryKey("PK_Worker", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -184,26 +184,26 @@ namespace ReservationProject.Infra.Migrations
                 name: "Reservation",
                 columns: table => new
                 {
-                    ReservationId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ReservationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RoomId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     WorkerId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reservation", x => x.ReservationId);
+                    table.PrimaryKey("PK_Reservation", x => x.Id);
                     table.UniqueConstraint("AK_Reservation_ReservationDate_RoomId", x => new { x.ReservationDate, x.RoomId });
                     table.ForeignKey(
                         name: "FK_Reservation_Room_RoomId",
                         column: x => x.RoomId,
                         principalTable: "Room",
-                        principalColumn: "RoomId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Reservation_Worker_WorkerId",
                         column: x => x.WorkerId,
                         principalTable: "Worker",
-                        principalColumn: "WorkerId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 

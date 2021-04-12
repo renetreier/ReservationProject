@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using ReservationProject.Core;
 
 namespace ReservationProject.Data
 {
-    public class Room
+    public class Room:IEntity
     {
-        [Display(Name = "Room Number")]
-        public string RoomId { get; set; }
+        
+        public string Id { get; set; }
         [Required]
         [StringLength(50, MinimumLength = 3)]
         [Display(Name = "Room Name")]
@@ -16,10 +15,6 @@ namespace ReservationProject.Data
         [StringLength(50, MinimumLength = 3)]
         public string BuildingAddress { get; set; }
 
-        internal static int Liida(int a, int b)
-        {
-            return a + b;
-        }
 
     }
 }

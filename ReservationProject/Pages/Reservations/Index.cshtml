@@ -23,7 +23,7 @@
                 @Html.RowData(modelItem => item.ReservationDate)
                 @Html.RowData(modelItem => item.ReservedRoom.RoomName)
                 @Html.RowData(modelItem => item.ReservedWorker.FullName)
-                @Html.RowButtons("Reservations", $"{item.ReservationId}")
+                @Html.RowButtons("Reservations", $"{item.Id}")
             </tr>
         }
     </tbody>

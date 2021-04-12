@@ -221,7 +221,7 @@ namespace ReservationProject.Infra.Migrations
 
             modelBuilder.Entity("ReservationProject.Data.Reservation", b =>
                 {
-                    b.Property<string>("ReservationId")
+                    b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("ReservationDate")
@@ -235,7 +235,7 @@ namespace ReservationProject.Infra.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("ReservationId");
+                    b.HasKey("Id");
 
                     b.HasAlternateKey("ReservationDate", "RoomId");
 
@@ -248,7 +248,7 @@ namespace ReservationProject.Infra.Migrations
 
             modelBuilder.Entity("ReservationProject.Data.Room", b =>
                 {
-                    b.Property<string>("RoomId")
+                    b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BuildingAddress")
@@ -260,14 +260,14 @@ namespace ReservationProject.Infra.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("RoomId");
+                    b.HasKey("Id");
 
                     b.ToTable("Room");
                 });
 
             modelBuilder.Entity("ReservationProject.Data.Worker", b =>
                 {
-                    b.Property<string>("WorkerId")
+                    b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
@@ -288,7 +288,7 @@ namespace ReservationProject.Infra.Migrations
                     b.Property<double>("Salary")
                         .HasColumnType("float");
 
-                    b.HasKey("WorkerId");
+                    b.HasKey("Id");
 
                     b.ToTable("Worker");
                 });
