@@ -30,10 +30,8 @@ namespace ReservationProject.Pages
 
         public async Task<IActionResult> OnPostCreateAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            if (!ModelState.IsValid) return Page();
+
             Reservation.ReservationId = Guid.NewGuid().ToString();
             //TODO kontroll kas olemas?
             db.Reservations.Add(Reservation);
@@ -42,16 +40,14 @@ namespace ReservationProject.Pages
         }
         public async Task<IActionResult> OnGetDeleteAsync(string id)
         {
-            await LoadReservation(id);
+            if (!await LoadReservation(id)) return NotFound();
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(string id)
         {
-            if (id == "")
-            {
-                return NotFound();
-            }
+            if (id == "") return NotFound();
 
             Reservation = await db.Reservations.FindAsync(id);
 
@@ -65,37 +61,32 @@ namespace ReservationProject.Pages
         }
         public async Task<IActionResult> OnGetDetailsAsync(string id)
         {
-            await LoadReservation(id);
+            if (!await LoadReservation(id)) return NotFound();
+
             return Page();
         }
         public async Task<IActionResult> OnGetEditAsync(string id)
         {
 
-            if (id == "")
-            {
-                return NotFound();
-            }
+            if (id == "") return NotFound();
 
             LoadRooms(db);
             LoadWorkers(db);
             Reservation = await db.Reservations.FirstOrDefaultAsync(m => m.ReservationId == id);
 
-            if (Reservation == null)
-            {
-                return NotFound();
-            }
+            if (Reservation == null) return NotFound();
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostEditAsync(string id)
         {
-            if (id == "")
-                return NotFound();
+            if (id == "") return NotFound();
 
             var reservationToUpdate = await db.Reservations.FindAsync(id);
 
-            if (reservationToUpdate == null)
-                return NotFound();
+            if (reservationToUpdate == null) return NotFound();
+
             if (await TryUpdateModelAsync(reservationToUpdate, "reservation",
                     c => c.ReservationDate, c => c.RoomId, c => c.WorkerId))
             {
@@ -106,10 +97,6 @@ namespace ReservationProject.Pages
 
         public IList<Reservation> ReservationsList { get; set; }
 
-        public async Task OnGetAsync()
-        {
-            await LoadReservations();
-        }
 
         public void LoadWorkers(object selectedWorker = null)
         {

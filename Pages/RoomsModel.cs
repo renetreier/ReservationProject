@@ -13,20 +13,14 @@ namespace ReservationProject.Pages
         private readonly ApplicationDbContext db;
 
         public RoomsModel(ApplicationDbContext context)=> db = context;
-        public IActionResult OnGetCreate()
-        {
-            return Page();
-        }
+        public IActionResult OnGetCreate()=> Page();
 
         [BindProperty]
         public Room Room { get; set; }
 
         public async Task<IActionResult> OnPostCreateAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            if (!ModelState.IsValid) return Page();
 
             Room.RoomId = Guid.NewGuid().ToString();
 
@@ -37,26 +31,18 @@ namespace ReservationProject.Pages
         }
         public async Task<IActionResult> OnGetDeleteAsync(string id)
         {
-            if (id == "")
-            {
-                return NotFound();
-            }
+            if (id == "") return NotFound();
 
             Room = await db.Rooms.FirstOrDefaultAsync(m => m.RoomId == id);
 
-            if (Room == null)
-            {
-                return NotFound();
-            }
+            if (Room == null) return NotFound();
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(string id)
         {
-            if (id == "")
-            {
-                return NotFound();
-            }
+            if (id == "") return NotFound();
 
             Room = await db.Rooms.FindAsync(id);
 
@@ -70,32 +56,22 @@ namespace ReservationProject.Pages
         }
         public async Task<IActionResult> OnGetDetailsAsync(string id)
         {
-            if (id =="")
-            {
-                return NotFound();
-            }
+            if (id =="") return NotFound();
 
             Room = await db.Rooms.FirstOrDefaultAsync(m => m.RoomId == id);
 
-            if (Room == null)
-            {
-                return NotFound();
-            }
+            if (Room == null) return NotFound();
+
             return Page();
         }
         public async Task<IActionResult> OnGetEditAsync(string id)
         {
-            if (id == "")
-            {
-                return NotFound();
-            }
-
+            if (id == "") return NotFound();
+            
             Room = await db.Rooms.FirstOrDefaultAsync(m => m.RoomId == id);
 
-            if (Room == null)
-            {
-                return NotFound();
-            }
+            if (Room == null) return NotFound();
+
             return Page();
         }
 
@@ -103,13 +79,11 @@ namespace ReservationProject.Pages
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostEditAsync(string id)
         {
-            if (id == "")
-                return NotFound();
+            if (id == "") return NotFound();
 
             var roomToUpdate = await db.Rooms.FindAsync(id);
 
-            if (roomToUpdate == null)
-                return NotFound();
+            if (roomToUpdate == null) return NotFound();
 
             if (await TryUpdateModelAsync(roomToUpdate, "room",
                 c => c.RoomName, c => c.BuildingAddress))
