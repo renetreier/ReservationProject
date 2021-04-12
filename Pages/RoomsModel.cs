@@ -11,8 +11,14 @@ namespace ReservationProject.Pages
     public class RoomsModel:BasePageModel
     {
         private readonly ApplicationDbContext db;
+        private readonly IRoomsRepo repo;
 
-        public RoomsModel(ApplicationDbContext context)=> db = context;
+        public RoomsModel(ApplicationDbContext c)
+            : this(new RoomsRepo(c)) => c = db;
+
+        protected internal RoomsModel(IRoomsRepo r) => repo = r;
+
+
         public IActionResult OnGetCreate()=> Page();
 
         [BindProperty]
@@ -22,7 +28,7 @@ namespace ReservationProject.Pages
         {
             if (!ModelState.IsValid) return Page();
 
-            Room.RoomId = Guid.NewGuid().ToString();
+            Room.Id = Guid.NewGuid().ToString();
 
             db.Rooms.Add(Room);
             await db.SaveChangesAsync();
@@ -31,13 +37,8 @@ namespace ReservationProject.Pages
         }
         public async Task<IActionResult> OnGetDeleteAsync(string id)
         {
-            if (id == "") return NotFound();
-
-            Room = await db.Rooms.FirstOrDefaultAsync(m => m.RoomId == id);
-
-            if (Room == null) return NotFound();
-
-            return Page();
+            Room = await repo.Get(id);
+            return Room is null ? NotFound() : Page();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(string id)
@@ -56,23 +57,13 @@ namespace ReservationProject.Pages
         }
         public async Task<IActionResult> OnGetDetailsAsync(string id)
         {
-            if (id =="") return NotFound();
-
-            Room = await db.Rooms.FirstOrDefaultAsync(m => m.RoomId == id);
-
-            if (Room == null) return NotFound();
-
-            return Page();
+            Room = await repo.Get(id);
+            return Room is null ? NotFound() : Page();
         }
         public async Task<IActionResult> OnGetEditAsync(string id)
         {
-            if (id == "") return NotFound();
-            
-            Room = await db.Rooms.FirstOrDefaultAsync(m => m.RoomId == id);
-
-            if (Room == null) return NotFound();
-
-            return Page();
+            Room = await repo.Get(id);
+            return Room is null ? NotFound() : Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -97,7 +88,7 @@ namespace ReservationProject.Pages
 
         public async Task OnGetAsync()
         {
-            RoomList = await db.Rooms.ToListAsync();
+            RoomList = await repo.Get();
         }
     }
 }

@@ -11,8 +11,9 @@ namespace ReservationProject.Pages
     public class WorkersModel : BasePageModel
     {
         private readonly ApplicationDbContext db;
-
-        public WorkersModel(ApplicationDbContext context) => db = context;
+        private readonly IWorkersRepo repo;
+        public WorkersModel(ApplicationDbContext c) : this(new WorkersRepo(c)) => c = db;
+        protected internal WorkersModel(IWorkersRepo r) => repo = r;
 
         public IActionResult OnGetCreate()=> Page();
         
@@ -22,7 +23,7 @@ namespace ReservationProject.Pages
         {
             if (!ModelState.IsValid) return Page();
 
-            Worker.WorkerId = Guid.NewGuid().ToString();
+            Worker.Id = Guid.NewGuid().ToString();
 
             db.Workers.Add(Worker);
             await db.SaveChangesAsync();
@@ -31,13 +32,8 @@ namespace ReservationProject.Pages
 
         public async Task<IActionResult> OnGetEditAsync(string id)
         {
-            if (id == "") return NotFound();
-
-            Worker = await db.Workers.FirstOrDefaultAsync(m => m.WorkerId == id);
-
-            if (Worker == null) return NotFound();
-
-            return Page();
+            Worker = await repo.Get(id);
+            return Worker is null ? NotFound() : Page();
         }
 
         public async Task<IActionResult> OnPostEditAsync(string id)
@@ -58,13 +54,8 @@ namespace ReservationProject.Pages
 
         public async Task<IActionResult> OnGetDeleteAsync(string id)
         {
-            if (id == "") return NotFound();
-
-            Worker = await db.Workers.FirstOrDefaultAsync(m => m.WorkerId == id);
-
-            if (Worker == null) return NotFound();
-
-            return Page();
+            Worker = await repo.Get(id);
+            return Worker is null ? NotFound() : Page();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(string id)
@@ -88,18 +79,16 @@ namespace ReservationProject.Pages
 
         public async Task<IActionResult> OnGetDetailsAsync(string id)
         {
-            if (id == "") return NotFound();
-
-            Worker = await db.Workers.FirstOrDefaultAsync(m => m.WorkerId == id);
-
-            if (Worker == null) return NotFound();
-
-            return Page();
+            Worker = await repo.Get(id);
+            return Worker is null ? NotFound() : Page();
         }
 
         public IList<Worker> WorkerList { get; set; }
 
-        public async Task OnGetAsync()=> WorkerList = await db.Workers.ToListAsync();
+        public async Task OnGetAsync()
+        {
+            WorkerList = await repo.Get();
+        }
     }
 
 }

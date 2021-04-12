@@ -13,8 +13,9 @@ namespace ReservationProject.Pages
     public class ReservationsModel:BasePageModel
     {
         private readonly ApplicationDbContext db;
-
-        public ReservationsModel(ApplicationDbContext context) => db = context;
+        private readonly IReservationsRepo repo;
+        public ReservationsModel(ApplicationDbContext c) : this(new ReservationsRepo(c)) => c = db;
+        protected internal ReservationsModel(IReservationsRepo r) => repo = r;
 
         public SelectList Workers { get; set; }
         public SelectList Rooms { get; set; }
@@ -32,7 +33,7 @@ namespace ReservationProject.Pages
         {
             if (!ModelState.IsValid) return Page();
 
-            Reservation.ReservationId = Guid.NewGuid().ToString();
+            Reservation.Id = Guid.NewGuid().ToString();
             //TODO kontroll kas olemas?
             db.Reservations.Add(Reservation);
             await db.SaveChangesAsync();
@@ -40,9 +41,11 @@ namespace ReservationProject.Pages
         }
         public async Task<IActionResult> OnGetDeleteAsync(string id)
         {
-            if (!await LoadReservation(id)) return NotFound();
+            //if (!await LoadReservation(id)) return NotFound();
 
-            return Page();
+            //return Page();
+            Reservation = await repo.Get(id);
+            return Reservation is null ? NotFound() : Page();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(string id)
@@ -61,22 +64,26 @@ namespace ReservationProject.Pages
         }
         public async Task<IActionResult> OnGetDetailsAsync(string id)
         {
-            if (!await LoadReservation(id)) return NotFound();
+            //if (!await LoadReservation(id)) return NotFound();
 
-            return Page();
+            //return Page();
+            Reservation = await repo.Get(id);
+            return Reservation is null ? NotFound() : Page();
         }
         public async Task<IActionResult> OnGetEditAsync(string id)
         {
 
-            if (id == "") return NotFound();
+            //if (id == "") return NotFound();
 
-            LoadRooms(db);
-            LoadWorkers(db);
-            Reservation = await db.Reservations.FirstOrDefaultAsync(m => m.ReservationId == id);
+            //LoadRooms(db);
+            //LoadWorkers(db);
+            //Reservation = await db.Reservations.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Reservation == null) return NotFound();
+            //if (Reservation == null) return NotFound();
 
-            return Page();
+            //return Page();
+            Reservation = await repo.Get(id);
+            return Reservation is null ? NotFound() : Page();
         }
 
         public async Task<IActionResult> OnPostEditAsync(string id)
@@ -119,7 +126,7 @@ namespace ReservationProject.Pages
                 .AsNoTracking()
                 .Include(c => c.ReservedRoom)
                 .Include(c=>c.ReservedWorker)
-                .FirstOrDefaultAsync(m => m.ReservationId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             return Reservation != null;
         }
         public async Task LoadReservations()
@@ -131,8 +138,9 @@ namespace ReservationProject.Pages
         }
         public async Task OnGetAsync()
         {
-            await LoadReservations();
-            ReservationsList = await db.Reservations.ToListAsync();
+            //await LoadReservations();
+            //ReservationsList = await db.Reservations.ToListAsync();
+            ReservationsList = await repo.Get();
         }
 
     }

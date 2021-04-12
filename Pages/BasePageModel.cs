@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ReservationProject.Pages
 { public class BasePageModel : PageModel
@@ -14,6 +15,7 @@ namespace ReservationProject.Pages
         public virtual bool HasPreviousPage { get; }
         public virtual bool HasNextPage { get; }
         public virtual int PageIndex { get; }
-        
+        //[BindProperty] public IEntityData Item { get; set; }
+
     }
 }

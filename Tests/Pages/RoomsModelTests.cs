@@ -1,26 +1,30 @@
+
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ReservationProject.Data;
 using ReservationProject.Infra;
 using ReservationProject.Pages;
 
-
-
-namespace ReservationProject.Tests
+namespace ReservationProject.Tests.Pages
 {
-    [TestClass]
-    public class RoomTests:BaasTest
-    {
+    
 
+    [TestClass]
+    public class RoomsModelTests:PageModelTests<Room>
+    {
+        private class TestRoomsRepo : TestRepo<Room>, IRoomsRepo { }
+       
+        
         [TestInitialize]
         public void TestInitialize()
         {
-            var context = db;
-            pageModel = new RoomsModel(context);
+            mockRepo = new TestRoomsRepo();
+            pageModel = new RoomsModel((IRoomsRepo)mockRepo);
         }
-
-       
         
-
         //public async Task<IActionResult> OnGetDeleteAsync(string id = "")
         //{
         //    if (id == null)

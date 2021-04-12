@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ReservationProject.Core;
 
 namespace ReservationProject.Data
 { 
-    public class Worker
+    public class Worker:IEntity
     {
-        public string WorkerId { get; set; }
+        public string Id { get; set; }
         [Required]
         [StringLength(50)]
         [Display(Name = "Last Name")]

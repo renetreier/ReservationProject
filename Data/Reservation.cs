@@ -1,14 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Dynamic;
+
+using ReservationProject.Core;
 
 namespace ReservationProject.Data
 {
-    public class Reservation
+    public class Reservation:IEntity
     {
         [Display(Name = "Reservation number")]
-        public string ReservationId { get; set; }
+        public string Id { get; set; }
         [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -17,7 +17,6 @@ namespace ReservationProject.Data
         [Required]
         [Display(Name = "Room")]
         public string RoomId { get; set; }
-
         public Room ReservedRoom { get; set; }
         [Required]
         [Display(Name = "Worker")]
