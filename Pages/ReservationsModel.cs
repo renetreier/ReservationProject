@@ -129,6 +129,11 @@ namespace ReservationProject.Pages
                 .Include(c => c.ReservedWorker)
                 .ToListAsync();
         }
+        public async Task OnGetAsync()
+        {
+            await LoadReservations();
+            ReservationsList = await db.Reservations.ToListAsync();
+        }
 
     }
 }
