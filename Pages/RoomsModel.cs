@@ -46,20 +46,6 @@ namespace ReservationProject.Pages
             return RedirectToPage("./Index");
         }
 
-        public async Task<IActionResult> OnGetDetailsAsync(string id)
-        {
-            Room = await repo.Get(id);
-            return Room is null ? NotFound() : Page();
-        }
-
-        public async Task<IActionResult> OnGetEditAsync(string id)
-        {
-            Room = await repo.Get(id);
-            return Room is null ? NotFound() : Page();
-        }
-
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostEditAsync(string id)
         {
             if (id == "") return NotFound();

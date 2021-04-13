@@ -28,7 +28,7 @@ namespace ReservationProject.Pages
         internal async Task<TView> Load(string id)
         {
             var item = await repo.Get(id);
-            await LoadRelatedItems(item);
+            if (item != null) await LoadRelatedItems(item);
             return ToViewModel(item);
         }
         public IActionResult OnGetCreate()
@@ -43,7 +43,18 @@ namespace ReservationProject.Pages
             return Item is null ? NotFound() : Page();
         }
 
+        public async Task<IActionResult> OnGetDetailsAsync(string id)
+        {
+            Item = await Load(id);
+            return Item is null ? NotFound() : Page();
+        }
 
+        public async Task<IActionResult> OnGetEditAsync(string id)
+        {
+            DoBeforeCreate();
+            Item = await Load(id);
+            return Item is null ? NotFound() : Page();
+        }
 
         protected internal virtual void DoBeforeCreate() { }
 
