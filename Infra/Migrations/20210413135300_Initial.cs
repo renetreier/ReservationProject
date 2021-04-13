@@ -192,7 +192,6 @@ namespace ReservationProject.Infra.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reservation", x => x.Id);
-                    table.UniqueConstraint("AK_Reservation_ReservationDate_RoomId", x => new { x.ReservationDate, x.RoomId });
                     table.ForeignKey(
                         name: "FK_Reservation_Room_RoomId",
                         column: x => x.RoomId,

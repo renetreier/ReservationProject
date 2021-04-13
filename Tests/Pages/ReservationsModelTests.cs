@@ -10,7 +10,7 @@ using ReservationProject.Pages;
 namespace ReservationProject.Tests.Pages
 {
     [TestClass]
-    public class ReservationsModelTests : PageModelTests<Reservation>
+    public class ReservationsModelTests : PageModelTests<Reservation, Reservation>
     {
         private class TestReservationRepo : TestRepo<Reservation>, IReservationsRepo { }
 

@@ -12,7 +12,7 @@ using ReservationProject.Pages;
 namespace ReservationProject.Tests.Pages
 {
     [TestClass]
-    public class WorkersModelTests : PageModelTests<Worker>
+    public class WorkersModelTests : PageModelTests<Worker, Worker>
     {
         private class TestWorkerRepo : TestRepo<Worker>, IWorkersRepo { }
 
