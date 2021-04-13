@@ -8,20 +8,15 @@ using ReservationProject.Infra;
 //TODO Vaja puhastada ja refaktoorida
 namespace ReservationProject.Pages
 {
-    public class RoomsModel:BasePageModel
+    public class RoomsModel : BasePageModel<Room, Room>
     {
-        private readonly ApplicationDbContext db;
-        private readonly IRoomsRepo repo;
+        public RoomsModel(ApplicationDbContext c) : this(new RoomsRepo(c), c) { }
 
-        public RoomsModel(ApplicationDbContext c)
-            : this(new RoomsRepo(c)) => c = db;
-
-        protected internal RoomsModel(IRoomsRepo r) => repo = r;
+        protected internal RoomsModel(IRoomsRepo r, ApplicationDbContext c = null) : base(r, c) { }
 
 
-        public IActionResult OnGetCreate()=> Page();
 
-        [BindProperty]
+        //[BindProperty] 
         public Room Room { get; set; }
 
         public async Task<IActionResult> OnPostCreateAsync()
@@ -34,11 +29,6 @@ namespace ReservationProject.Pages
             await db.SaveChangesAsync();
 
             return RedirectToPage("./Index");
-        }
-        public async Task<IActionResult> OnGetDeleteAsync(string id)
-        {
-            Room = await repo.Get(id);
-            return Room is null ? NotFound() : Page();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(string id)
@@ -55,11 +45,13 @@ namespace ReservationProject.Pages
 
             return RedirectToPage("./Index");
         }
+
         public async Task<IActionResult> OnGetDetailsAsync(string id)
         {
             Room = await repo.Get(id);
             return Room is null ? NotFound() : Page();
         }
+
         public async Task<IActionResult> OnGetEditAsync(string id)
         {
             Room = await repo.Get(id);
@@ -81,6 +73,7 @@ namespace ReservationProject.Pages
             {
                 await db.SaveChangesAsync();
             }
+
             return RedirectToPage("./Index");
         }
 
@@ -90,5 +83,7 @@ namespace ReservationProject.Pages
         {
             RoomList = await repo.Get();
         }
+
+        protected internal override Room ToViewModel(Room e) => e;
     }
 }

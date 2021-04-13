@@ -10,20 +10,18 @@ using ReservationProject.Infra;
 
 namespace ReservationProject.Pages
 {
-    public class ReservationsModel:BasePageModel
+    public class ReservationsModel:BasePageModel<Reservation, Reservation>
     {
-        private readonly ApplicationDbContext db;
-        private readonly IReservationsRepo repo;
-        public ReservationsModel(ApplicationDbContext c) : this(new ReservationsRepo(c)) => c = db;
-        protected internal ReservationsModel(IReservationsRepo r) => repo = r;
+        public ReservationsModel(ApplicationDbContext c) : this(new ReservationsRepo(c), c) { }
+        protected internal ReservationsModel(IReservationsRepo r, ApplicationDbContext c = null): base(r, c) { }
 
         public SelectList Workers { get; set; }
         public SelectList Rooms { get; set; }
-        public IActionResult OnGetCreate()
+
+        protected internal override void DoBeforeCreate()
         {
-            LoadRooms(db);
-            LoadWorkers(db);
-            return Page();
+            LoadRooms();
+            LoadWorkers();
         }
 
         [BindProperty]
@@ -38,14 +36,6 @@ namespace ReservationProject.Pages
             db.Reservations.Add(Reservation);
             await db.SaveChangesAsync();
             return RedirectToPage("./Index");
-        }
-        public async Task<IActionResult> OnGetDeleteAsync(string id)
-        {
-            //if (!await LoadReservation(id)) return NotFound();
-
-            //return Page();
-            Reservation = await repo.Get(id);
-            return Reservation is null ? NotFound() : Page();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(string id)
@@ -109,14 +99,14 @@ namespace ReservationProject.Pages
         {
             var q = from d in db.Workers orderby d.LastName select d;
             Workers = new SelectList(q.AsNoTracking(),
-                "WorkerId", "FullName", selectedWorker);
+                "Id", "FullName", selectedWorker);
         }
 
         public void LoadRooms(object selectedRoom = null)
         {
             var q = from d in db.Rooms orderby d.RoomName select d;
             Rooms = new SelectList(q.AsNoTracking(),
-                "RoomId", "RoomName", selectedRoom);
+                "Id", "RoomName", selectedRoom);
         }
 
         public async Task<bool> LoadReservation(string id)
@@ -143,5 +133,6 @@ namespace ReservationProject.Pages
             ReservationsList = await repo.Get();
         }
 
+        protected internal override Reservation ToViewModel(Reservation e) => e;
     }
 }
