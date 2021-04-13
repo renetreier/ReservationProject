@@ -11,12 +11,12 @@ namespace ReservationProject.Pages
     public class RoomsModel : BasePageModel<Room, Room>
     {
         public RoomsModel(ApplicationDbContext c) : this(new RoomsRepo(c), c) { }
+
         protected internal RoomsModel(IRoomsRepo r, ApplicationDbContext c = null) : base(r, c) { }
 
 
-        //public IActionResult OnGetCreate()=> Page();
 
-        [BindProperty]
+        //[BindProperty] 
         public Room Room { get; set; }
 
         public async Task<IActionResult> OnPostCreateAsync()
@@ -29,11 +29,6 @@ namespace ReservationProject.Pages
             await db.SaveChangesAsync();
 
             return RedirectToPage("./Index");
-        }
-        public async Task<IActionResult> OnGetDeleteAsync(string id)
-        {
-            Room = await repo.Get(id);
-            return Room is null ? NotFound() : Page();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(string id)
@@ -50,11 +45,13 @@ namespace ReservationProject.Pages
 
             return RedirectToPage("./Index");
         }
+
         public async Task<IActionResult> OnGetDetailsAsync(string id)
         {
             Room = await repo.Get(id);
             return Room is null ? NotFound() : Page();
         }
+
         public async Task<IActionResult> OnGetEditAsync(string id)
         {
             Room = await repo.Get(id);
@@ -76,6 +73,7 @@ namespace ReservationProject.Pages
             {
                 await db.SaveChangesAsync();
             }
+
             return RedirectToPage("./Index");
         }
 
@@ -85,5 +83,7 @@ namespace ReservationProject.Pages
         {
             RoomList = await repo.Get();
         }
+
+        protected internal override Room ToViewModel(Room e) => e;
     }
 }

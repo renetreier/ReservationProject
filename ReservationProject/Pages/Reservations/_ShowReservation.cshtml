@@ -1,6 +1,6 @@
 ﻿@using ReservationProject.Pages.Extensions;
 @model ReservationProject.Pages.ReservationsModel
 
-@Html.Show(model => model.Reservation.ReservationDate)
-@Html.Show(model => model.Reservation.ReservedRoom.RoomName)
-@Html.Show(model => model.Reservation.ReservedWorker.FullName)
+@Html.Show(model => model.Item.ReservationDate)
+@Html.Show(model => model.Item.ReservedRoom.RoomName)
+@Html.Show(model => model.Item.ReservedWorker.FullName)

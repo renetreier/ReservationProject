@@ -50,12 +50,6 @@ namespace ReservationProject.Pages
             return RedirectToPage("./Index");
         }
 
-        public async Task<IActionResult> OnGetDeleteAsync(string id)
-        {
-            Worker = await repo.Get(id);
-            return Worker is null ? NotFound() : Page();
-        }
-
         public async Task<IActionResult> OnPostDeleteAsync(string id)
         {
 
@@ -87,6 +81,8 @@ namespace ReservationProject.Pages
         {
             WorkerList = await repo.Get();
         }
-    }
 
+        protected internal override Worker ToViewModel(Worker e) => e;
+
+    }
 }

@@ -24,8 +24,6 @@ namespace ReservationProject.Pages
             LoadWorkers();
         }
 
-
-
         [BindProperty]
         public Reservation Reservation { get; set; }
 
@@ -38,14 +36,6 @@ namespace ReservationProject.Pages
             db.Reservations.Add(Reservation);
             await db.SaveChangesAsync();
             return RedirectToPage("./Index");
-        }
-        public async Task<IActionResult> OnGetDeleteAsync(string id)
-        {
-            //if (!await LoadReservation(id)) return NotFound();
-
-            //return Page();
-            Reservation = await repo.Get(id);
-            return Reservation is null ? NotFound() : Page();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(string id)
@@ -143,5 +133,6 @@ namespace ReservationProject.Pages
             ReservationsList = await repo.Get();
         }
 
+        protected internal override Reservation ToViewModel(Reservation e) => e;
     }
 }
