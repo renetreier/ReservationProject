@@ -52,29 +52,22 @@ namespace ReservationProject.Pages
 
             return RedirectToPage("./Index");
         }
-        public async Task<IActionResult> OnGetDetailsAsync(string id)
-        {
-            //if (!await LoadReservation(id)) return NotFound();
 
-            //return Page();
-            Reservation = await repo.Get(id);
-            return Reservation is null ? NotFound() : Page();
-        }
-        public async Task<IActionResult> OnGetEditAsync(string id)
-        {
+        //public async Task<IActionResult> OnGetEditAsync(string id)
+        //{
 
-            //if (id == "") return NotFound();
+        //    //if (id == "") return NotFound();
 
-            //LoadRooms(db);
-            //LoadWorkers(db);
-            //Reservation = await db.Reservations.FirstOrDefaultAsync(m => m.Id == id);
+        //    //LoadRooms(db);
+        //    //LoadWorkers(db);
+        //    //Reservation = await db.Reservations.FirstOrDefaultAsync(m => m.Id == id);
 
-            //if (Reservation == null) return NotFound();
+        //    //if (Reservation == null) return NotFound();
 
-            //return Page();
-            Reservation = await repo.Get(id);
-            return Reservation is null ? NotFound() : Page();
-        }
+        //    //return Page();
+        //    Reservation = await repo.Get(id);
+        //    return Reservation is null ? NotFound() : Page();
+        //}
 
         public async Task<IActionResult> OnPostEditAsync(string id)
         {
@@ -109,27 +102,16 @@ namespace ReservationProject.Pages
                 "Id", "RoomName", selectedRoom);
         }
 
-        public async Task<bool> LoadReservation(string id)
+        protected internal override async Task LoadRelatedItems(Reservation item)
         {
-            if (id == "") return false;
-            Reservation = await db.Reservations
-                .AsNoTracking()
-                .Include(c => c.ReservedRoom)
-                .Include(c=>c.ReservedWorker)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            return Reservation != null;
+            item.ReservedRoom = await db.Rooms.AsNoTracking()
+                .FirstOrDefaultAsync(r => r.Id == item.RoomId);
+            item.ReservedWorker = await db.Workers.AsNoTracking()
+                .FirstOrDefaultAsync(w => w.Id == item.WorkerId);
         }
-        public async Task LoadReservations()
-        {
-            ReservationsList = await db.Reservations
-                .Include(c => c.ReservedRoom)
-                .Include(c => c.ReservedWorker)
-                .ToListAsync();
-        }
+     
         public async Task OnGetAsync()
         {
-            //await LoadReservations();
-            //ReservationsList = await db.Reservations.ToListAsync();
             ReservationsList = await repo.Get();
         }
 

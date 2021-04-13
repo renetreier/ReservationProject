@@ -28,11 +28,6 @@ namespace ReservationProject.Pages
             return RedirectToPage("./Index");
         }
 
-        public async Task<IActionResult> OnGetEditAsync(string id)
-        {
-            Worker = await repo.Get(id);
-            return Worker is null ? NotFound() : Page();
-        }
 
         public async Task<IActionResult> OnPostEditAsync(string id)
         {
@@ -67,12 +62,6 @@ namespace ReservationProject.Pages
             }
 
             return RedirectToPage("./Index");
-        }
-
-        public async Task<IActionResult> OnGetDetailsAsync(string id)
-        {
-            Worker = await repo.Get(id);
-            return Worker is null ? NotFound() : Page();
         }
 
         public IList<Worker> WorkerList { get; set; }
