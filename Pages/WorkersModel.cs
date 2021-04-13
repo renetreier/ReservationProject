@@ -12,9 +12,11 @@ namespace ReservationProject.Pages
     {
         public WorkersModel(ApplicationDbContext c) : this(new WorkersRepo(c), c) { }
         protected internal WorkersModel(IWorkersRepo r, ApplicationDbContext c = null) : base(r, c) { }
+        protected internal override Worker ToViewModel(Worker w) => w;
+        protected internal override Worker ToEntity(Worker w) => w;
 
         //public IActionResult OnGetCreate()=> Page();
-
+        
         [BindProperty] public Worker Worker { get; set; }
 
         public async Task<IActionResult> OnPostCreateAsync()
@@ -70,8 +72,6 @@ namespace ReservationProject.Pages
         {
             WorkerList = await repo.Get();
         }
-
-        protected internal override Worker ToViewModel(Worker e) => e;
 
     }
 }

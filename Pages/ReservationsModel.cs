@@ -15,25 +15,19 @@ namespace ReservationProject.Pages
         public ReservationsModel(ApplicationDbContext c) : this(new ReservationsRepo(c), c) { }
         protected internal ReservationsModel(IReservationsRepo r, ApplicationDbContext c = null): base(r, c) { }
 
-        public SelectList Workers { get; set; }
-        public SelectList Rooms { get; set; }
+        protected internal override Reservation ToViewModel(Reservation r) => r;
+        protected internal override Reservation ToEntity(Reservation r) => r;
 
-        protected internal override void DoBeforeCreate()
-        {
-            LoadRooms();
-            LoadWorkers();
-        }
+      
 
-        [BindProperty]
-        public Reservation Reservation { get; set; }
 
         public async Task<IActionResult> OnPostCreateAsync()
         {
             if (!ModelState.IsValid) return Page();
 
-            Reservation.Id = Guid.NewGuid().ToString();
+            Item.Id = Guid.NewGuid().ToString();
             //TODO kontroll kas olemas?
-            db.Reservations.Add(Reservation);
+            db.Reservations.Add(Item);
             await db.SaveChangesAsync();
             return RedirectToPage("./Index");
         }
@@ -42,11 +36,11 @@ namespace ReservationProject.Pages
         {
             if (id == "") return NotFound();
 
-            Reservation = await db.Reservations.FindAsync(id);
+            Item = await db.Reservations.FindAsync(id);
 
-            if (Reservation != null)
+            if (Item != null)
             {
-                db.Reservations.Remove(Reservation);
+                db.Reservations.Remove(Item);
                 await db.SaveChangesAsync();
             }
 
@@ -88,22 +82,24 @@ namespace ReservationProject.Pages
         public IList<Reservation> ReservationsList { get; set; }
 
 
-        public void LoadWorkers(object selectedWorker = null)
-        {
-            var q = from d in db.Workers orderby d.LastName select d;
-            Workers = new SelectList(q.AsNoTracking(),
-                "Id", "FullName", selectedWorker);
-        }
-
-        public void LoadRooms(object selectedRoom = null)
-        {
-            var q = from d in db.Rooms orderby d.RoomName select d;
-            Rooms = new SelectList(q.AsNoTracking(),
-                "Id", "RoomName", selectedRoom);
-        }
+       
+        public SelectList Rooms =>
+            new(
+                db.Rooms.OrderBy(x => x.RoomName).AsNoTracking(),
+                nameof(Item.ReservedRoom.Id),
+                nameof(Item.ReservedRoom.RoomName),
+                Item?.RoomId);
+        public SelectList Workers =>
+            new(
+                db.Workers.OrderBy(x => x.LastName).AsNoTracking(),
+                nameof(Item.ReservedWorker.Id),
+                nameof(Item.ReservedWorker.FullName),
+                Item?.WorkerId);
 
         protected internal override async Task LoadRelatedItems(Reservation item)
         {
+            if (isNull(item)) return;
+            if (isNull(db)) return;
             item.ReservedRoom = await db.Rooms.AsNoTracking()
                 .FirstOrDefaultAsync(r => r.Id == item.RoomId);
             item.ReservedWorker = await db.Workers.AsNoTracking()
@@ -115,6 +111,5 @@ namespace ReservationProject.Pages
             ReservationsList = await repo.Get();
         }
 
-        protected internal override Reservation ToViewModel(Reservation e) => e;
     }
 }

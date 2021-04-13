@@ -23,12 +23,13 @@ namespace ReservationProject.Pages
         [BindProperty] public TView Item { get; protected set; }
         protected internal virtual async Task LoadRelatedItems(TEntity item) { await Task.CompletedTask; }
         protected internal abstract TView ToViewModel(TEntity e);
-
+        protected internal abstract TEntity ToEntity(TView e);
+        protected internal bool isNull(object o) => o is null;
 
         internal async Task<TView> Load(string id)
         {
             var item = await repo.Get(id);
-            if (item != null) await LoadRelatedItems(item);
+            if (!isNull(id)) await LoadRelatedItems(item);
             return ToViewModel(item);
         }
         public IActionResult OnGetCreate()
@@ -39,32 +40,24 @@ namespace ReservationProject.Pages
 
         public async Task<IActionResult> OnGetDeleteAsync(string id)
         {
-            Item = await Load(id);
-            return Item is null ? NotFound() : Page();
+            return isNull(Item=await Load(id)) ? NotFound() : Page();
         }
 
         public async Task<IActionResult> OnGetDetailsAsync(string id)
         {
-            Item = await Load(id);
-            return Item is null ? NotFound() : Page();
+            return isNull(Item=await Load(id)) ? NotFound() : Page();
         }
 
         public async Task<IActionResult> OnGetEditAsync(string id)
         {
-            DoBeforeCreate();
+            
             Item = await Load(id);
+            if (Item != null)  DoBeforeCreate();
             return Item is null ? NotFound() : Page();
         }
 
         protected internal virtual void DoBeforeCreate() { }
 
-        public string NameSort { get; protected set; }
-        public string DateSort { get; protected set; }
-        public string CurrentFilter { get; protected set; }
-        public string CurrentSort { get; protected set; }
-        public virtual bool HasPreviousPage { get; }
-        public virtual bool HasNextPage { get; }
-        public virtual int PageIndex { get; }
     }
 
 }

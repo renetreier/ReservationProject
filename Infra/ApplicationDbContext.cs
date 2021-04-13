@@ -14,7 +14,6 @@ namespace ReservationProject.Infra
         public DbSet<Room> Rooms { get; set; }
         
         
-        //TODO VAJA DBINITIALIZER KA TEHA, "Rene" - Ei saa vist enne teha kui see foreign key jama korda tehtud
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -22,9 +21,8 @@ namespace ReservationProject.Infra
             modelBuilder.Entity<Room>().ToTable("Room");
             modelBuilder.Entity<Worker>().ToTable("Worker");
             modelBuilder.Entity<Reservation>().ToTable("Reservation");
-            modelBuilder.Entity<Reservation>().HasAlternateKey(r => new {r.ReservationDate, r.RoomId});
 
-            //TODO SIIN ON VAJA TEHA, ET TA SAAKS ARU, ET RESERVATIONIL ON FOREIGN KEY-D
+           
 
         }
     }

@@ -1,16 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ReservationProject.Core;
 using ReservationProject.Infra;
 using ReservationProject.Pages;
 
 //TODO Vaja lisada Igale poole Assemblyinfo, et testid ligi saaks
 namespace ReservationProject.Tests.Pages
 {
-    public class PageModelTests<T> where T:new()
+    public class PageModelTests<TEntity, TView> 
+        where TEntity : class, IEntity, new()
+        where TView : class, new()
     { 
         protected dynamic pageModel;
-        protected TestRepo<T> mockRepo;
+        protected TestRepo<TEntity> mockRepo;
 
 
         protected object OnGetDeleteAsync(string id, object result=null)
@@ -18,6 +21,20 @@ namespace ReservationProject.Tests.Pages
             mockRepo.Result = result;
             return pageModel.OnGetDeleteAsync(id).GetAwaiter().GetResult();
         }
+        protected object OnGetDetailsAsync(string id, object result = null)
+        {
+            mockRepo.Result = result;
+            return pageModel.OnGetDetailsAsync(id).GetAwaiter().GetResult();
+        }
+        protected object OnGetEditAsync(string id, object result = null)
+        {
+            mockRepo.Result = result;
+            return pageModel.OnGetEditAsync(id).GetAwaiter().GetResult();
+        }
+        //protected object OnGetCreate()
+        //{
+        //    return pageModel.OnGetCreate();
+        //}
         [TestMethod]
         public void OnGetDeleteAsyncTestItemNotFound()
         {
@@ -33,67 +50,73 @@ namespace ReservationProject.Tests.Pages
         [TestMethod]
         public void OnGetDeleteAsyncTestIsCallingGet()
         {
-            var result = pageModel.OnGetDeleteAsync("12345").GetAwaiter().GetResult();
+            pageModel.OnGetDeleteAsync("12345").GetAwaiter().GetResult();
             Assert.AreEqual("Get 12345", mockRepo.Actions[0]);
         }
         [TestMethod]
         public void OnGetDeleteAsyncTestPageResult()
         {
-            mockRepo.Result = new T();
+            mockRepo.Result = new TEntity();
             var result = pageModel.OnGetDeleteAsync("12345").GetAwaiter().GetResult();
             Assert.IsInstanceOfType(result, typeof(PageResult));
         }
-        //    protected object OnPostDeleteAsync(string id = "")
-        //    {
-        //        return pageModel.OnPostDeleteAsync(id).GetAwaiter().GetResult();
-        //    }
-        protected object OnGetDetailsAsync(string id, object result = null)
-        {
-            mockRepo.Result = result;
-            return pageModel.OnGetDetailsAsync(id).GetAwaiter().GetResult();
-        }
-        protected object OnGetEditAsync(string id, object result = null)
-        {
-            mockRepo.Result = result;
-            return pageModel.OnGetEditAsync(id).GetAwaiter().GetResult();
-        }
-        //    protected object OnPostEditAsync(string id = "")
-        //    {
-        //        return pageModel.OnPostEditAsync(id).GetAwaiter().GetResult();
-        //    }
-        //    protected object OnGetCreate()
-        //    {
-        //        return pageModel.OnGetCreate();
-        //    }
-        //    [TestMethod]
-        //    public void OnPostDeleteAsyncTestItemNotFound()
-        //    {
-        //        var result = OnPostDeleteAsync("");
-        //        Assert.IsInstanceOfType(result, typeof(NotFoundResult));
-        //    }
-        [TestMethod]
-        public void OnGetEditAsyncTestItemNotFound()
-        {
-            var result = OnGetEditAsync("");
-            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
-        }
-        //    [TestMethod]
-        //    public void OnPostEditAsyncTestItemNotFound()
-        //    {
-        //        var result = OnPostEditAsync("");
-        //        Assert.IsInstanceOfType(result, typeof(NotFoundResult));
-        //    }
+        
         [TestMethod]
         public void OnGetDetailsAsyncTestItemNotFound()
         {
             var result = OnGetDetailsAsync("");
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
-        //    [TestMethod]
-        //    public void OnGetCreatePageResult()
-        //    {
-        //        var result = OnGetCreate();
-        //        Assert.IsInstanceOfType(result, typeof(PageResult));
-        //    }
+        [TestMethod]
+        public void OnGetDetailsAsyncTestIdIsNull()
+        {
+            var result = pageModel.OnGetDetailsAsync(null).GetAwaiter().GetResult();
+            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
+        }
+        [TestMethod]
+        public void OnGetDetailsAsyncTestIsCallingGet()
+        {
+            pageModel.OnGetDetailsAsync("12345").GetAwaiter().GetResult();
+            Assert.AreEqual("Get 12345", mockRepo.Actions[0]);
+        }
+        [TestMethod]
+        public void OnGetDetailsAsyncTestPageResult()
+        {
+            mockRepo.Result = new TEntity();
+            var result = pageModel.OnGetDetailsAsync("12345").GetAwaiter().GetResult();
+            Assert.IsInstanceOfType(result, typeof(PageResult));
+        }
+        [TestMethod]
+        public void OnGetEditAsyncTestItemNotFound()
+        {
+            var result = OnGetEditAsync("");
+            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
+        }
+        [TestMethod]
+        public void OnGetEditAsyncTestIdIsNull()
+        {
+            var result = pageModel.OnGetEditAsync(null).GetAwaiter().GetResult();
+            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
+        }
+        [TestMethod]
+        public void OnGetEditAsyncTestIsCallingGet()
+        {
+            pageModel.OnGetEditAsync("12345").GetAwaiter().GetResult();
+            Assert.AreEqual("Get 12345", mockRepo.Actions[0]);
+        }
+        [TestMethod]
+        public void OnGetEditAsyncTestPageResult()
+        {
+            mockRepo.Result = new TEntity();
+            var result = pageModel.OnGetEditAsync("12345").GetAwaiter().GetResult();
+            Assert.IsInstanceOfType(result, typeof(PageResult));
+        }
+
+        [TestMethod]
+        public void OnGetCreatePageResult()
+        {
+            var result = pageModel.OnGetCreate();
+            Assert.IsInstanceOfType(result, typeof(PageResult));
+        }
     }
 }

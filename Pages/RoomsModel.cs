@@ -13,7 +13,8 @@ namespace ReservationProject.Pages
         public RoomsModel(ApplicationDbContext c) : this(new RoomsRepo(c), c) { }
 
         protected internal RoomsModel(IRoomsRepo r, ApplicationDbContext c = null) : base(r, c) { }
-
+        protected internal override Room ToViewModel(Room r) => r;
+        protected internal override Room ToEntity(Room r) => r;
 
 
         //[BindProperty] 
@@ -70,6 +71,5 @@ namespace ReservationProject.Pages
             RoomList = await repo.Get();
         }
 
-        protected internal override Room ToViewModel(Room e) => e;
     }
 }
