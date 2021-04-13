@@ -8,15 +8,13 @@ using ReservationProject.Infra;
 
 namespace ReservationProject.Pages
 {
-    public class WorkersModel : BasePageModel
+    public class WorkersModel : BasePageModel<Worker, Worker>
     {
-        private readonly ApplicationDbContext db;
-        private readonly IWorkersRepo repo;
-        public WorkersModel(ApplicationDbContext c) : this(new WorkersRepo(c)) => c = db;
-        protected internal WorkersModel(IWorkersRepo r) => repo = r;
+        public WorkersModel(ApplicationDbContext c) : this(new WorkersRepo(c), c) { }
+        protected internal WorkersModel(IWorkersRepo r, ApplicationDbContext c = null) : base(r, c) { }
 
-        public IActionResult OnGetCreate()=> Page();
-        
+        //public IActionResult OnGetCreate()=> Page();
+
         [BindProperty] public Worker Worker { get; set; }
 
         public async Task<IActionResult> OnPostCreateAsync()

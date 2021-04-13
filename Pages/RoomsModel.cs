@@ -8,18 +8,13 @@ using ReservationProject.Infra;
 //TODO Vaja puhastada ja refaktoorida
 namespace ReservationProject.Pages
 {
-    public class RoomsModel:BasePageModel
+    public class RoomsModel : BasePageModel<Room, Room>
     {
-        private readonly ApplicationDbContext db;
-        private readonly IRoomsRepo repo;
-
-        public RoomsModel(ApplicationDbContext c)
-            : this(new RoomsRepo(c)) => c = db;
-
-        protected internal RoomsModel(IRoomsRepo r) => repo = r;
+        public RoomsModel(ApplicationDbContext c) : this(new RoomsRepo(c), c) { }
+        protected internal RoomsModel(IRoomsRepo r, ApplicationDbContext c = null) : base(r, c) { }
 
 
-        public IActionResult OnGetCreate()=> Page();
+        //public IActionResult OnGetCreate()=> Page();
 
         [BindProperty]
         public Room Room { get; set; }
