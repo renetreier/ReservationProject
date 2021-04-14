@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -27,6 +28,7 @@ namespace ReservationProject.Pages
         protected internal virtual async Task LoadRelatedItems(TEntity item) { await Task.CompletedTask; }
         protected internal abstract TView ToViewModel(TEntity e);
         protected internal abstract TEntity ToEntity(TView e);
+
         protected internal bool IsNull(object o) => o is null;
 
         internal async Task<TView> Load(string id)
@@ -35,6 +37,7 @@ namespace ReservationProject.Pages
             if (!IsNull(id)) await LoadRelatedItems(item);
             return ToViewModel(item);
         }
+
         public IActionResult OnGetCreate()
         {
             DoBeforeCreate();
@@ -53,14 +56,20 @@ namespace ReservationProject.Pages
 
         public async Task<IActionResult> OnGetEditAsync(string id)
         {
-            
             if (Item != null)  DoBeforeCreate();
             return IsNull(Item = await Load(id)) ? NotFound() : Page();
         }
 
         protected internal virtual void DoBeforeCreate() { }
         public async Task OnGetAsync()=> ItemList = await repo.Get();
-    }
 
+        public async Task<IActionResult> OnPostCreateAsync()
+        {
+            if (!ModelState.IsValid) return Page();
+            await repo.Add(ToEntity(Item));
+            await db.SaveChangesAsync();
+            return RedirectToPage("./Index");
+        }
+    }
 }
 

@@ -21,18 +21,6 @@ namespace ReservationProject.Pages
 
 
 
-        public async Task<IActionResult> OnPostCreateAsync()
-        {
-            if (!ModelState.IsValid) return Page();
-
-            Item.Id = Guid.NewGuid().ToString();
-
-            db.Rooms.Add(ToEntity(Item));
-            await db.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
-        }
-
         public async Task<IActionResult> OnPostDeleteAsync(string id)
         {
             if (id == "") return NotFound();

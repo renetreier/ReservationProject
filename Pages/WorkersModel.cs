@@ -19,18 +19,6 @@ namespace ReservationProject.Pages
             => IsNull(w) ? null : Copy.Members(w, new Worker());
 
 
-        public async Task<IActionResult> OnPostCreateAsync()
-        {
-            if (!ModelState.IsValid) return Page();
-
-            Item.Id = Guid.NewGuid().ToString();
-
-            db.Workers.Add(ToEntity(Item));
-            await db.SaveChangesAsync();
-            return RedirectToPage("./Index");
-        }
-
-
         public async Task<IActionResult> OnPostEditAsync(string id)
         {
             if (id == "") return NotFound();
