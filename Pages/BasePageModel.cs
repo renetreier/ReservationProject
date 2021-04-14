@@ -22,7 +22,7 @@ namespace ReservationProject.Pages
             repo = r;
         }
 
-        [BindProperty] public TView Item { get; protected set; }
+        [BindProperty] public TView Item { get; set; }
         public IList<TEntity> ItemList { get; set; }
         protected internal virtual async Task LoadRelatedItems(TEntity item) { await Task.CompletedTask; }
         protected internal abstract TView ToViewModel(TEntity e);
@@ -54,9 +54,8 @@ namespace ReservationProject.Pages
         public async Task<IActionResult> OnGetEditAsync(string id)
         {
             
-            Item = await Load(id);
             if (Item != null)  DoBeforeCreate();
-            return Item is null ? NotFound() : Page();
+            return isNull(Item = await Load(id)) ? NotFound() : Page();
         }
 
         protected internal virtual void DoBeforeCreate() { }
