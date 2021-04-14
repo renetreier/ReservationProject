@@ -79,10 +79,7 @@ namespace ReservationProject.Pages
             return RedirectToPage("./Index");
         }
 
-        public IList<Reservation> ReservationsList { get; set; }
 
-
-       
         public SelectList Rooms =>
             new(
                 db.Rooms.OrderBy(x => x.RoomName).AsNoTracking(),
@@ -105,11 +102,6 @@ namespace ReservationProject.Pages
             item.ReservedWorker = await db.Workers.AsNoTracking()
                 .FirstOrDefaultAsync(w => w.Id == item.WorkerId);
         }
-     
-        public async Task OnGetAsync()
-        {
-            ReservationsList = await repo.Get();
-        }
-
+        
     }
 }

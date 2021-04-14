@@ -18,15 +18,14 @@ namespace ReservationProject.Pages
 
 
         //[BindProperty] 
-        public Room Room { get; set; }
 
         public async Task<IActionResult> OnPostCreateAsync()
         {
             if (!ModelState.IsValid) return Page();
 
-            Room.Id = Guid.NewGuid().ToString();
+            Item.Id = Guid.NewGuid().ToString();
 
-            db.Rooms.Add(Room);
+            db.Rooms.Add(Item);
             await db.SaveChangesAsync();
 
             return RedirectToPage("./Index");
@@ -36,11 +35,11 @@ namespace ReservationProject.Pages
         {
             if (id == "") return NotFound();
 
-            Room = await db.Rooms.FindAsync(id);
+            Item = await db.Rooms.FindAsync(id);
 
-            if (Room != null)
+            if (Item != null)
             {
-                db.Rooms.Remove(Room);
+                db.Rooms.Remove(Item);
                 await db.SaveChangesAsync();
             }
 
@@ -64,12 +63,6 @@ namespace ReservationProject.Pages
             return RedirectToPage("./Index");
         }
 
-        public IList<Room> RoomList { get; set; }
-
-        public async Task OnGetAsync()
-        {
-            RoomList = await repo.Get();
-        }
 
     }
 }

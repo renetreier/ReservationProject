@@ -10,13 +10,13 @@
 <table class="table">
     <thead>
         <tr>
-            @Html.TableHeader(model => model.RoomList[0].RoomName)
-            @Html.TableHeader(model => model.RoomList[0].BuildingAddress)
+            @Html.TableHeader(model => model.ItemList[0].RoomName)
+            @Html.TableHeader(model => model.ItemList[0].BuildingAddress)
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.RoomList)
+        @foreach (var item in Model.ItemList)
         {
             <tr>
                 @Html.RowData(modelItem => item.RoomName)

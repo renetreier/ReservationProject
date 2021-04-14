@@ -10,14 +10,14 @@
 <table class="table">
     <thead>
         <tr>
-            @Html.TableHeader(model => model.ReservationsList[0].ReservationDate)
-            @Html.TableHeader(model => model.ReservationsList[0].RoomId)
-            @Html.TableHeader(model => model.ReservationsList[0].WorkerId)
+            @Html.TableHeader(model => model.ItemList[0].ReservationDate)
+            @Html.TableHeader(model => model.ItemList[0].RoomId)
+            @Html.TableHeader(model => model.ItemList[0].WorkerId)
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.ReservationsList)
+        @foreach (var item in Model.ItemList)
         {
             <tr>
                 @Html.RowData(modelItem => item.ReservationDate)

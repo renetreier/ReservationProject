@@ -14,18 +14,16 @@ namespace ReservationProject.Pages
         protected internal WorkersModel(IWorkersRepo r, ApplicationDbContext c = null) : base(r, c) { }
         protected internal override Worker ToViewModel(Worker w) => w;
         protected internal override Worker ToEntity(Worker w) => w;
-
-        //public IActionResult OnGetCreate()=> Page();
         
-        [BindProperty] public Worker Worker { get; set; }
+       
 
         public async Task<IActionResult> OnPostCreateAsync()
         {
             if (!ModelState.IsValid) return Page();
 
-            Worker.Id = Guid.NewGuid().ToString();
+            Item.Id = Guid.NewGuid().ToString();
 
-            db.Workers.Add(Worker);
+            db.Workers.Add(Item);
             await db.SaveChangesAsync();
             return RedirectToPage("./Index");
         }
@@ -55,23 +53,19 @@ namespace ReservationProject.Pages
 
             if (id == "") return NotFound();
 
-            Worker = await db.Workers.FindAsync(id);
+            Item = await db.Workers.FindAsync(id);
 
-            if (Worker != null)
+            if (Item != null)
             {
-                db.Workers.Remove(Worker);
+                db.Workers.Remove(Item);
                 await db.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");
         }
 
-        public IList<Worker> WorkerList { get; set; }
 
-        public async Task OnGetAsync()
-        {
-            WorkerList = await repo.Get();
-        }
+        
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ReservationProject.Core;
@@ -13,6 +14,7 @@ namespace ReservationProject.Pages
     {
         protected readonly ApplicationDbContext db;
         protected readonly IRepo<TEntity> repo;
+        
 
         protected BasePageModel(IRepo<TEntity> r, ApplicationDbContext c = null)
         {
@@ -21,6 +23,7 @@ namespace ReservationProject.Pages
         }
 
         [BindProperty] public TView Item { get; protected set; }
+        public IList<TEntity> ItemList { get; set; }
         protected internal virtual async Task LoadRelatedItems(TEntity item) { await Task.CompletedTask; }
         protected internal abstract TView ToViewModel(TEntity e);
         protected internal abstract TEntity ToEntity(TView e);
@@ -57,7 +60,10 @@ namespace ReservationProject.Pages
         }
 
         protected internal virtual void DoBeforeCreate() { }
-
+        public async Task OnGetAsync()
+        {
+            ItemList = await repo.Get();
+        }
     }
 
 }
