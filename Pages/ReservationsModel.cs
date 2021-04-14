@@ -1,25 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using ReservationProject.Aids;
 using ReservationProject.Data;
+using ReservationProject.Facade;
 using ReservationProject.Infra;
 
 namespace ReservationProject.Pages
 {
-    public class ReservationsModel:BasePageModel<Reservation, Reservation>
+    public class ReservationsModel:BasePageModel<Reservation, ReservationView>
     {
         public ReservationsModel(ApplicationDbContext c) : this(new ReservationsRepo(c), c) { }
         protected internal ReservationsModel(IReservationsRepo r, ApplicationDbContext c = null): base(r, c) { }
 
-        protected internal override Reservation ToViewModel(Reservation r) => r;
-        protected internal override Reservation ToEntity(Reservation r) => r;
+        protected internal override ReservationView ToViewModel(Reservation r)
+            => IsNull(r) ? null : Copy.Members(r, new ReservationView());
 
-      
-
+        protected internal override Reservation ToEntity(ReservationView r)
+            => IsNull(r) ? null : Copy.Members(r, new Reservation());
 
         public async Task<IActionResult> OnPostCreateAsync()
         {
@@ -27,7 +28,7 @@ namespace ReservationProject.Pages
 
             Item.Id = Guid.NewGuid().ToString();
             //TODO kontroll kas olemas?
-            db.Reservations.Add(Item);
+            db.Reservations.Add(ToEntity(Item));
             await db.SaveChangesAsync();
             return RedirectToPage("./Index");
         }
@@ -36,11 +37,11 @@ namespace ReservationProject.Pages
         {
             if (id == "") return NotFound();
 
-            Item = await db.Reservations.FindAsync(id);
+            Item = ToViewModel(await db.Reservations.FindAsync(id));
 
             if (Item != null)
             {
-                db.Reservations.Remove(Item);
+                db.Reservations.Remove(ToEntity(Item));
                 await db.SaveChangesAsync();
             }
 
@@ -79,10 +80,7 @@ namespace ReservationProject.Pages
             return RedirectToPage("./Index");
         }
 
-        public IList<Reservation> ReservationsList { get; set; }
 
-
-       
         public SelectList Rooms =>
             new(
                 db.Rooms.OrderBy(x => x.RoomName).AsNoTracking(),
@@ -98,18 +96,13 @@ namespace ReservationProject.Pages
 
         protected internal override async Task LoadRelatedItems(Reservation item)
         {
-            if (isNull(item)) return;
-            if (isNull(db)) return;
+            if (IsNull(item)) return;
+            if (IsNull(db)) return;
             item.ReservedRoom = await db.Rooms.AsNoTracking()
                 .FirstOrDefaultAsync(r => r.Id == item.RoomId);
             item.ReservedWorker = await db.Workers.AsNoTracking()
                 .FirstOrDefaultAsync(w => w.Id == item.WorkerId);
         }
-     
-        public async Task OnGetAsync()
-        {
-            ReservationsList = await repo.Get();
-        }
-
+        
     }
 }

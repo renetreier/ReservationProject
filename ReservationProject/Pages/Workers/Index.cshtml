@@ -9,14 +9,14 @@
 <table class="table">
     <thead>
         <tr>
-            @Html.TableHeader(model => model.WorkerList[0].FullName)
-            @Html.TableHeader(model => model.WorkerList[0].Email)
-            @Html.TableHeader(model => model.WorkerList[0].Salary)
+            @Html.TableHeader(model => model.ItemList[0].FullName)
+            @Html.TableHeader(model => model.ItemList[0].Email)
+            @Html.TableHeader(model => model.ItemList[0].Salary)
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.WorkerList)
+        @foreach (var item in Model.ItemList)
         {
             <tr>
                 @Html.RowData(modelItem => item.FullName)

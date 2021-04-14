@@ -5,14 +5,10 @@ using ReservationProject.Core;
 
 namespace ReservationProject.Data
 {
-    public class Reservation:IEntity
+    public class Reservation:BaseEntityData,IEntity
     {
-        [Display(Name = "Reservation number")]
-        public string Id { get; set; }
         [Required]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Reservation Date")]
         public DateTime ReservationDate { get; set; }
         [Required]
         public string RoomId { get; set; }

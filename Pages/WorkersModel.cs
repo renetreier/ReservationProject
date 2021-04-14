@@ -1,31 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using ReservationProject.Aids;
 using ReservationProject.Data;
+using ReservationProject.Facade;
 using ReservationProject.Infra;
 
 namespace ReservationProject.Pages
 {
-    public class WorkersModel : BasePageModel<Worker, Worker>
+    public class WorkersModel : BasePageModel<Worker, WorkerView>
     {
         public WorkersModel(ApplicationDbContext c) : this(new WorkersRepo(c), c) { }
         protected internal WorkersModel(IWorkersRepo r, ApplicationDbContext c = null) : base(r, c) { }
-        protected internal override Worker ToViewModel(Worker w) => w;
-        protected internal override Worker ToEntity(Worker w) => w;
-
-        //public IActionResult OnGetCreate()=> Page();
+        protected internal override WorkerView ToViewModel(Worker w)
+            => IsNull(w) ? null : Copy.Members(w, new WorkerView());
         
-        [BindProperty] public Worker Worker { get; set; }
+        protected internal override Worker ToEntity(WorkerView w)
+            => IsNull(w) ? null : Copy.Members(w, new Worker());
+
 
         public async Task<IActionResult> OnPostCreateAsync()
         {
             if (!ModelState.IsValid) return Page();
 
-            Worker.Id = Guid.NewGuid().ToString();
+            Item.Id = Guid.NewGuid().ToString();
 
-            db.Workers.Add(Worker);
+            db.Workers.Add(ToEntity(Item));
             await db.SaveChangesAsync();
             return RedirectToPage("./Index");
         }
@@ -55,23 +55,19 @@ namespace ReservationProject.Pages
 
             if (id == "") return NotFound();
 
-            Worker = await db.Workers.FindAsync(id);
+            Item = ToViewModel(await db.Workers.FindAsync(id));
 
-            if (Worker != null)
+            if (Item != null)
             {
-                db.Workers.Remove(Worker);
+                db.Workers.Remove(ToEntity(Item));
                 await db.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");
         }
 
-        public IList<Worker> WorkerList { get; set; }
 
-        public async Task OnGetAsync()
-        {
-            WorkerList = await repo.Get();
-        }
+        
 
     }
 }

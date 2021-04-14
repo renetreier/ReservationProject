@@ -5,24 +5,15 @@ using ReservationProject.Core;
 
 namespace ReservationProject.Data
 { 
-    public class Worker:IEntity
+    public class Worker: BaseEntityData, IEntity
     {
-        public string Id { get; set; }
         [Required]
-        [StringLength(50)]
-        [Display(Name = "Last Name")]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z]*$")]
         public string LastName { get; set; }
         [Required]
-        [StringLength(50, ErrorMessage = "First name cannot be longer than 50 characters.")]
-        [Column("FirstName")]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z]*$")]
-        [Display(Name = "First Name")]
         public string FirstName { get; set; }
         [Required]
         [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
         public string Email { get; set; }
-
         [DataType(DataType.Currency)]
         public double Salary { get; set; }
 

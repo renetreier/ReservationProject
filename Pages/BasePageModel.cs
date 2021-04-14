@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ReservationProject.Core;
@@ -13,6 +14,7 @@ namespace ReservationProject.Pages
     {
         protected readonly ApplicationDbContext db;
         protected readonly IRepo<TEntity> repo;
+        
 
         protected BasePageModel(IRepo<TEntity> r, ApplicationDbContext c = null)
         {
@@ -20,16 +22,17 @@ namespace ReservationProject.Pages
             repo = r;
         }
 
-        [BindProperty] public TView Item { get; protected set; }
+        [BindProperty] public TView Item { get; set; }
+        public IList<TEntity> ItemList { get; set; }
         protected internal virtual async Task LoadRelatedItems(TEntity item) { await Task.CompletedTask; }
         protected internal abstract TView ToViewModel(TEntity e);
         protected internal abstract TEntity ToEntity(TView e);
-        protected internal bool isNull(object o) => o is null;
+        protected internal bool IsNull(object o) => o is null;
 
         internal async Task<TView> Load(string id)
         {
             var item = await repo.Get(id);
-            if (!isNull(id)) await LoadRelatedItems(item);
+            if (!IsNull(id)) await LoadRelatedItems(item);
             return ToViewModel(item);
         }
         public IActionResult OnGetCreate()
@@ -40,24 +43,23 @@ namespace ReservationProject.Pages
 
         public async Task<IActionResult> OnGetDeleteAsync(string id)
         {
-            return isNull(Item=await Load(id)) ? NotFound() : Page();
+            return IsNull(Item=await Load(id)) ? NotFound() : Page();
         }
 
         public async Task<IActionResult> OnGetDetailsAsync(string id)
         {
-            return isNull(Item=await Load(id)) ? NotFound() : Page();
+            return IsNull(Item=await Load(id)) ? NotFound() : Page();
         }
 
         public async Task<IActionResult> OnGetEditAsync(string id)
         {
             
-            Item = await Load(id);
             if (Item != null)  DoBeforeCreate();
-            return Item is null ? NotFound() : Page();
+            return IsNull(Item = await Load(id)) ? NotFound() : Page();
         }
 
         protected internal virtual void DoBeforeCreate() { }
-
+        public async Task OnGetAsync()=> ItemList = await repo.Get();
     }
 
 }

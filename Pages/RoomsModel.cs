@@ -1,32 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using ReservationProject.Aids;
 using ReservationProject.Data;
+using ReservationProject.Facade;
 using ReservationProject.Infra;
 //TODO Vaja puhastada ja refaktoorida
 namespace ReservationProject.Pages
 {
-    public class RoomsModel : BasePageModel<Room, Room>
+    public class RoomsModel : BasePageModel<Room, RoomView>
     {
         public RoomsModel(ApplicationDbContext c) : this(new RoomsRepo(c), c) { }
 
         protected internal RoomsModel(IRoomsRepo r, ApplicationDbContext c = null) : base(r, c) { }
-        protected internal override Room ToViewModel(Room r) => r;
-        protected internal override Room ToEntity(Room r) => r;
+        protected internal override RoomView ToViewModel(Room r)
+            => IsNull(r) ? null : Copy.Members(r, new RoomView());
+
+        protected internal override Room ToEntity(RoomView r)
+            => IsNull(r) ? null : Copy.Members(r, new Room());
 
 
-        //[BindProperty] 
-        public Room Room { get; set; }
 
         public async Task<IActionResult> OnPostCreateAsync()
         {
             if (!ModelState.IsValid) return Page();
 
-            Room.Id = Guid.NewGuid().ToString();
+            Item.Id = Guid.NewGuid().ToString();
 
-            db.Rooms.Add(Room);
+            db.Rooms.Add(ToEntity(Item));
             await db.SaveChangesAsync();
 
             return RedirectToPage("./Index");
@@ -36,11 +37,11 @@ namespace ReservationProject.Pages
         {
             if (id == "") return NotFound();
 
-            Room = await db.Rooms.FindAsync(id);
+            Item = ToViewModel(await db.Rooms.FindAsync(id));
 
-            if (Room != null)
+            if (Item != null)
             {
-                db.Rooms.Remove(Room);
+                db.Rooms.Remove(ToEntity(Item));
                 await db.SaveChangesAsync();
             }
 
@@ -64,12 +65,6 @@ namespace ReservationProject.Pages
             return RedirectToPage("./Index");
         }
 
-        public IList<Room> RoomList { get; set; }
-
-        public async Task OnGetAsync()
-        {
-            RoomList = await repo.Get();
-        }
 
     }
 }

@@ -2,8 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReservationProject.Core;
-using ReservationProject.Infra;
-using ReservationProject.Pages;
+
 
 //TODO Vaja lisada Igale poole Assemblyinfo, et testid ligi saaks
 namespace ReservationProject.Tests.Pages
@@ -118,5 +117,28 @@ namespace ReservationProject.Tests.Pages
             var result = pageModel.OnGetCreate();
             Assert.IsInstanceOfType(result, typeof(PageResult));
         }
+        [TestMethod]
+        public void IsNullReturnTrue()
+        {
+            Assert.AreEqual(true, pageModel.IsNull(null));
+        }
+        [TestMethod]
+        public void IsNullReturnFalse()
+        {
+            Assert.AreEqual(false, pageModel.IsNull(1));
+        }
+        [TestMethod]
+        public void ToViewModelTestItemIsNull()
+        {
+            Assert.AreEqual(null, pageModel.ToViewModel(null));
+        }
+        //[TestMethod]
+        //public void ToViewModelTestItemIsCorrect()
+        //{
+        //    mockRepo.Result = new TEntity();
+        //    var result = new TView();
+        //    Assert.AreEqual(result, pageModel.ToViewModel(mockRepo.Result));
+        //} SEE HETKEL MINGI JAMA TEST, ei oska korda panna
+
     }
 }
