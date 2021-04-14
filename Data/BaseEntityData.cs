@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ReservationProject.Core;
 
 namespace ReservationProject.Data {
     public abstract class BaseEntityData {

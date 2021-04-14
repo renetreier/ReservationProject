@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
-//DONE 9.5 Nii saan alati vajalikud nimed kätte
-//==========================================================================
+
 namespace ReservationProject.Aids
 {
     public static class GetMember {

@@ -27,12 +27,12 @@ namespace ReservationProject.Pages
         protected internal virtual async Task LoadRelatedItems(TEntity item) { await Task.CompletedTask; }
         protected internal abstract TView ToViewModel(TEntity e);
         protected internal abstract TEntity ToEntity(TView e);
-        protected internal bool isNull(object o) => o is null;
+        protected internal bool IsNull(object o) => o is null;
 
         internal async Task<TView> Load(string id)
         {
             var item = await repo.Get(id);
-            if (!isNull(id)) await LoadRelatedItems(item);
+            if (!IsNull(id)) await LoadRelatedItems(item);
             return ToViewModel(item);
         }
         public IActionResult OnGetCreate()
@@ -43,26 +43,23 @@ namespace ReservationProject.Pages
 
         public async Task<IActionResult> OnGetDeleteAsync(string id)
         {
-            return isNull(Item=await Load(id)) ? NotFound() : Page();
+            return IsNull(Item=await Load(id)) ? NotFound() : Page();
         }
 
         public async Task<IActionResult> OnGetDetailsAsync(string id)
         {
-            return isNull(Item=await Load(id)) ? NotFound() : Page();
+            return IsNull(Item=await Load(id)) ? NotFound() : Page();
         }
 
         public async Task<IActionResult> OnGetEditAsync(string id)
         {
             
             if (Item != null)  DoBeforeCreate();
-            return isNull(Item = await Load(id)) ? NotFound() : Page();
+            return IsNull(Item = await Load(id)) ? NotFound() : Page();
         }
 
         protected internal virtual void DoBeforeCreate() { }
-        public async Task OnGetAsync()
-        {
-            ItemList = await repo.Get();
-        }
+        public async Task OnGetAsync()=> ItemList = await repo.Get();
     }
 
 }

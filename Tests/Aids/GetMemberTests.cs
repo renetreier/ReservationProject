@@ -6,15 +6,15 @@ namespace ReservationProject.Tests.Aids {
     [TestClass]
     public class GetMemberTests {
 
-        private readonly string stringField = null;
-        private string stringProperty { get; } = null;
+        private readonly string StringField = null;
+        private string StringProperty { get; } = null;
 
         [TestMethod] public void NameTestField() 
-            => Assert.AreEqual("stringField",
-                GetMember.Name<GetMemberTests>(x => x.stringField));
+            => Assert.AreEqual("StringField",
+                GetMember.Name<GetMemberTests>(x => x.StringField));
         [TestMethod] public void NameTestProperty() 
-            => Assert.AreEqual("stringProperty",
-                GetMember.Name<GetMemberTests>(x => x.stringProperty));
+            => Assert.AreEqual("StringProperty",
+                GetMember.Name<GetMemberTests>(x => x.StringProperty));
         [TestMethod] public void NameTestFunction() 
             => Assert.AreEqual("ToString", 
                 GetMember.Name<object>(x => x.ToString()));

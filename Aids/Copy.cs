@@ -1,8 +1,5 @@
 ﻿using System.Linq;
 
-//DONE 9.6 Lisasin lihtsa Copy klassi objeti propertite nimepõhiseks kopeerimiseks
-// 
-//=================================================
 namespace ReservationProject.Aids {
     public static class Copy {
         

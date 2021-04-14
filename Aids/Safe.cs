@@ -1,7 +1,5 @@
 ﻿using System;
-//DONE 9.6 Lisasin lihtsa Safe klassi meetodite ja funtsioonide turvaliseks jooksutamiseks
-// Tekkinud vead kirjutatakse standard konsooli 
-//=================================================
+
 namespace ReservationProject.Aids
 {
     public static class Safe {
@@ -9,7 +7,7 @@ namespace ReservationProject.Aids
             try {
                 return function();
             } catch (Exception e) {
-                logException(e);
+                LogException(e);
                 return valueOnException;
             }
         }
@@ -18,11 +16,11 @@ namespace ReservationProject.Aids
             try {
                 action();
             } catch (Exception e) {
-                logException(e);
+                LogException(e);
             }
         }
 
-        private static void logException(Exception e) {
+        private static void LogException(Exception e) {
             Console.WriteLine(e.ToString());
         }
     }
