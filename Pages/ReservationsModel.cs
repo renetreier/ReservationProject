@@ -22,16 +22,6 @@ namespace ReservationProject.Pages
         protected internal override Reservation ToEntity(ReservationView r)
             => IsNull(r) ? null : Copy.Members(r, new Reservation());
 
-        public async Task<IActionResult> OnPostCreateAsync()
-        {
-            if (!ModelState.IsValid) return Page();
-
-            Item.Id = Guid.NewGuid().ToString();
-            //TODO kontroll kas olemas?
-            db.Reservations.Add(ToEntity(Item));
-            await db.SaveChangesAsync();
-            return RedirectToPage("./Index");
-        }
 
         public async Task<IActionResult> OnPostDeleteAsync(string id)
         {
