@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using ReservationProject.Core;
 using ReservationProject.Domain;
 
@@ -32,7 +33,6 @@ namespace ReservationProject.Infra {
         {
             obj.Id = Guid.NewGuid().ToString();
             await set.AddAsync(obj);
-
         }
         public Task Update(T obj) => throw new NotImplementedException();
         public T GetById(string id)=> throw new NotImplementedException();

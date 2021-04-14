@@ -69,6 +69,8 @@ namespace ReservationProject.Pages
             await repo.Add(ToEntity(Item));
             await db.SaveChangesAsync();
             return RedirectToPage("./Index");
+            //TODO Test ei lähe läbi, sest item = null ja siis ei saa savechanges teha (vähemalt tundub, et selle pärast)
+            // Kuskile vaja see notfound lisada, aga ei saa hakkama :D Muidu töötab
         }
     }
 }

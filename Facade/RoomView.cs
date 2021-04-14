@@ -3,7 +3,7 @@ using ReservationProject.Core;
 
 namespace ReservationProject.Facade
 {
-    public class RoomView
+    public class RoomView: IEntity
     {
         public string Id { get; set; }
         [Required]
@@ -13,5 +13,6 @@ namespace ReservationProject.Facade
         [Display(Name = "Address")]
         [StringLength(50, MinimumLength = 3)]
         public string BuildingAddress { get; set; }
+        public byte[] RowVersion { get; set; }
     }
 }

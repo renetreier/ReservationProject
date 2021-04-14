@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ReservationProject.Aids;
 using ReservationProject.Core;
+using ReservationProject.Facade;
 
 
 //TODO Vaja lisada Igale poole Assemblyinfo, et testid ligi saaks
@@ -9,7 +11,7 @@ namespace ReservationProject.Tests.Pages
 {
     public class PageModelTests<TEntity, TView> 
         where TEntity : class, IEntity, new()
-        where TView : class, new()
+        where TView : IEntity
     { 
         protected dynamic pageModel;
         protected TestRepo<TEntity> mockRepo;
@@ -29,6 +31,11 @@ namespace ReservationProject.Tests.Pages
         {
             mockRepo.Result = result;
             return pageModel.OnGetEditAsync(id).GetAwaiter().GetResult();
+        }
+        protected object OnPostCreateAsync(dynamic newItem = null)
+        {
+            pageModel.Item = newItem;
+            return pageModel.OnPostCreateAsync().GetAwaiter().GetResult();
         }
         //protected object OnGetCreate()
         //{
@@ -132,6 +139,14 @@ namespace ReservationProject.Tests.Pages
         {
             Assert.AreEqual(null, pageModel.ToViewModel(null));
         }
+        [TestMethod]
+        public void OnPostCreateTestIsCallingAdd()
+        {
+            var o = CreateNew.Instance<TView>();
+            OnPostCreateAsync(o);
+            Assert.AreEqual($"Add {o.Id}", mockRepo.Actions[0]);
+        }
+
         //[TestMethod]
         //public void ToViewModelTestItemIsCorrect()
         //{
