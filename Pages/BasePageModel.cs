@@ -61,17 +61,38 @@ namespace ReservationProject.Pages
         }
 
         protected internal virtual void DoBeforeCreate() { }
-        public async Task OnGetAsync()=> ItemList = await repo.Get();
+
+        public async Task OnGetAsync()
+        {
+            ItemList = await repo.Get();
+        } 
 
         public async Task<IActionResult> OnPostCreateAsync()
         {
             if (!ModelState.IsValid) return Page();
+            //await LoadRelatedItems(ToEntity(Item));
             await repo.Add(ToEntity(Item));
-            await db.SaveChangesAsync();
+            if (!IsNull(db)) await db.SaveChangesAsync();
             return RedirectToPage("./Index");
-            //TODO Test ei lähe läbi, sest item = null ja siis ei saa savechanges teha (vähemalt tundub, et selle pärast)
-            // Kuskile vaja see notfound lisada, aga ei saa hakkama :D Muidu töötab
         }
+        public async Task<IActionResult> OnPostDeleteAsync(string id)
+        {
+            //TODO kui kustutad töötaja, kustutaks ka kõik temaga seotud reserveeringud
+            // TODO "Rene" mulle tundub et see töötab, kui kustutad ära siis reserveering kustub ka
+
+            if (IsNull(id)) return NotFound();
+            await repo.Delete(ToEntity(Item));
+            if (!IsNull(Item)) await db.SaveChangesAsync();
+            return RedirectToPage("./Index");
+        }
+        public async Task<IActionResult> OnPostEditAsync(string id)
+        {
+            if (IsNull(id)) return NotFound();
+            await repo.Update(ToEntity(Item));
+            if (!IsNull(Item)) await db.SaveChangesAsync();
+            return RedirectToPage("./Index");
+        }
+
     }
 }
 

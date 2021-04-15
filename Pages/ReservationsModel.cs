@@ -23,52 +23,21 @@ namespace ReservationProject.Pages
             => IsNull(r) ? null : Copy.Members(r, new Reservation());
 
 
-        public async Task<IActionResult> OnPostDeleteAsync(string id)
-        {
-            if (id == "") return NotFound();
-
-            Item = ToViewModel(await db.Reservations.FindAsync(id));
-
-            if (Item != null)
-            {
-                db.Reservations.Remove(ToEntity(Item));
-                await db.SaveChangesAsync();
-            }
-
-            return RedirectToPage("./Index");
-        }
-
-        //public async Task<IActionResult> OnGetEditAsync(string id)
+        //public async Task<IActionResult> OnPostEditAsync(string id)
         //{
+        //    if (id == "") return NotFound();
 
-        //    //if (id == "") return NotFound();
+        //    var reservationToUpdate = await db.Reservations.FindAsync(id);
 
-        //    //LoadRooms(db);
-        //    //LoadWorkers(db);
-        //    //Reservation = await db.Reservations.FirstOrDefaultAsync(m => m.Id == id);
+        //    if (reservationToUpdate == null) return NotFound();
 
-        //    //if (Reservation == null) return NotFound();
-
-        //    //return Page();
-        //    Reservation = await repo.Get(id);
-        //    return Reservation is null ? NotFound() : Page();
+        //    if (await TryUpdateModelAsync(reservationToUpdate, "reservation",
+        //            c => c.ReservationDate, c => c.RoomId, c => c.WorkerId))
+        //    {
+        //            await db.SaveChangesAsync();
+        //    }
+        //    return RedirectToPage("./Index");
         //}
-
-        public async Task<IActionResult> OnPostEditAsync(string id)
-        {
-            if (id == "") return NotFound();
-
-            var reservationToUpdate = await db.Reservations.FindAsync(id);
-
-            if (reservationToUpdate == null) return NotFound();
-
-            if (await TryUpdateModelAsync(reservationToUpdate, "reservation",
-                    c => c.ReservationDate, c => c.RoomId, c => c.WorkerId))
-            {
-                    await db.SaveChangesAsync();
-            }
-            return RedirectToPage("./Index");
-        }
 
 
         public SelectList Rooms =>

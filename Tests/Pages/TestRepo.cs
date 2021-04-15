@@ -18,7 +18,7 @@ namespace ReservationProject.Tests.Pages
         public async Task<T> Get(string id) => await Perform($"Get {id}");
         public Task<List<T>> Get() => throw new System.NotImplementedException();
 
-        public Task Delete(T obj) => throw new System.NotImplementedException();
+        public async Task Delete(T obj) => await Perform($"Delete {obj.Id}");
 
         public async Task Add(T obj) => await Perform($"Add {obj.Id}");
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReservationProject.Aids;
@@ -37,14 +38,15 @@ namespace ReservationProject.Tests.Pages
             pageModel.Item = newItem;
             return pageModel.OnPostCreateAsync().GetAwaiter().GetResult();
         }
-        //protected object OnGetCreate()
-        //{
-        //    return pageModel.OnGetCreate();
-        //}
+        private object OnPostDeleteAsync(string id, object oldItem = null)//TODO siin mingi kala vist?
+        {
+            mockRepo.Result = oldItem;
+            return pageModel.OnPostDeleteAsync(id).GetAwaiter().GetResult();
+        }
         [TestMethod]
         public void OnGetDeleteAsyncTestItemNotFound()
         {
-            var result = pageModel.OnGetDeleteAsync("12345").GetAwaiter().GetResult();
+            var result = OnGetDeleteAsync("");
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
         [TestMethod]
@@ -147,6 +149,20 @@ namespace ReservationProject.Tests.Pages
             Assert.AreEqual($"Add {o.Id}", mockRepo.Actions[0]);
         }
 
+        [TestMethod]
+        public void OnPostDeleteTestIsCallingAdd()
+        {
+            var o = CreateNew.Instance<TView>();
+            OnPostDeleteAsync(o.Id);
+            Assert.AreEqual($"Delete {o.Id}", mockRepo.Actions[0]);
+        }
+
+        [TestMethod]
+        public void OnGetAsyncReturnsList()
+        {
+            var result = pageModel.OnGetAsync();
+            Assert.IsInstanceOfType(result, typeof(List<object>));
+        }
         //[TestMethod]
         //public void ToViewModelTestItemIsCorrect()
         //{
