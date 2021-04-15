@@ -27,14 +27,23 @@ namespace ReservationProject.Infra {
             return await set.AsNoTracking().FirstOrDefaultAsync(m => m.Id == id);
         }
 
-        public Task Delete(T obj) => throw new NotImplementedException();
+        public async Task Delete(T obj)
+        {
+            await Task.CompletedTask;
+            set.Remove(obj);
+        } 
 
         public async Task Add(T obj)
         {
             obj.Id = Guid.NewGuid().ToString();
             await set.AddAsync(obj);
         }
-        public Task Update(T obj) => throw new NotImplementedException();
+
+        public async Task Update(T obj)
+        {
+            await Task.CompletedTask;
+            set.Update(obj);
+        } 
         public T GetById(string id)=> throw new NotImplementedException();
 
     }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using ReservationProject.Domain;
 using ReservationProject.Infra;
 
 namespace ReservationProject.Soft
@@ -13,6 +14,7 @@ namespace ReservationProject.Soft
         {
             var host = CreateHostBuilder(args).Build();
             CreateDbIfNotExists(host);
+            GetRepo.SetProvider(host.Services);
             host.Run();
         }
         private static void CreateDbIfNotExists(IHost host)

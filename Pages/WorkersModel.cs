@@ -19,40 +19,22 @@ namespace ReservationProject.Pages
             => IsNull(w) ? null : Copy.Members(w, new Worker());
 
 
-        public async Task<IActionResult> OnPostEditAsync(string id)
-        {
-            if (id == "") return NotFound();
+        //public async Task<IActionResult> OnPostEditAsync(string id)
+        //{
+        //    if (id == "") return NotFound();
 
-            var workerToUpdate = await db.Workers.FindAsync(id);
+        //    var workerToUpdate = await db.Workers.FindAsync(id);
 
-            if (workerToUpdate == null) return NotFound();
+        //    if (workerToUpdate == null) return NotFound();
 
-            if (await TryUpdateModelAsync(workerToUpdate, "worker",
-                c => c.FirstName, c => c.LastName, c => c.Email, c => c.Salary))
-            {
-                await db.SaveChangesAsync();
-            }
-            return RedirectToPage("./Index");
-        }
+        //    if (await TryUpdateModelAsync(workerToUpdate, "worker",
+        //        c => c.FirstName, c => c.LastName, c => c.Email, c => c.Salary))
+        //    {
+        //        await db.SaveChangesAsync();
+        //    }
+        //    return RedirectToPage("./Index");
+        //}
 
-        public async Task<IActionResult> OnPostDeleteAsync(string id)
-        {
-
-            //TODO kui kustutad töötaja, kustutaks ka kõik temaga seotud reserveeringud
-            // TODO "Rene" mulle tundub et see töötab, kui kustutad ära siis reserveering kustub ka
-
-            if (id == "") return NotFound();
-
-            Item = ToViewModel(await db.Workers.FindAsync(id));
-
-            if (Item != null)
-            {
-                db.Workers.Remove(ToEntity(Item));
-                await db.SaveChangesAsync();
-            }
-
-            return RedirectToPage("./Index");
-        }
 
 
         
