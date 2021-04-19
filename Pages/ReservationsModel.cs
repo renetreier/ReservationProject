@@ -13,6 +13,8 @@ namespace ReservationProject.Pages
 {
     public class ReservationsModel:BasePageModel<Reservation, ReservationView>
     {
+        public override string PageTitle => "Reservation";
+
         public ReservationsModel(ApplicationDbContext c) : this(new ReservationsRepo(c), c) { }
         protected internal ReservationsModel(IReservationsRepo r, ApplicationDbContext c = null): base(r, c) { }
 
@@ -21,23 +23,6 @@ namespace ReservationProject.Pages
 
         protected internal override Reservation ToEntity(ReservationView r)
             => IsNull(r) ? null : Copy.Members(r, new Reservation());
-
-
-        //public async Task<IActionResult> OnPostEditAsync(string id)
-        //{
-        //    if (id == "") return NotFound();
-
-        //    var reservationToUpdate = await db.Reservations.FindAsync(id);
-
-        //    if (reservationToUpdate == null) return NotFound();
-
-        //    if (await TryUpdateModelAsync(reservationToUpdate, "reservation",
-        //            c => c.ReservationDate, c => c.RoomId, c => c.WorkerId))
-        //    {
-        //            await db.SaveChangesAsync();
-        //    }
-        //    return RedirectToPage("./Index");
-        //}
 
 
         public SelectList Rooms =>

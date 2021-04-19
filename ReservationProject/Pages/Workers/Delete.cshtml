@@ -3,14 +3,6 @@
 
 @{
     Layout = "_Delete";
-    ViewData["Page"] = "worker";
-    ViewData["ItemID"] = Model.Item.Id;
 }
 
 <partial name="_ShowWorker.cshtml" />
-
-@section DeleteBinding {
-    <input type="hidden" asp-for="@ViewData["ItemId"]" />
-}
-
-@section ErrorMessage{}

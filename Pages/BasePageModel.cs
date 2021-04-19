@@ -3,27 +3,45 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.IdentityModel.Tokens;
 using ReservationProject.Core;
 using ReservationProject.Domain;
 using ReservationProject.Infra;
 
 namespace ReservationProject.Pages
 {
-    public abstract class BasePageModel<TEntity, TView> : PageModel
+    public abstract class BasePageModel : PageModel
+    {
+        public string ErrorMessage { get; protected set; }
+        public abstract string PageTitle { get; }
+        [BindProperty] public IEntity Item { get; set; }
+        public string NameSort { get; protected set; }
+        public string DateSort { get; protected set; }
+        public string CurrentFilter { get; protected set; }
+        public string CurrentSort { get; protected set; }
+        public virtual bool HasPreviousPage { get; protected set; }
+        public virtual bool HasNextPage { get; protected set; }
+        public virtual int PageIndex { get; protected set; }
+
+    }
+    public abstract class BasePageModel<TEntity, TView> : BasePageModel
         where TEntity : class, IEntity, new()
         where TView : class, new()
     {
         protected readonly ApplicationDbContext db;
         protected readonly IRepo<TEntity> repo;
-        
 
         protected BasePageModel(IRepo<TEntity> r, ApplicationDbContext c = null)
         {
             db = c;
             repo = r;
         }
+        [BindProperty] public new TView Item
+        {
+            get => (TView)base.Item;
+            set => base.Item = (IEntity)value;
+        }
 
-        [BindProperty] public TView Item { get; set; }
         public IList<TEntity> ItemList { get; set; }
         protected internal virtual async Task LoadRelatedItems(TEntity item) { await Task.CompletedTask; }
         protected internal abstract TView ToViewModel(TEntity e);
@@ -56,7 +74,7 @@ namespace ReservationProject.Pages
 
         public async Task<IActionResult> OnGetEditAsync(string id)
         {
-            if (Item != null)  DoBeforeCreate();
+            if (!IsNull(Item))  DoBeforeCreate();
             return IsNull(Item = await Load(id)) ? NotFound() : Page();
         }
 
@@ -70,16 +88,12 @@ namespace ReservationProject.Pages
         public async Task<IActionResult> OnPostCreateAsync()
         {
             if (!ModelState.IsValid) return Page();
-            //await LoadRelatedItems(ToEntity(Item));
             await repo.Add(ToEntity(Item));
             if (!IsNull(db)) await db.SaveChangesAsync();
             return RedirectToPage("./Index");
         }
         public async Task<IActionResult> OnPostDeleteAsync(string id)
         {
-            //TODO kui kustutad töötaja, kustutaks ka kõik temaga seotud reserveeringud
-            // TODO "Rene" mulle tundub et see töötab, kui kustutad ära siis reserveering kustub ka
-
             if (IsNull(id)) return NotFound();
             await repo.Delete(ToEntity(Item));
             if (!IsNull(Item)) await db.SaveChangesAsync();
