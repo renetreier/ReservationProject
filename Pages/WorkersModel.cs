@@ -10,6 +10,8 @@ namespace ReservationProject.Pages
 {
     public class WorkersModel : BasePageModel<Worker, WorkerView>
     {
+        public override string PageTitle => "Worker";
+
         public WorkersModel(ApplicationDbContext c) : this(new WorkersRepo(c), c) { }
         protected internal WorkersModel(IWorkersRepo r, ApplicationDbContext c = null) : base(r, c) { }
         protected internal override WorkerView ToViewModel(Worker w)

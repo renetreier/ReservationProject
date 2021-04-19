@@ -1,15 +1,7 @@
 ﻿@page
 @model ReservationProject.Pages.ReservationsModel
 @{
-    ViewData["Title"] = "Delete";
     Layout = "_Delete";
-    ViewData["ItemID"] = Model.Item.Id;
 }
 
 <partial name="_ShowReservation.cshtml" />
-
-@section DeleteBinding {
-    <input type="hidden" asp-for="@ViewData["ItemId"]" />
-}
-
-@section ErrorMessage{}

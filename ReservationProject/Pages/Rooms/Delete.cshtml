@@ -3,14 +3,9 @@
 
 @{
     Layout = "_Delete";
-    ViewData["Page"] = "room";
-    ViewData["ItemID"] = Model.Item.Id;
 }
 
 <partial name="_ShowRoom.cshtml" />
 
-@section DeleteBinding {
-    <input type="hidden" asp-for="@ViewData["ItemId"]" />
-}
 
-@section ErrorMessage{}
+

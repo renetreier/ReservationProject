@@ -10,6 +10,8 @@ namespace ReservationProject.Pages
 {
     public class RoomsModel : BasePageModel<Room, RoomView>
     {
+        public override string PageTitle => "Room";
+
         public RoomsModel(ApplicationDbContext c) : this(new RoomsRepo(c), c) { }
 
         protected internal RoomsModel(IRoomsRepo r, ApplicationDbContext c = null) : base(r, c) { }

@@ -13,6 +13,8 @@ namespace ReservationProject.Pages
 {
     public class ReservationsModel:BasePageModel<Reservation, ReservationView>
     {
+        public override string PageTitle => "Reservation";
+
         public ReservationsModel(ApplicationDbContext c) : this(new ReservationsRepo(c), c) { }
         protected internal ReservationsModel(IReservationsRepo r, ApplicationDbContext c = null): base(r, c) { }
 
@@ -52,6 +54,7 @@ namespace ReservationProject.Pages
                 nameof(Item.ReservedWorker.Id),
                 nameof(Item.ReservedWorker.FullName),
                 Item?.WorkerId);
+
 
         protected internal override async Task LoadRelatedItems(Reservation item)
         {
