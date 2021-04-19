@@ -12,7 +12,9 @@ namespace ReservationProject.Facade
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Reservation Date")]
         public DateTime ReservationDate { get; set; }
+        [Display(Name = "Room")]
         public string RoomId { get; set; }
+        [Display(Name = "Worker")]
         public string WorkerId { get; set; }
         public Room ReservedRoom { get; set; }
         public Worker ReservedWorker { get; set; }

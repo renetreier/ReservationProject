@@ -25,23 +25,6 @@ namespace ReservationProject.Pages
             => IsNull(r) ? null : Copy.Members(r, new Reservation());
 
 
-        //public async Task<IActionResult> OnPostEditAsync(string id)
-        //{
-        //    if (id == "") return NotFound();
-
-        //    var reservationToUpdate = await db.Reservations.FindAsync(id);
-
-        //    if (reservationToUpdate == null) return NotFound();
-
-        //    if (await TryUpdateModelAsync(reservationToUpdate, "reservation",
-        //            c => c.ReservationDate, c => c.RoomId, c => c.WorkerId))
-        //    {
-        //            await db.SaveChangesAsync();
-        //    }
-        //    return RedirectToPage("./Index");
-        //}
-
-
         public SelectList Rooms =>
             new(
                 db.Rooms.OrderBy(x => x.RoomName).AsNoTracking(),
@@ -54,7 +37,6 @@ namespace ReservationProject.Pages
                 nameof(Item.ReservedWorker.Id),
                 nameof(Item.ReservedWorker.FullName),
                 Item?.WorkerId);
-
 
         protected internal override async Task LoadRelatedItems(Reservation item)
         {

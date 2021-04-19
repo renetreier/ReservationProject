@@ -36,10 +36,7 @@ namespace ReservationProject.Pages
             db = c;
             repo = r;
         }
-
-        //[BindProperty] public TView Item { get; set; }
-        [BindProperty]
-        public new TView Item
+        [BindProperty] public new TView Item
         {
             get => (TView)base.Item;
             set => base.Item = (IEntity)value;
@@ -97,9 +94,6 @@ namespace ReservationProject.Pages
         }
         public async Task<IActionResult> OnPostDeleteAsync(string id)
         {
-            //TODO kui kustutad töötaja, kustutaks ka kõik temaga seotud reserveeringud
-            // TODO "Rene" mulle tundub et see töötab, kui kustutad ära siis reserveering kustub ka
-
             if (IsNull(id)) return NotFound();
             await repo.Delete(ToEntity(Item));
             if (!IsNull(Item)) await db.SaveChangesAsync();

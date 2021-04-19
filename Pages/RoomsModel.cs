@@ -21,40 +21,5 @@ namespace ReservationProject.Pages
         protected internal override Room ToEntity(RoomView r)
             => IsNull(r) ? null : Copy.Members(r, new Room());
 
-
-
-        //public async Task<IActionResult> OnPostDeleteAsync(string id)
-        //{
-        //    if (id == "") return NotFound();
-
-        //    Item = ToViewModel(await db.Rooms.FindAsync(id));
-
-        //    if (Item != null)
-        //    {
-        //        db.Rooms.Remove(ToEntity(Item));
-        //        await db.SaveChangesAsync();
-        //    }
-
-        //    return RedirectToPage("./Index");
-        //}
-
-        //public async Task<IActionResult> OnPostEditAsync(string id)
-        //{
-        //    if (id == "") return NotFound();
-
-        //    var roomToUpdate = await db.Rooms.FindAsync(id);
-
-        //    if (roomToUpdate == null) return NotFound();
-
-        //    if (await TryUpdateModelAsync(roomToUpdate, "room",
-        //        c => c.RoomName, c => c.BuildingAddress))
-        //    {
-        //        await db.SaveChangesAsync();
-        //    }
-
-        //    return RedirectToPage("./Index");
-        //}
-
-
     }
 }
