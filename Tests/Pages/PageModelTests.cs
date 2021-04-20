@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReservationProject.Aids;
 using ReservationProject.Core;
@@ -18,6 +19,11 @@ namespace ReservationProject.Tests.Pages
         protected TestRepo<TEntity> mockRepo;
 
 
+        protected object OnGetAsync(object result = null)
+        {
+            mockRepo.Result = result;
+            return pageModel.OnGetAsync().GetAwaiter().GetResult();
+        }
         protected object OnGetDeleteAsync(string id, object result=null)
         {
             mockRepo.Result = result;
@@ -38,9 +44,9 @@ namespace ReservationProject.Tests.Pages
             pageModel.Item = newItem;
             return pageModel.OnPostCreateAsync().GetAwaiter().GetResult();
         }
-        private object OnPostDeleteAsync(string id, object oldItem = null)//TODO siin mingi kala vist?
+        protected object OnPostDeleteAsync(string id, dynamic oldItem = null)
         {
-            mockRepo.Result = oldItem;
+            pageModel.Item = oldItem;
             return pageModel.OnPostDeleteAsync(id).GetAwaiter().GetResult();
         }
         [TestMethod]
@@ -150,18 +156,19 @@ namespace ReservationProject.Tests.Pages
         }
 
         [TestMethod]
-        public void OnPostDeleteTestIsCallingAdd()
+        public void OnPostDeleteTestIsCallingDelete()
         {
             var o = CreateNew.Instance<TView>();
-            OnPostDeleteAsync(o.Id);
+            o.Id = "1";
+            OnPostDeleteAsync(o.Id, o);
             Assert.AreEqual($"Delete {o.Id}", mockRepo.Actions[0]);
         }
 
         [TestMethod]
         public void OnGetAsyncReturnsList()
         {
-            var result = pageModel.OnGetAsync();
-            Assert.IsInstanceOfType(result, typeof(List<object>));
+            pageModel.OnGetAsync().GetAwaiter().GetResult();
+            Assert.AreEqual("Get all 1", mockRepo.Actions[0]);
         }
         //[TestMethod]
         //public void ToViewModelTestItemIsCorrect()
@@ -169,7 +176,7 @@ namespace ReservationProject.Tests.Pages
         //    mockRepo.Result = new TEntity();
         //    var result = new TView();
         //    Assert.AreEqual(result, pageModel.ToViewModel(mockRepo.Result));
-        //} SEE HETKEL MINGI JAMA TEST, ei oska korda panna
+        //}
 
     }
 }

@@ -94,7 +94,7 @@ namespace ReservationProject.Pages
         {
             if (IsNull(id)) return NotFound();
             await repo.Delete(ToEntity(Item));
-            if (!IsNull(Item)) await db.SaveChangesAsync();
+            if (!IsNull(db)) await db.SaveChangesAsync();
             return RedirectToPage("./Index");
         }
         public async Task<IActionResult> OnPostEditAsync(string id)

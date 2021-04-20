@@ -15,8 +15,18 @@ namespace ReservationProject.Tests.Pages
             Actions.Add(v);
             return (T) Result;
         }
+
+        private async Task<List<T>> GetList(string v)
+        {
+            List<string> returnList = new List<string>();
+            await Task.CompletedTask;
+            returnList.Add(v);
+            Actions.Add(v + $" {returnList.Count}");
+            return (List<T>)Result;
+        }
+
         public async Task<T> Get(string id) => await Perform($"Get {id}");
-        public Task<List<T>> Get() => throw new System.NotImplementedException();
+        public async Task<List<T>> Get() => await GetList("Get all");
 
         public async Task Delete(T obj) => await Perform($"Delete {obj.Id}");
 
