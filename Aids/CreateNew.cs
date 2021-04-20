@@ -16,18 +16,18 @@ namespace ReservationProject.Aids {
         }
         public static object Instance(Type t) {
             return Safe.Run(() => {
-                var constructor = getConstructorInfo(t);
+                var constructor = GetConstructorInfo(t);
 
                 if (constructor is null) return null;
                 var parameters = constructor.GetParameters();
-                var values = setRandomParameters(parameters);
-                return invoke(constructor, values);
+                var values = SetRandomParameters(parameters);
+                return Invoke(constructor, values);
             }, null);
         }
-        private static object invoke(ConstructorInfo ci, object[] values) {
+        private static object Invoke(ConstructorInfo ci, object[] values) {
             return values.Length == 0 ? ci.Invoke(null) : ci.Invoke(values);
         }
-        private static object[] setRandomParameters(IEnumerable<ParameterInfo> parameters) {
+        private static object[] SetRandomParameters(IEnumerable<ParameterInfo> parameters) {
             var values = new List<object>();
             foreach (var p in parameters) {
                 var t = p.ParameterType;
@@ -36,7 +36,7 @@ namespace ReservationProject.Aids {
             }
             return values.ToArray();
         }
-        private static ConstructorInfo getConstructorInfo(Type t) {
+        private static ConstructorInfo GetConstructorInfo(Type t) {
             var constructors = t?.GetConstructors();
 
             if (constructors == null) return null;

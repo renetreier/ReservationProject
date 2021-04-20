@@ -18,7 +18,7 @@ namespace ReservationProject.Tests.Pages
 
         private async Task<List<T>> GetList(string v)
         {
-            List<string> returnList = new List<string>();
+            List<string> returnList = new();
             await Task.CompletedTask;
             returnList.Add(v);
             Actions.Add(v + $" {returnList.Count}");
@@ -32,7 +32,7 @@ namespace ReservationProject.Tests.Pages
 
         public async Task Add(T obj) => await Perform($"Add {obj.Id}");
 
-        public Task Update(T obj) => throw new System.NotImplementedException();
+        public async Task Update(T obj) => await Perform($"Update {obj.Id}");
 
         public T GetById(string id) => throw new System.NotImplementedException();
         

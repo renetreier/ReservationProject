@@ -7,7 +7,6 @@ namespace ReservationProject.Data
     {
         [Required]
         [StringLength(50, MinimumLength = 3)]
-
         public string RoomName { get; set; }
         [StringLength(50, MinimumLength = 3)]
         public string BuildingAddress { get; set; }

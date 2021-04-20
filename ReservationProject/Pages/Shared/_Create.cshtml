@@ -8,6 +8,7 @@
 <h1>@ViewData["Title"]</h1>
 
 <h4>@Model.PageTitle</h4>
+<h4>@Model.ErrorMessage</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -23,7 +24,7 @@
     </div>
 </div>
 
-<div>
+<div >
     <a asp-page="./Index" asp-route-handler="Index">Back to List</a>
 </div>
 

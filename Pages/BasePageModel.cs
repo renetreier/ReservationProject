@@ -26,13 +26,13 @@ namespace ReservationProject.Pages
         where TEntity : class, IEntity, new()
         where TView : class, new()
     {
-        protected readonly ApplicationDbContext db;
-        protected readonly IRepo<TEntity> repo;
+        protected readonly ApplicationDbContext Db;
+        protected readonly IRepo<TEntity> Repo;
 
         protected BasePageModel(IRepo<TEntity> r, ApplicationDbContext c = null)
         {
-            db = c;
-            repo = r;
+            Db = c;
+            Repo = r;
         }
         [BindProperty] public new TView Item
         {
@@ -49,7 +49,7 @@ namespace ReservationProject.Pages
 
         internal async Task<TView> Load(string id)
         {
-            var item = await repo.Get(id);
+            var item = await Repo.Get(id);
             if (!IsNull(id)) await LoadRelatedItems(item);
             return ToViewModel(item);
         }
@@ -78,30 +78,28 @@ namespace ReservationProject.Pages
 
         protected internal virtual void DoBeforeCreate() { }
 
-        public async Task OnGetAsync()
-        {
-            ItemList = await repo.Get();
-        } 
+        
+        public async Task OnGetAsync()=> ItemList = await Repo.Get();
 
         public async Task<IActionResult> OnPostCreateAsync()
         {
             if (!ModelState.IsValid) return Page();
-            await repo.Add(ToEntity(Item));
-            if (!IsNull(db)) await db.SaveChangesAsync();
+            await Repo.Add(ToEntity(Item));
+            if (!IsNull(Db)) await Db.SaveChangesAsync();
             return RedirectToPage("./Index");
         }
         public async Task<IActionResult> OnPostDeleteAsync(string id)
         {
             if (IsNull(id)) return NotFound();
-            await repo.Delete(ToEntity(Item));
-            if (!IsNull(db)) await db.SaveChangesAsync();
+            await Repo.Delete(ToEntity(Item));
+            if (!IsNull(Db)) await Db.SaveChangesAsync();
             return RedirectToPage("./Index");
         }
         public async Task<IActionResult> OnPostEditAsync(string id)
         {
             if (IsNull(id)) return NotFound();
-            await repo.Update(ToEntity(Item));
-            if (!IsNull(Item)) await db.SaveChangesAsync();
+            await Repo.Update(ToEntity(Item));
+            if (!IsNull(Db)) await Db.SaveChangesAsync();
             return RedirectToPage("./Index");
         }
 

@@ -13,7 +13,7 @@ namespace ReservationProject.Infra {
 
         public override async Task<List<Reservation>> Get()
         {
-            return await set.AsNoTracking().Include(c => c.ReservedRoom)
+            return await Set.AsNoTracking().Include(c => c.ReservedRoom)
                 .Include(c => c.ReservedWorker).ToListAsync();
         }
     }

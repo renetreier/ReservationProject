@@ -7,7 +7,6 @@ namespace ReservationProject.Data
 {
     public class Reservation:BaseEntityData,IEntity
     {
-        [Required]
         [DataType(DataType.Date)]
         public DateTime ReservationDate { get; set; }
         [Required]

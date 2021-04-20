@@ -11,8 +11,8 @@ namespace ReservationProject.Data
         public string LastName { get; set; }
         [Required]
         public string FirstName { get; set; }
-        [Required]
         [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
+        [Required]
         public string Email { get; set; }
         [DataType(DataType.Currency)]
         public double Salary { get; set; }

@@ -6,10 +6,10 @@ namespace ReservationProject.Aids {
 
         public static void Values(object o) {
             if (o is null) return;
-            if (o is IList list) setValuesForList(list);
-            else setValuesForProperties(o);
+            if (o is IList list) SetValuesForList(list);
+            else SetValuesForProperties(o);
         }
-        private static void setValuesForProperties(object o) {
+        private static void SetValuesForProperties(object o) {
             if (o is null) return;
             var t = o.GetType();
             var properties = t.GetProperties();
@@ -21,15 +21,15 @@ namespace ReservationProject.Aids {
             }
         }
 
-        private static void setValuesForList(IList l) {
+        private static void SetValuesForList(IList l) {
             if (l is null) return;
-            var t = getListElementsType(l);
+            var t = GetListElementsType(l);
             for (var c = 0; c <= GetRandom.UInt8(3, 5); c++) {
                 var v = GetRandom.ValueOf(t);
                 l.Add(v);
             }
         }
-        private static Type getListElementsType(IList list) {
+        private static Type GetListElementsType(IList list) {
             return Safe.Run(() => {
                 var t = list.GetType();
                 var types =
