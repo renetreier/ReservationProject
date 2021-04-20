@@ -9,7 +9,6 @@ namespace ReservationProject.Facade
     public class ReservationView:IEntity
     {
         public string Id { get; set; }
-        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         [Display(Name = "Reservation Date")]
         public DateTime ReservationDate { get; set; }

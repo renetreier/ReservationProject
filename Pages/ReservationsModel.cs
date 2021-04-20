@@ -51,7 +51,7 @@ namespace ReservationProject.Pages
         //    ItemList = Db.Reservations.AsNoTracking().ToList();
         //    foreach (var item in ItemList)
         //    {
-        //        if (item.RoomId==itemToChange.RoomId && item.ReservationDate==itemToChange.ReservationDate)
+        //        if (item.RoomId == itemToChange.RoomId && item.ReservationDate == itemToChange.ReservationDate)
         //        {
         //            ErrorMessage = "ei ole vaba aeg";
         //            RedirectToPage("./Index");
@@ -60,7 +60,7 @@ namespace ReservationProject.Pages
         //    }
         //}
 
-   
+
 
     }
 }

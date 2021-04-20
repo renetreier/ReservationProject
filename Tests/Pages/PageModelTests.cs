@@ -196,13 +196,6 @@ namespace ReservationProject.Tests.Pages
             pageModel.OnGetAsync().GetAwaiter().GetResult();
             Assert.AreEqual("Get all 1", mockRepo.Actions[0]);
         }
-        //[TestMethod]
-        //public void ToViewModelTestItemIsCorrect()
-        //{
-        //    mockRepo.Result = new TEntity();
-        //    var result = new TView();
-        //    Assert.AreEqual(result, pageModel.ToViewModel(mockRepo.Result));
-        //}
 
     }
 }

@@ -83,7 +83,7 @@ namespace ReservationProject.Pages
 
         public async Task<IActionResult> OnPostCreateAsync()
         {
-            if (!ModelState.IsValid) return Page();//TODO siin pekkis, kui tühjaks jätad mingi asja
+            if (!ModelState.IsValid) return Page();
             await Repo.Add(ToEntity(Item));
             if (!IsNull(Db)) await Db.SaveChangesAsync();
             return RedirectToPage("./Index");
