@@ -49,6 +49,11 @@ namespace ReservationProject.Tests.Pages
             pageModel.Item = oldItem;
             return pageModel.OnPostDeleteAsync(id).GetAwaiter().GetResult();
         }
+        protected object OnPostEditAsync(string id, dynamic oldItem = null)
+        {
+            pageModel.Item = oldItem;
+            return pageModel.OnPostEditAsync(id).GetAwaiter().GetResult();
+        }
         [TestMethod]
         public void OnGetDeleteAsyncTestItemNotFound()
         {
@@ -74,7 +79,6 @@ namespace ReservationProject.Tests.Pages
             var result = pageModel.OnGetDeleteAsync("12345").GetAwaiter().GetResult();
             Assert.IsInstanceOfType(result, typeof(PageResult));
         }
-        
         [TestMethod]
         public void OnGetDetailsAsyncTestItemNotFound()
         {
@@ -125,7 +129,6 @@ namespace ReservationProject.Tests.Pages
             var result = pageModel.OnGetEditAsync("12345").GetAwaiter().GetResult();
             Assert.IsInstanceOfType(result, typeof(PageResult));
         }
-
         [TestMethod]
         public void OnGetCreatePageResult()
         {
@@ -148,13 +151,17 @@ namespace ReservationProject.Tests.Pages
             Assert.AreEqual(null, pageModel.ToViewModel(null));
         }
         [TestMethod]
+        public void ToEntityTestItemIsNull()
+        {
+            Assert.AreEqual(null, pageModel.ToEntity(null));
+        }
+        [TestMethod]
         public void OnPostCreateTestIsCallingAdd()
         {
             var o = CreateNew.Instance<TView>();
             OnPostCreateAsync(o);
             Assert.AreEqual($"Add {o.Id}", mockRepo.Actions[0]);
         }
-
         [TestMethod]
         public void OnPostDeleteTestIsCallingDelete()
         {
@@ -163,7 +170,26 @@ namespace ReservationProject.Tests.Pages
             OnPostDeleteAsync(o.Id, o);
             Assert.AreEqual($"Delete {o.Id}", mockRepo.Actions[0]);
         }
-
+        [TestMethod]
+        public void OnPostEditTestIsCallingEdit()
+        {
+            var o = CreateNew.Instance<TView>();
+            o.Id = "1";
+            OnPostEditAsync(o.Id, o);
+            Assert.AreEqual($"Update {o.Id}", mockRepo.Actions[0]);
+        }
+        [TestMethod]
+        public void OnPostDeleteTestItemNotFound()
+        {
+            var result = OnPostDeleteAsync(null);
+            Assert.IsInstanceOfType(result,typeof(NotFoundResult));
+        }
+        [TestMethod]
+        public void OnPostEditTestItemNotFound()
+        {
+            var result = OnPostEditAsync(null);
+            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
+        }
         [TestMethod]
         public void OnGetAsyncReturnsList()
         {
