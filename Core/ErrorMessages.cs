@@ -12,6 +12,8 @@
               + "was modified by another user after you. The "
               + "edit operation was canceled and the current values in the database "
               + "have been displayed. If you still want to edit this record, click "
-              + "the Save button again.";    
+              + "the Save button again.";
+        public static string RoomNotFree =>
+            "Room is not free on this date";
     }
 }
