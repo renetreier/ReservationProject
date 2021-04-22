@@ -84,9 +84,16 @@ namespace ReservationProject.Pages
         public async Task<IActionResult> OnPostCreateAsync()
         {
             if (!ModelState.IsValid) return Page();
+            if (!RoomAvailable())
+            {
+                ErrorMessage = ErrorMessages.RoomNotFree;
+                return Page();
+            }
             await Repo.Add(ToEntity(Item));
             if (!IsNull(Db)) await Db.SaveChangesAsync();
             return RedirectToPage("./Index");
+         
+            
         }
         public async Task<IActionResult> OnPostDeleteAsync(string id)
         {
@@ -98,10 +105,17 @@ namespace ReservationProject.Pages
         public async Task<IActionResult> OnPostEditAsync(string id)
         {
             if (IsNull(id)) return NotFound();
+            if (!RoomAvailable())
+            {
+                ErrorMessage = ErrorMessages.RoomNotFree;
+                return Page();
+            }
             await Repo.Update(ToEntity(Item));
             if (!IsNull(Db)) await Db.SaveChangesAsync();
             return RedirectToPage("./Index");
         }
+
+        protected internal virtual bool RoomAvailable() => true;
 
     }
 }
