@@ -1,6 +1,7 @@
 ﻿
 using ReservationProject.Data;
 using ReservationProject.Domain;
+using ReservationProject.Infra.Common;
 
 namespace ReservationProject.Infra {
     public interface IWorkersRepo : IRepo<Worker> { }

@@ -6,7 +6,7 @@ using ReservationProject.Core;
 using ReservationProject.Domain;
 using ReservationProject.Infra;
 
-namespace ReservationProject.Pages
+namespace ReservationProject.Pages.Common
 {
     public abstract class BasePageModel : PageModel
     {

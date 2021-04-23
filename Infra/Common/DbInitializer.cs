@@ -1,10 +1,8 @@
-﻿
-using System;
-using System.Globalization;
+﻿using System;
 using System.Linq;
 using ReservationProject.Data;
 
-namespace ReservationProject.Infra {
+namespace ReservationProject.Infra.Common {
     public static class DbInitializer {
         public static void Initialize(ApplicationDbContext dataBase) {
             if (dataBase.Workers.Any()) return;
