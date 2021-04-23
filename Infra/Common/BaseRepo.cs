@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using ReservationProject.Core;
 using ReservationProject.Domain;
 
-namespace ReservationProject.Infra {
+namespace ReservationProject.Infra.Common {
 
     
     public abstract class BaseRepo<T> :IRepo<T> where T : class, IEntity, new() {

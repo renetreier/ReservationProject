@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ReservationProject.Domain;
 using ReservationProject.Infra;
+using ReservationProject.Infra.Common;
 
 namespace ReservationProject.Soft
 {

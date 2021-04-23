@@ -5,6 +5,8 @@ using ReservationProject.Aids;
 using ReservationProject.Data;
 using ReservationProject.Facade;
 using ReservationProject.Infra;
+using ReservationProject.Pages.Common;
+
 //TODO Vaja puhastada ja refaktoorida
 namespace ReservationProject.Pages
 {

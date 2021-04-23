@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace ReservationProject.Pages.Extensions
+namespace ReservationProject.Core.Extensions
 {
     public static class EditorHtml
     {

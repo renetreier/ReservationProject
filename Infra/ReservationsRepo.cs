@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ReservationProject.Data;
 using ReservationProject.Domain;
+using ReservationProject.Infra.Common;
 
 namespace ReservationProject.Infra {
     public interface IReservationsRepo : IRepo<Reservation> { }

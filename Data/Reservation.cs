@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 using ReservationProject.Core;
+using ReservationProject.Data.Common;
 
 namespace ReservationProject.Data
 {
