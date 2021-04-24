@@ -1,12 +1,43 @@
-﻿@{
+﻿@model ReservationProject.Pages.Common.BasePage
+@{
+    ViewData["Title"] = Model.PageTitle;
     Layout = "_Layout";
-    ViewData["Title"] = "Index";
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
 
 <h2>@ViewData["Title"]</h2>
-
 <p>
     <a asp-page="Create" asp-route-handler="Create">Create New</a>
 </p>
+<form asp-page="./Index" method="get">
+    <input type="hidden" name="Handler" value="Index" />
+    <input type="hidden" name="CurrentFilter" value="@Model.CurrentFilter" />
+    <div class="form-group">
+        <p>
+            Find by name:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Index" asp-route-handler="Index">Back to full List</a>
+        </p>
+    </div>
+</form>
 
 @RenderBody()
+
+<a asp-page="./Index"
+   asp-route-handler="Index"
+   asp-route-sortOrder="@Model.SortOrder"
+   asp-route-pageIndex="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+<a asp-page="./Index"
+   asp-route-handler="Index"
+   asp-route-sortOrder="@Model.SortOrder"
+   asp-route-pageIndex="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>

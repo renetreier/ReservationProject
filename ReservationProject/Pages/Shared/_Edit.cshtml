@@ -1,13 +1,11 @@
-﻿@model ReservationProject.Pages.Common.BasePageModel
+﻿@model ReservationProject.Pages.Common.BasePage
 
 @{    
     Layout = "_Layout";
     ViewData["Title"] = "Edit";
     
 }
-
 <h1>@ViewData["Title"]</h1>
-
 <h4>@Model.PageTitle</h4>
 <hr />
 <p class="text-danger">@Model.ErrorMessage</p>
@@ -16,6 +14,7 @@
         <form enctype="multipart/form-data" id="editForm" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Item.Id" />
+            <input type="hidden" asp-for="Item.RowVersion" />
             <dl class="row">
                 @RenderBody()
             </dl>

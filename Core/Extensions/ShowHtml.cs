@@ -5,42 +5,64 @@ using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace ReservationProject.Core.Extensions
-{
-    public static class ShowHtml
-    {
-        public static IHtmlContent Show<TModel, TResult>(this IHtmlHelper<TModel> html,
-            Expression<Func<TModel, TResult>> getMethod) => Show(html, getMethod, getMethod);
-        public static IHtmlContent Show<TModel, TResult1, TResult2>(this IHtmlHelper<TModel> html,
-            Expression<Func<TModel, TResult1>> getLabelMethod, Expression<Func<TModel, TResult2>> getValueMethod = null) 
-        {
-            var labelStr = html.DisplayNameFor(getLabelMethod);
-            var valueStr = (getValueMethod is null) ? GetValue(html, getLabelMethod) : GetValue(html, getValueMethod);
-            return html.Show(labelStr, valueStr);
+namespace ReservationProject.Core.Extensions {
+    public static class ShowHtml {
+        public static IHtmlContent Show<TModel, TResult>(
+            this IHtmlHelper<TModel> h,
+            Expression<Func<TModel, TResult>> e
+        ) => Show(h, e, e);
+
+        public static IHtmlContent Show<TModel, TResult1>(
+            this IHtmlHelper<TModel> h,
+            Expression<Func<TModel, TResult1>> label,
+            object value) {
+            var labelStr = h.DisplayNameFor(label);
+            return h.Show(labelStr, value.ToString());
         }
-        public static IHtmlContent Show<TModel>(this IHtmlHelper<TModel> html, string label, string value)
-        {
-            if (html == null) throw new ArgumentNullException(nameof(html));
-            var s = HtmlStrings(html, label, value);
+        public static IHtmlContent Show<TModel, TResult1, TResult2>(
+            this IHtmlHelper<TModel> h,
+            Expression<Func<TModel, TResult1>> label,
+            Expression<Func<TModel, TResult2>> value = null) {
+            var labelStr = h.DisplayNameFor(label);
+            var valueStr = (value is null) 
+                ? GetValue(h, label) 
+                : GetValue(h, value);
+            return h.Show(labelStr, valueStr);
+        }
+        public static IHtmlContent Show<TModel>(
+            this IHtmlHelper<TModel> h, string label, string value) {
+            if (h == null) throw new ArgumentNullException(nameof(h));
+            var s = HtmlStrings(h, label, value);
             return new HtmlContentBuilder(s);
         }
-        internal static List<object> HtmlStrings<TModel>(IHtmlHelper<TModel> h, string label, string value)
-        {
-            return new List<object> {
-                new HtmlString("<dt class=\"col-sm-2\">"),
+        internal static List<object> HtmlStrings<TModel>(
+            IHtmlHelper<TModel> h, string label, string value) {
+            return HtmlStrings(
                 h.Raw(label),
-                new HtmlString("</dt>"),
-                new HtmlString("<dd class=\"col-sm-10\">"),
-                h.Raw(value),
-                new HtmlString("</dd>")
-            };
+                h.Raw(value)
+                );
         }
-        internal static string GetValue<TModel, TResult>(IHtmlHelper<TModel> h, Expression<Func<TModel, TResult>> e)
-        {
+        internal static string GetValue<TModel, TResult>(IHtmlHelper<TModel> h, Expression<Func<TModel, TResult>> e) {
             var value = h.DisplayFor(e);
             var writer = new System.IO.StringWriter();
             value.WriteTo(writer, HtmlEncoder.Default);
             return writer.ToString();
         }
+        public static List<object> HtmlStrings(object label, object value) {
+            return new (){
+                new HtmlString("<dt class=\"col-sm-2\">"),
+                label,
+                new HtmlString("</dt>"),
+                new HtmlString("<dd class=\"col-sm-10\">"),
+                value,
+                new HtmlString("</dd>")
+            };
+        }
     }
 }
+
+
+
+
+
+

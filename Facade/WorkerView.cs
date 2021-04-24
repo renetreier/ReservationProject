@@ -1,12 +1,9 @@
-﻿using ReservationProject.Core;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using ReservationProject.Facade.Common;
 
 namespace ReservationProject.Facade {
-    public class WorkerView : IEntity
+    public class WorkerView : BaseEntityView
     {
-        public string Id { get; set; }
 
         [StringLength(50)]
         [RegularExpression(@"^[A-Z]+[a-zA-Z]*$")]
@@ -22,6 +19,5 @@ namespace ReservationProject.Facade {
         public string Email { get; set; }
         public double Salary { get; set; }
         public string FullName { get; set; }
-        public byte[] RowVersion { get; set; }
     }
 }

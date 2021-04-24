@@ -1,7 +1,7 @@
 ﻿@using ReservationProject.Core.Extensions
 
-@model ReservationProject.Pages.ReservationsModel
+@model ReservationProject.Pages.ReservationsPage
 
 @Html.Editor(model => model.Item.ReservationDate)
-@Html.Select(model=>model.Item.RoomId, Model.Rooms, "Select room")
-@Html.Select(model => model.Item.WorkerId, Model.Workers, "Select worker")
+@Html.Select(model => model.Item.RoomName, Model.Rooms, "Select room") @*TODO SIIN KA VIST KALA*@
+@Html.Select(model => model.Item.WorkerName, Model.Workers, "Select worker")@*TODO SIIN KA VIST KALA*@
