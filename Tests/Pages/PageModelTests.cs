@@ -171,7 +171,7 @@ namespace ReservationProject.Tests.Pages
             Assert.AreEqual($"Delete {o.Id}", mockRepo.Actions[0]);
         }
         [TestMethod]
-        public void OnPostEditTestIsCallingEdit()
+        public void OnPostEditTestIsCallingUpdate()
         {
             var o = CreateNew.Instance<TView>();
             o.Id = "1";

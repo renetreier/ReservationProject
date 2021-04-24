@@ -49,7 +49,7 @@ namespace ReservationProject.Pages
 
         protected internal override bool RoomAvailable()
         {
-            var reservationInDataBase = Db.Reservations.SingleOrDefault(//TODO siia peaks saama, et ta ei ole DB vaid REPO
+            var reservationInDataBase = Db?.Reservations.SingleOrDefault(//TODO siia peaks saama, et ta ei ole DB vaid REPO
                 r => r.RoomId == Item.RoomId && r.ReservationDate == Item.ReservationDate);
             if (reservationInDataBase != null)
                 return false;
