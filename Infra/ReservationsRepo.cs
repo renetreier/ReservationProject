@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ReservationProject.Data;
@@ -14,7 +15,7 @@ namespace ReservationProject.Infra {
 
         public override async Task<List<Reservation>> Get()
         {
-            return await Set.AsNoTracking().Include(c => c.ReservedRoom)
+            return await Set.AsNoTracking().OrderBy(r=>r.ReservationDate).Include(c => c.ReservedRoom)
                 .Include(c => c.ReservedWorker).ToListAsync();
         }
     }
