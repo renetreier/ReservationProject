@@ -14,7 +14,9 @@ namespace ReservationProject.Facade
         public string RoomId { get; set; }
         [Display(Name = "Worker")]
         public string WorkerId { get; set; }
+        [Display(Name="Worker Name")]
         public string WorkerName { get; set; }
+        [Display(Name = "Room Name")]
         public string RoomName { get; set; }
 
     }

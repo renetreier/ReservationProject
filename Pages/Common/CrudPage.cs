@@ -10,6 +10,7 @@ namespace ReservationProject.Pages.Common {
         where TView : class, IEntityData, new() {
         protected CrudPage(IRepo<TEntity> r, ApplicationDbContext c = null) :base(r, c) { }
 
-        public IList<TView> Items { get; set; }
+        public IList<TView> ItemList { get; set; }
+        
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.EntityFrameworkCore;
 using ReservationProject.Core;
 using ReservationProject.Data.Common;
@@ -20,6 +21,7 @@ namespace ReservationProject.Infra.Common {
         public new async Task<TEntity> Get(string id) => ToEntity(await base.Get(id));
         public virtual async Task<bool> Delete(TEntity e) => await Delete(ToData(e));
         public virtual async Task<bool> Add(TEntity e) => await Add(ToData(e));
+
         public virtual async Task<bool> Update(TEntity e) => await Update(ToData(e));
         public new TEntity GetById(string id) => ToEntity(base.GetById(id));
     }
@@ -51,11 +53,18 @@ namespace ReservationProject.Infra.Common {
             return isOk;
         }
 
+        //TODO mingi pask, kaotab objekti andmed ära. ToData mingi jama mu arust. Selle peaks vist samamoodi tegema nagu ToEntity, aga ei osanud
         public async Task<bool> Add(T obj)
         {
             var isOk = await isEntityOk(obj, true);
-            if (isOk) await Set.AddAsync(obj);
-            await Db.SaveChangesAsync();
+            if (isOk)
+            {
+                obj.Id = Guid.NewGuid().ToString();
+                await Set.AddAsync(obj);
+                await Db.SaveChangesAsync();
+            }
+            
+            
             return isOk;
         }
 
