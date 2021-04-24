@@ -30,6 +30,7 @@ namespace ReservationProject.Pages.Common
     {
         protected readonly ApplicationDbContext Db;
         protected readonly IRepo<TEntity> Repo;
+       
 
         protected BasePageModel(IRepo<TEntity> r, ApplicationDbContext c = null)
         {
@@ -179,7 +180,6 @@ namespace ReservationProject.Pages.Common
                 return Page();
             }
             await Repo.Add(ToEntity(Item));
-            if (!IsNull(Db)) await Db.SaveChangesAsync();
             return RedirectToPage("./Index");
 
 

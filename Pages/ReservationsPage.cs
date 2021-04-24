@@ -23,8 +23,8 @@ namespace ReservationProject.Pages
         {
             if (IsNull(c)) return null;
             var v = Copy.Members(c.Data, new ReservationView());
-            v.WorkerName = c.Worker?.LastName;
-            v.RoomName = c.Room?.RoomName;
+            v.WorkerName = c.ReservedWorker?.FullName;
+            v.RoomName = c.ReservedRoom?.RoomName;
             return v;
         }
         protected internal override ReservationEntity ToEntity(ReservationView c)
@@ -33,25 +33,24 @@ namespace ReservationProject.Pages
             return new ReservationEntity(d);
         }
 
-        //TODO need 2 ei tööta
         public SelectList Rooms =>
             new(
                 Db.Rooms.OrderBy(x => x.RoomName).AsNoTracking(),
-                "RoomId","RoomName",Item.RoomId);
+                "Id","RoomName",Item?.RoomId);
         public SelectList Workers =>
             new(
                 Db.Workers.OrderBy(x => x.LastName).AsNoTracking(),
-                "WorkerId","LastName",Item.WorkerId);
+                "Id","LastName",Item?.WorkerId);
 
-        protected internal override async Task LoadRelatedItems(ReservationEntity item)
-        {
-            if (IsNull(item)) return;
-            if (IsNull(Db)) return;
-            item.Room = await Db.Rooms.AsNoTracking()
-                .FirstOrDefaultAsync(r => r.Id == item.RoomId);
-            item.Worker = await Db.Workers.AsNoTracking()
-                .FirstOrDefaultAsync(w => w.Id == item.WorkerId);
-        }
+        //protected internal override async Task LoadRelatedItems(ReservationEntity item)
+        //{
+        //    if (IsNull(item)) return;
+        //    if (IsNull(Db)) return;
+        //    item.RoomName = await Db.Rooms.AsNoTracking()
+        //        .FirstOrDefaultAsync(r => r.Id == item.RoomId);
+        //    item.Worker = await Db.Workers.AsNoTracking()
+        //        .FirstOrDefaultAsync(w => w.Id == item.WorkerId);
+        //}
 
 
         protected internal override bool RoomAvailable()

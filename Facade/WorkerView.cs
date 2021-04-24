@@ -18,6 +18,13 @@ namespace ReservationProject.Facade {
         [Required]
         public string Email { get; set; }
         public double Salary { get; set; }
-        public string FullName { get; set; }
+        [Display(Name = "Name")]
+        public string FullName
+        {
+            get
+            {
+                return LastName + ", " + FirstName;
+            }
+        }
     }
 }
