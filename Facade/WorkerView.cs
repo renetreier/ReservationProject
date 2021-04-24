@@ -1,7 +1,5 @@
 ﻿using ReservationProject.Core;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReservationProject.Facade {
     public class WorkerView : IEntity

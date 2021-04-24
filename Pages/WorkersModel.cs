@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using ReservationProject.Aids;
+﻿using ReservationProject.Aids;
 using ReservationProject.Data;
 using ReservationProject.Facade;
 using ReservationProject.Infra;

@@ -57,21 +57,5 @@ namespace ReservationProject.Pages
                 return false;
             return true;
         }
-        //protected internal override void DoBeforeCreate(dynamic itemToChange)
-        //{
-        //    ItemList = Db.Reservations.AsNoTracking().ToList();
-        //    foreach (var item in ItemList)
-        //    {
-        //        if (item.RoomId == itemToChange.RoomId && item.ReservationDate == itemToChange.ReservationDate)
-        //        {
-        //            ErrorMessage = "ei ole vaba aeg";
-        //            RedirectToPage("./Index");
-        //            break;
-        //        }
-        //    }
-        //}
-
-
-
     }
 }
