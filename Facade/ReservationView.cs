@@ -1,25 +1,21 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using ReservationProject.Core;
-using ReservationProject.Data;
+using ReservationProject.Facade.Common;
 
 
 namespace ReservationProject.Facade
 {
-    public class ReservationView:IEntity
+    public class ReservationView:BaseEntityView
     {
-        public string Id { get; set; }
         [DataType(DataType.Date)]
         [Display(Name = "Reservation Date")]
         public DateTime ReservationDate { get; set; }
-        [Required]
         [Display(Name = "Room")]
         public string RoomId { get; set; }
-        [Required]
         [Display(Name = "Worker")]
         public string WorkerId { get; set; }
-        public Room ReservedRoom { get; set; }
-        public Worker ReservedWorker { get; set; }
-        public byte[] RowVersion { get; set; }
+        public string WorkerName { get; set; }
+        public string RoomName { get; set; }
+
     }
 }

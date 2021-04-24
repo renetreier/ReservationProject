@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ReservationProject.Domain;
+using ReservationProject.Domain.Common;
+using ReservationProject.Domain.Repos;
 using ReservationProject.Infra;
 using ReservationProject.Infra.Common;
 

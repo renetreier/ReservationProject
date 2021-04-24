@@ -1,22 +1,19 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReservationProject.Aids;
 using ReservationProject.Core;
-using ReservationProject.Facade;
 
 
 //TODO Vaja lisada Igale poole Assemblyinfo, et testid ligi saaks
 namespace ReservationProject.Tests.Pages
 {
-    public class PageModelTests<TEntity, TView> 
-        where TEntity : class, IEntity, new()
-        where TView : IEntity
-    { 
+    public class PageModelTests<TData, TView>
+       where TData : IBaseEntity, new()
+       where TView : IEntityData
+    {
         protected dynamic pageModel;
-        protected TestRepo<TEntity> mockRepo;
+        protected TestRepo<TData> mockRepo;
 
 
         protected object OnGetAsync(object result = null)
@@ -75,7 +72,7 @@ namespace ReservationProject.Tests.Pages
         [TestMethod]
         public void OnGetDeleteAsyncTestPageResult()
         {
-            mockRepo.Result = new TEntity();
+            mockRepo.Result = new TData();
             var result = pageModel.OnGetDeleteAsync("12345").GetAwaiter().GetResult();
             Assert.IsInstanceOfType(result, typeof(PageResult));
         }
@@ -100,7 +97,7 @@ namespace ReservationProject.Tests.Pages
         [TestMethod]
         public void OnGetDetailsAsyncTestPageResult()
         {
-            mockRepo.Result = new TEntity();
+            mockRepo.Result = new TData();
             var result = pageModel.OnGetDetailsAsync("12345").GetAwaiter().GetResult();
             Assert.IsInstanceOfType(result, typeof(PageResult));
         }
@@ -125,7 +122,7 @@ namespace ReservationProject.Tests.Pages
         [TestMethod]
         public void OnGetEditAsyncTestPageResult()
         {
-            mockRepo.Result = new TEntity();
+            mockRepo.Result = new TData();
             var result = pageModel.OnGetEditAsync("12345").GetAwaiter().GetResult();
             Assert.IsInstanceOfType(result, typeof(PageResult));
         }
@@ -166,7 +163,6 @@ namespace ReservationProject.Tests.Pages
         public void OnPostDeleteTestIsCallingDelete()
         {
             var o = CreateNew.Instance<TView>();
-            o.Id = "1";
             OnPostDeleteAsync(o.Id, o);
             Assert.AreEqual($"Delete {o.Id}", mockRepo.Actions[0]);
         }
@@ -174,7 +170,6 @@ namespace ReservationProject.Tests.Pages
         public void OnPostEditTestIsCallingUpdate()
         {
             var o = CreateNew.Instance<TView>();
-            o.Id = "1";
             OnPostEditAsync(o.Id, o);
             Assert.AreEqual($"Update {o.Id}", mockRepo.Actions[0]);
         }
@@ -193,7 +188,7 @@ namespace ReservationProject.Tests.Pages
         [TestMethod]
         public void OnGetAsyncReturnsList()
         {
-            pageModel.OnGetAsync().GetAwaiter().GetResult();
+            pageModel.OnGetIndexAsync().GetAwaiter().GetResult();
             Assert.AreEqual("Get all 1", mockRepo.Actions[0]);
         }
 

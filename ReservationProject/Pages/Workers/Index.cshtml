@@ -1,6 +1,6 @@
 ﻿@page
 @using ReservationProject.Core.Extensions
-@model ReservationProject.Pages.WorkersModel
+@model ReservationProject.Pages.WorkersPage
 
 @{
     Layout = "_Index";
@@ -8,20 +8,20 @@
 <table class="table">
     <thead>
         <tr>
-            @Html.TableHeader(model => model.ItemList[0].FullName)
-            @Html.TableHeader(model => model.ItemList[0].Email)
-            @Html.TableHeader(model => model.ItemList[0].Salary)
+            @Html.TableSortHeader(model => model.Item.LastName, Model)
+            @Html.TableSortHeader(model => model.Item.Email, Model)
+            @Html.TableSortHeader(model => model.Item.Salary, Model)
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.ItemList)
+        @foreach (var item in Model.Items)
         {
             <tr>
-                @Html.RowData(modelItem => item.FullName)
+                @Html.RowData(modelItem => item.LastName)
                 @Html.RowData(modelItem => item.Email)
                 @Html.RowData(modelItem => item.Salary)
-                @Html.RowButtons("Workers", $"{item.Id}")
+                @Html.RowButtons(Model.PageUrl, $"{item.Id}")
             </tr>
         }
     </tbody>

@@ -1,40 +1,47 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using ReservationProject.Core;
+using ReservationProject.Domain.Repos;
 
 namespace ReservationProject.Tests.Pages
 {
-    public abstract class TestRepo<T> where T : IEntity
+    public abstract class TestRepo<TClass> : IRepo<TClass> where TClass : IBaseEntity
     {
-        public List<string> Actions { get; } = new();
+        public string ErrorMessage { get; set; }
+        public TClass EntityInDb { get; set; }
         public object Result { get; set; } = null;
-
-        private async Task<T> Perform(string v)
+        public List<string> Actions { get; } = new();
+        public async Task<bool> Add(TClass obj) => await complete($"Add {obj?.Id}");
+        public async Task<bool> Delete(TClass obj) => await complete($"Delete {obj?.Id}");
+        public async Task<bool> Update(TClass obj) => await complete($"Update {obj?.Id}");
+        public async Task<List<TClass>> Get() => await list("List");
+        public async Task<TClass> Get(string id) => await item($"Get {id}");
+        public TClass GetById(string id) => get($"GetById {id}");
+        private async Task<TClass> item(string v) => await complete(v, (TClass)Result);
+        private async Task<List<TClass>> list(string v) => await complete(v, (List<TClass>)Result);
+        private async Task<TResult> complete<TResult>(string s, TResult r)
+        {
+            await complete(s);
+            return r;
+        }
+        private async Task<bool> complete(string s)
         {
             await Task.CompletedTask;
-            Actions.Add(v);
-            return (T) Result;
+            Actions.Add(s);
+            return Result is not null;
         }
-
-        private async Task<List<T>> GetList(string v)
+        private TClass get(string s)
         {
-            List<string> returnList = new();
-            await Task.CompletedTask;
-            returnList.Add(v);
-            Actions.Add(v + $" {returnList.Count}");
-            return (List<T>)Result;
+            Actions.Add(s);
+            return (TClass)Result;
         }
-
-        public async Task<T> Get(string id) => await Perform($"Get {id}");
-        public async Task<List<T>> Get() => await GetList("Get all");
-
-        public async Task Delete(T obj) => await Perform($"Delete {obj.Id}");
-
-        public async Task Add(T obj) => await Perform($"Add {obj.Id}");
-
-        public async Task Update(T obj) => await Perform($"Update {obj.Id}");
-
-        public T GetById(string id) => throw new System.NotImplementedException();
-        
+        public int? PageIndex { get; set; }
+        public int TotalPages { get; } = 0;
+        public bool HasNextPage { get; } = false;
+        public bool HasPreviousPage { get; } = false;
+        public int PageSize { get; set; }
+        public string CurrentFilter { get; set; }
+        public string SearchString { get; set; }
+        public string SortOrder { get; set; }
     }
 }

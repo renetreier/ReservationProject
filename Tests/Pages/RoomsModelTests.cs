@@ -1,12 +1,8 @@
-
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReservationProject.Data;
+using ReservationProject.Domain;
+using ReservationProject.Domain.Repos;
 using ReservationProject.Facade;
-using ReservationProject.Infra;
 using ReservationProject.Pages;
 
 namespace ReservationProject.Tests.Pages
@@ -14,16 +10,16 @@ namespace ReservationProject.Tests.Pages
     
 
     [TestClass]
-    public class RoomsModelTests:PageModelTests<Room, RoomView>
+    public class RoomsModelTests:PageModelTests<RoomEntity, RoomView>
     {
-        private class TestRoomsRepo : TestRepo<Room>, IRoomsRepo { }
+        private class TestRoomsRepo : TestRepo<RoomEntity>, IRoomsRepo { }
        
         
         [TestInitialize]
         public void TestInitialize()
         {
             mockRepo = new TestRoomsRepo();
-            pageModel = new RoomsModel((IRoomsRepo)mockRepo);
+            pageModel = new RoomsPage((IRoomsRepo)mockRepo);
         }
     }
 }
