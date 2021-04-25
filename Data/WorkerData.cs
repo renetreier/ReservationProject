@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using ReservationProject.Data.Common;
+﻿using ReservationProject.Data.Common;
 
 namespace ReservationProject.Data
 { 

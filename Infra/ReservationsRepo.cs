@@ -2,7 +2,6 @@
 using ReservationProject.Data;
 using ReservationProject.Domain;
 using ReservationProject.Domain.Repos;
-using ReservationProject.Facade;
 using ReservationProject.Infra.Common;
 
 namespace ReservationProject.Infra {
@@ -21,6 +20,7 @@ namespace ReservationProject.Infra {
                      x.RoomId.Contains(SearchString) ||
                      x.WorkerId.Contains(SearchString));
         }
+
         //TODO Renksu kala
         //public override async Task<List<ReservationData>> Get()
         //{

@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReservationProject.Aids;
 using ReservationProject.Core;
+using ReservationProject.Pages;
 
 
 //TODO Vaja lisada Igale poole Assemblyinfo, et testid ligi saaks
@@ -16,11 +18,6 @@ namespace ReservationProject.Tests.Pages
         protected TestRepo<TData> mockRepo;
 
 
-        protected object OnGetAsync(object result = null)
-        {
-            mockRepo.Result = result;
-            return pageModel.OnGetAsync().GetAwaiter().GetResult();
-        }
         protected object OnGetDeleteAsync(string id, object result=null)
         {
             mockRepo.Result = result;
@@ -186,11 +183,10 @@ namespace ReservationProject.Tests.Pages
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
         [TestMethod]
-        public void OnGetAsyncReturnsList()
+        public void IndexPageReturnsRedirectToPageResult()
         {
-            pageModel.OnGetIndexAsync().GetAwaiter().GetResult();
-            Assert.AreEqual("Get all 1", mockRepo.Actions[0]);
+            var result = pageModel.IndexPage();
+            Assert.IsInstanceOfType(result, typeof(RedirectToPageResult));
         }
-
     }
 }

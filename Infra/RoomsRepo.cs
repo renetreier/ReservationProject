@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
 using ReservationProject.Data;
 using ReservationProject.Domain;
 using ReservationProject.Domain.Repos;
@@ -13,7 +10,7 @@ namespace ReservationProject.Infra {
     {
         public RoomsRepo(ApplicationDbContext c) : base(c, c?.Rooms) { }
         protected override RoomEntity ToEntity(RoomData d) => new(d);
-        protected override RoomData ToData(RoomEntity e) => e?.Data ?? new RoomData();
+        protected override RoomData ToData(RoomEntity e) =>  e?.Data ?? new RoomData() ;
 
         protected internal override IQueryable<RoomData> ApplyFilters(IQueryable<RoomData> query)
         {

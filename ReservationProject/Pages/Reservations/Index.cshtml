@@ -10,8 +10,8 @@
     <thead>
         <tr>
             @Html.TableSortHeader(model => model.Item.ReservationDate, Model)
-            @Html.TableSortHeader(model => model.Item.RoomName,Model)
-            @Html.TableSortHeader(model => model.Item.WorkerName, Model)
+            @Html.TableHeader(model => model.Item.RoomName)
+            @Html.TableHeader(model => model.Item.WorkerName)
             <th></th>
         </tr>
     </thead>

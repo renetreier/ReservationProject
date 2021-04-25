@@ -50,11 +50,9 @@ namespace ReservationProject.Pages.Common
         protected internal abstract TEntity ToEntity(TView e);
         protected internal bool IsNull(object o) => o is null;
 
-        //TODO SIIN VAJA KUIDAGI NÜÜD MINGI NORMAALNE JAMA TEHA :)
         internal async Task<TView> Load(string id)
         {
             var item = await Repo.Get(id);
-            if (!IsNull(id)) await LoadRelatedItems(item);
             //ErrorMessage = SetConcurrencyMsg(concurrencyError);
             return ToViewModel(item);
         }
@@ -88,45 +86,14 @@ namespace ReservationProject.Pages.Common
         //protected internal virtual void DoBeforeDelete(TView v) { }
         //protected internal virtual void DoBeforeEdit(TView v) { }
 
-        //internal IActionResult IndexPage() =>
-        //    RedirectToPage("./Index", new { handler = "Index" });
+        internal IActionResult IndexPage() =>
+            RedirectToPage("./Index", new { handler = "Index" });
         //public async Task<IActionResult> OnGetDeleteAsync(string id, bool concurrencyError = false)
         //    => IsNull(Item = await Load(id, concurrencyError)) ? NotFound() : Page();
         //public async Task<IActionResult> OnGetDetailsAsync(string id)
         //    => IsNull(Item = await Load(id)) ? NotFound() : Page();
         //public async Task<IActionResult> OnGetEditAsync(string id)
         //    => IsNull(Item ??= await Load(id)) ? NotFound() : Page();
-
-        //public IActionResult OnGetCreate()
-        //{
-        //    DoBeforeCreate(Item);
-        //    return Page();
-        //}
-        //public virtual async Task<IActionResult> OnPostDeleteAsync(string id)
-        //{
-        //    DoBeforeDelete(Item);
-        //    if (await save(remove)) return IndexPage();
-        //    if (Repo?.EntityInDb is null) return IndexPage();
-        //    return RedirectToPage("./Delete",
-        //        new { id, concurrencyError = true, handler = "Delete" });
-        //}
-        //public virtual async Task<IActionResult> OnPostEditAsync(string id, string[] selectedCourses = null)
-        //{
-        //    if (!ModelState.IsValid) return Page();
-        //    DoBeforeEdit(Item);
-        //    if (await save(update)) return IndexPage();
-        //    SetPreviousValues(ToViewModel(Repo?.EntityInDb));
-        //    Item.RowVersion = Repo?.EntityInDb?.RowVersion;
-        //    ModelState.Remove("Item.RowVersion");
-        //    return Page();
-        //}
-        //public virtual async Task<IActionResult> OnPostCreateAsync()
-        //{
-        //    if (!ModelState.IsValid) return Page();
-        //    DoBeforeCreate(Item);
-        //    if (await save(add)) return IndexPage();
-        //    return Page();
-        //}
 
 
         //private void SetPreviousValues(TView dbValues)
@@ -168,9 +135,6 @@ namespace ReservationProject.Pages.Common
 
         protected internal virtual void DoBeforeCreate() { }
 
-        //TODO siin vist kala? vb seda pole pldse vaja, aga äkki on ka
-        //public async Task OnGetAsync()=> ItemList = await Repo.Get();
-
         public async Task<IActionResult> OnPostCreateAsync()
         {
             if (!ModelState.IsValid) return Page();
@@ -180,16 +144,14 @@ namespace ReservationProject.Pages.Common
                 return Page();
             }
             await Repo.Add(ToEntity(Item));
-            return RedirectToPage("./Index");
-
-
+            return IndexPage();
         }
-        public async Task<IActionResult> OnPostDeleteAsync(string id)
+            public async Task<IActionResult> OnPostDeleteAsync(string id)
         {
             if (IsNull(id)) return NotFound();
             await Repo.Delete(ToEntity(Item));
             if (!IsNull(Db)) await Db.SaveChangesAsync();
-            return RedirectToPage("./Index");
+            return IndexPage();
         }
         public async Task<IActionResult> OnPostEditAsync(string id)
         {
@@ -201,7 +163,7 @@ namespace ReservationProject.Pages.Common
             }
             await Repo.Update(ToEntity(Item));
             if (!IsNull(Db)) await Db.SaveChangesAsync();
-            return RedirectToPage("./Index");
+            return IndexPage();
         }
 
         protected internal virtual bool RoomAvailable() => true;
