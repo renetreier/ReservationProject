@@ -18,8 +18,11 @@ namespace ReservationProject.Pages
         protected internal override RoomView ToViewModel(RoomEntity r)
             => IsNull(r) ? null : Copy.Members(r, new RoomView());
 
-        protected internal override RoomEntity ToEntity(RoomView r)
-            => IsNull(r) ? null : Copy.Members(r, new RoomEntity());
+        protected internal override RoomEntity ToEntity(RoomView c)
+        {
+            var d = Copy.Members(c, new RoomData());
+            return new RoomEntity(d);
+        }
 
     }
 }

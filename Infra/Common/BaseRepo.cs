@@ -53,7 +53,7 @@ namespace ReservationProject.Infra.Common {
             return isOk;
         }
 
-        //TODO mingi pask, kaotab objekti andmed ära. ToData mingi jama mu arust. Selle peaks vist samamoodi tegema nagu ToEntity, aga ei osanud
+
         public async Task<bool> Add(T obj)
         {
             var isOk = await isEntityOk(obj, true);
@@ -63,8 +63,6 @@ namespace ReservationProject.Infra.Common {
                 await Set.AddAsync(obj);
                 await Db.SaveChangesAsync();
             }
-            
-            
             return isOk;
         }
 
