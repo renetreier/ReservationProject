@@ -14,7 +14,7 @@ namespace ReservationProject.Aids {
             => Safe.Run(() => {
                 var v = Enum.GetValues(t);
                 return v.GetValue(i);
-            }, def(t));
+            }, Def(t));
         public static dynamic ValueByValue(Type t, int i)
             => Safe.Run(() => {
                 var values = Enum.GetValues(t);
@@ -23,10 +23,10 @@ namespace ReservationProject.Aids {
                     if (v == i) return e;
                 }
 
-                return def(t);
-            }, def(t));
+                return Def(t);
+            }, Def(t));
 
-        private static object def(Type t) {
+        private static object Def(Type t) {
             if (t.IsValueType) return Activator.CreateInstance(t);
             if (!t.IsEnum) return null;
             var v = Enum.GetValues(t);

@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReservationProject.Aids;
 using ReservationProject.Core;
-using ReservationProject.Pages;
 
 
 //TODO Vaja lisada Igale poole Assemblyinfo, et testid ligi saaks
@@ -14,39 +12,39 @@ namespace ReservationProject.Tests.Pages
        where TData : IBaseEntity, new()
        where TView : IEntityData
     {
-        protected dynamic pageModel;
-        protected TestRepo<TData> mockRepo;
+        protected dynamic PageModel;
+        protected TestRepo<TData> MockRepo;
 
 
         protected object OnGetDeleteAsync(string id, object result=null)
         {
-            mockRepo.Result = result;
-            return pageModel.OnGetDeleteAsync(id).GetAwaiter().GetResult();
+            MockRepo.Result = result;
+            return PageModel.OnGetDeleteAsync(id).GetAwaiter().GetResult();
         }
         protected object OnGetDetailsAsync(string id, object result = null)
         {
-            mockRepo.Result = result;
-            return pageModel.OnGetDetailsAsync(id).GetAwaiter().GetResult();
+            MockRepo.Result = result;
+            return PageModel.OnGetDetailsAsync(id).GetAwaiter().GetResult();
         }
         protected object OnGetEditAsync(string id, object result = null)
         {
-            mockRepo.Result = result;
-            return pageModel.OnGetEditAsync(id).GetAwaiter().GetResult();
+            MockRepo.Result = result;
+            return PageModel.OnGetEditAsync(id).GetAwaiter().GetResult();
         }
         protected object OnPostCreateAsync(dynamic newItem = null)
         {
-            pageModel.Item = newItem;
-            return pageModel.OnPostCreateAsync().GetAwaiter().GetResult();
+            PageModel.Item = newItem;
+            return PageModel.OnPostCreateAsync().GetAwaiter().GetResult();
         }
         protected object OnPostDeleteAsync(string id, dynamic oldItem = null)
         {
-            pageModel.Item = oldItem;
-            return pageModel.OnPostDeleteAsync(id).GetAwaiter().GetResult();
+            PageModel.Item = oldItem;
+            return PageModel.OnPostDeleteAsync(id).GetAwaiter().GetResult();
         }
         protected object OnPostEditAsync(string id, dynamic oldItem = null)
         {
-            pageModel.Item = oldItem;
-            return pageModel.OnPostEditAsync(id).GetAwaiter().GetResult();
+            PageModel.Item = oldItem;
+            return PageModel.OnPostEditAsync(id).GetAwaiter().GetResult();
         }
         [TestMethod]
         public void OnGetDeleteAsyncTestItemNotFound()
@@ -57,20 +55,20 @@ namespace ReservationProject.Tests.Pages
         [TestMethod]
         public void OnGetDeleteAsyncTestIdIsNull()
         {
-            var result = pageModel.OnGetDeleteAsync(null).GetAwaiter().GetResult();
+            var result = PageModel.OnGetDeleteAsync(null).GetAwaiter().GetResult();
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
         [TestMethod]
         public void OnGetDeleteAsyncTestIsCallingGet()
         {
-            pageModel.OnGetDeleteAsync("12345").GetAwaiter().GetResult();
-            Assert.AreEqual("Get 12345", mockRepo.Actions[0]);
+            PageModel.OnGetDeleteAsync("12345").GetAwaiter().GetResult();
+            Assert.AreEqual("Get 12345", MockRepo.Actions[0]);
         }
         [TestMethod]
         public void OnGetDeleteAsyncTestPageResult()
         {
-            mockRepo.Result = new TData();
-            var result = pageModel.OnGetDeleteAsync("12345").GetAwaiter().GetResult();
+            MockRepo.Result = new TData();
+            var result = PageModel.OnGetDeleteAsync("12345").GetAwaiter().GetResult();
             Assert.IsInstanceOfType(result, typeof(PageResult));
         }
         [TestMethod]
@@ -82,20 +80,20 @@ namespace ReservationProject.Tests.Pages
         [TestMethod]
         public void OnGetDetailsAsyncTestIdIsNull()
         {
-            var result = pageModel.OnGetDetailsAsync(null).GetAwaiter().GetResult();
+            var result = PageModel.OnGetDetailsAsync(null).GetAwaiter().GetResult();
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
         [TestMethod]
         public void OnGetDetailsAsyncTestIsCallingGet()
         {
-            pageModel.OnGetDetailsAsync("12345").GetAwaiter().GetResult();
-            Assert.AreEqual("Get 12345", mockRepo.Actions[0]);
+            PageModel.OnGetDetailsAsync("12345").GetAwaiter().GetResult();
+            Assert.AreEqual("Get 12345", MockRepo.Actions[0]);
         }
         [TestMethod]
         public void OnGetDetailsAsyncTestPageResult()
         {
-            mockRepo.Result = new TData();
-            var result = pageModel.OnGetDetailsAsync("12345").GetAwaiter().GetResult();
+            MockRepo.Result = new TData();
+            var result = PageModel.OnGetDetailsAsync("12345").GetAwaiter().GetResult();
             Assert.IsInstanceOfType(result, typeof(PageResult));
         }
         [TestMethod]
@@ -107,68 +105,68 @@ namespace ReservationProject.Tests.Pages
         [TestMethod]
         public void OnGetEditAsyncTestIdIsNull()
         {
-            var result = pageModel.OnGetEditAsync(null).GetAwaiter().GetResult();
+            var result = PageModel.OnGetEditAsync(null).GetAwaiter().GetResult();
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
         [TestMethod]
         public void OnGetEditAsyncTestIsCallingGet()
         {
-            pageModel.OnGetEditAsync("12345").GetAwaiter().GetResult();
-            Assert.AreEqual("Get 12345", mockRepo.Actions[0]);
+            PageModel.OnGetEditAsync("12345").GetAwaiter().GetResult();
+            Assert.AreEqual("Get 12345", MockRepo.Actions[0]);
         }
         [TestMethod]
         public void OnGetEditAsyncTestPageResult()
         {
-            mockRepo.Result = new TData();
-            var result = pageModel.OnGetEditAsync("12345").GetAwaiter().GetResult();
+            MockRepo.Result = new TData();
+            var result = PageModel.OnGetEditAsync("12345").GetAwaiter().GetResult();
             Assert.IsInstanceOfType(result, typeof(PageResult));
         }
         [TestMethod]
         public void OnGetCreatePageResult()
         {
-            var result = pageModel.OnGetCreate();
+            var result = PageModel.OnGetCreate();
             Assert.IsInstanceOfType(result, typeof(PageResult));
         }
         [TestMethod]
         public void IsNullReturnTrue()
         {
-            Assert.AreEqual(true, pageModel.IsNull(null));
+            Assert.AreEqual(true, PageModel.IsNull(null));
         }
         [TestMethod]
         public void IsNullReturnFalse()
         {
-            Assert.AreEqual(false, pageModel.IsNull(1));
+            Assert.AreEqual(false, PageModel.IsNull(1));
         }
         [TestMethod]
         public void ToViewModelTestItemIsNull()
         {
-            Assert.AreEqual(null, pageModel.ToViewModel(null));
+            Assert.AreEqual(null, PageModel.ToViewModel(null));
         }
         [TestMethod]
         public void ToEntityTestItemIsNull()
         {
-            Assert.AreEqual(null, pageModel.ToEntity(null));
+            Assert.AreEqual(null, PageModel.ToEntity(null));
         }
         [TestMethod]
         public void OnPostCreateTestIsCallingAdd()
         {
             var o = CreateNew.Instance<TView>();
             OnPostCreateAsync(o);
-            Assert.AreEqual($"Add {o.Id}", mockRepo.Actions[0]);
+            Assert.AreEqual($"Add {o.Id}", MockRepo.Actions[0]);
         }
         [TestMethod]
         public void OnPostDeleteTestIsCallingDelete()
         {
             var o = CreateNew.Instance<TView>();
             OnPostDeleteAsync(o.Id, o);
-            Assert.AreEqual($"Delete {o.Id}", mockRepo.Actions[0]);
+            Assert.AreEqual($"Delete {o.Id}", MockRepo.Actions[0]);
         }
         [TestMethod]
         public void OnPostEditTestIsCallingUpdate()
         {
             var o = CreateNew.Instance<TView>();
             OnPostEditAsync(o.Id, o);
-            Assert.AreEqual($"Update {o.Id}", mockRepo.Actions[0]);
+            Assert.AreEqual($"Update {o.Id}", MockRepo.Actions[0]);
         }
         [TestMethod]
         public void OnPostDeleteTestItemNotFound()
@@ -185,7 +183,7 @@ namespace ReservationProject.Tests.Pages
         [TestMethod]
         public void IndexPageReturnsRedirectToPageResult()
         {
-            var result = pageModel.IndexPage();
+            var result = PageModel.IndexPage();
             Assert.IsInstanceOfType(result, typeof(RedirectToPageResult));
         }
     }

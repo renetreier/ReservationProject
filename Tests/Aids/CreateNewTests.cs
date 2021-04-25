@@ -6,30 +6,30 @@ using ReservationProject.Aids;
 namespace ReservationProject.Tests.Aids {
     [TestClass]
     public class CreateNewTests {
-        internal class testClassStr {
-            public testClassStr(string s) { strField = s;}
-            protected internal readonly string strField;
+        internal class TestClassStr {
+            public TestClassStr(string s) { StrField = s;}
+            protected internal readonly string StrField;
         }
-        internal class testClassInt {
-            public testClassInt(int i) { intField = i; }
-            protected internal readonly int intField;
+        internal class TestClassInt {
+            public TestClassInt(int i) { IntField = i; }
+            protected internal readonly int IntField;
         }
         [TestMethod] public void InstanceTest() {
-            testCreate<testClassStr>();
-            testCreate<testClassInt>();
-            testCreate<CreateNewTests>();
+            TestCreate<TestClassStr>();
+            TestCreate<TestClassInt>();
+            TestCreate<CreateNewTests>();
         }
-        [DataRow(typeof(testClassStr))]
-        [DataRow(typeof(testClassInt))]
+        [DataRow(typeof(TestClassStr))]
+        [DataRow(typeof(TestClassInt))]
         [DataRow(typeof(CreateNewTests))]
         [DataTestMethod]
-        public void InstanceTestBtType(Type t) => testCreate(t);
-        private static void testCreate(Type t) {
+        public void InstanceTestBtType(Type t) => TestCreate(t);
+        private static void TestCreate(Type t) {
             var o = CreateNew.Instance(t);
             Assert.IsNotNull(o);
             Assert.IsInstanceOfType(o, t);
         }
-        private static void testCreate<T>() {
+        private static void TestCreate<T>() {
             var o = CreateNew.Instance<T>();
             Assert.IsNotNull(o);
             Assert.IsInstanceOfType(o, typeof(T));

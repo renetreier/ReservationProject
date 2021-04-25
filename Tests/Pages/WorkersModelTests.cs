@@ -15,8 +15,8 @@ namespace ReservationProject.Tests.Pages
         [TestInitialize]
         public void TestInitialize()
         {
-            mockRepo = new TestWorkerRepo();
-            pageModel = new WorkersPage((IWorkersRepo)mockRepo);
+            MockRepo = new TestWorkerRepo();
+            PageModel = new WorkersPage((IWorkersRepo)MockRepo);
         }
     }
 }

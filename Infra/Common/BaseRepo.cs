@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.EntityFrameworkCore;
 using ReservationProject.Core;
 using ReservationProject.Data.Common;
@@ -55,7 +54,7 @@ namespace ReservationProject.Infra.Common {
 
         public async Task<bool> Add(T obj)
         {
-            var isOk = await isEntityOk(obj, true);
+            var isOk = await IsEntityOk(obj, true);
             if (isOk)
             {
                 await Set.AddAsync(obj);
@@ -84,11 +83,11 @@ namespace ReservationProject.Infra.Common {
         internal async Task<bool> IsEntityOk(T obj,
             string concurrencyErrorMsg)
         {
-            return await isEntityOk(obj, false)
+            return await IsEntityOk(obj, false)
                    && IsCorrectVersion(obj, concurrencyErrorMsg);
         }
 
-        private async Task<bool> isEntityOk(T obj, bool isNewItem)
+        private async Task<bool> IsEntityOk(T obj, bool isNewItem)
         {
             if (obj is null) return SetErrorMessage("Item is null");
             if (Set is null) return SetErrorMessage("DbSet is null");

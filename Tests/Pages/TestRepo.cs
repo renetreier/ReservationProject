@@ -11,26 +11,26 @@ namespace ReservationProject.Tests.Pages
         public TClass EntityInDb { get; set; }
         public object Result { get; set; } = null;
         public List<string> Actions { get; } = new();
-        public async Task<bool> Add(TClass obj) => await complete($"Add {obj?.Id}");
-        public async Task<bool> Delete(TClass obj) => await complete($"Delete {obj?.Id}");
-        public async Task<bool> Update(TClass obj) => await complete($"Update {obj?.Id}");
-        public async Task<List<TClass>> Get() => await list("List");
-        public async Task<TClass> Get(string id) => await item($"Get {id}");
-        public TClass GetById(string id) => get($"GetById {id}");
-        private async Task<TClass> item(string v) => await complete(v, (TClass)Result);
-        private async Task<List<TClass>> list(string v) => await complete(v, (List<TClass>)Result);
-        private async Task<TResult> complete<TResult>(string s, TResult r)
+        public async Task<bool> Add(TClass obj) => await Complete($"Add {obj?.Id}");
+        public async Task<bool> Delete(TClass obj) => await Complete($"Delete {obj?.Id}");
+        public async Task<bool> Update(TClass obj) => await Complete($"Update {obj?.Id}");
+        public async Task<List<TClass>> Get() => await GetList("List");
+        public async Task<TClass> Get(string id) => await Item($"Get {id}");
+        public TClass GetById(string id) => GetWithId($"GetById {id}");
+        private async Task<TClass> Item(string v) => await Complete(v, (TClass)Result);
+        private async Task<List<TClass>> GetList(string v) => await Complete(v, (List<TClass>)Result);
+        private async Task<TResult> Complete<TResult>(string s, TResult r)
         {
-            await complete(s);
+            await Complete(s);
             return r;
         }
-        private async Task<bool> complete(string s)
+        private async Task<bool> Complete(string s)
         {
             await Task.CompletedTask;
             Actions.Add(s);
             return Result is not null;
         }
-        private TClass get(string s)
+        private TClass GetWithId(string s)
         {
             Actions.Add(s);
             return (TClass)Result;

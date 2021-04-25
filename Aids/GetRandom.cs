@@ -7,36 +7,36 @@ using System.Text;
 namespace ReservationProject.Aids {
     public static class GetRandom {
         public static sbyte Int8(sbyte min = sbyte.MinValue, sbyte max = sbyte.MaxValue)
-            => Convert.ToSByte(rnd(min, max));
+            => Convert.ToSByte(Rnd(min, max));
         public static short Int16(short min = short.MinValue, short max = short.MaxValue)
-            => Convert.ToInt16(rnd(min, max));
+            => Convert.ToInt16(Rnd(min, max));
         public static int Int32(int min = int.MinValue, int max = int.MaxValue)
-            => Convert.ToInt32(rnd(min, max));
+            => Convert.ToInt32(Rnd(min, max));
         public static long Int64(long min = long.MinValue, long max = long.MaxValue)
-            => Convert.ToInt64(rnd(min, max));
+            => Convert.ToInt64(Rnd(min, max));
         public static byte UInt8(byte min = byte.MinValue, byte max = byte.MaxValue)
-            => Convert.ToByte(rnd(min, max));
+            => Convert.ToByte(Rnd(min, max));
         public static ushort UInt16(ushort min = ushort.MinValue, ushort max = ushort.MaxValue)
-            => Convert.ToUInt16(rnd(min, max));
+            => Convert.ToUInt16(Rnd(min, max));
         public static uint UInt32(uint min = uint.MinValue, uint max = uint.MaxValue)
-            => Convert.ToUInt32(rnd(min, max));
+            => Convert.ToUInt32(Rnd(min, max));
         public static ulong UInt64(ulong min = ulong.MinValue, ulong max = ulong.MaxValue)
-            => Convert.ToUInt64(rnd(min, max));
+            => Convert.ToUInt64(Rnd(min, max));
         public static float Float(float min = float.MinValue, float max = float.MaxValue)
-            => Convert.ToSingle(rnd(min, max));
+            => Convert.ToSingle(Rnd(min, max));
         public static double Double(double min = double.MinValue, double max = double.MaxValue)
-              => rnd(min, max);
+              => Rnd(min, max);
         public static decimal Decimal(decimal min = decimal.MinValue, decimal max = decimal.MaxValue)
-            => Convert.ToDecimal(rnd(Convert.ToDouble(min), Convert.ToDouble(max)));
+            => Convert.ToDecimal(Rnd(Convert.ToDouble(min), Convert.ToDouble(max)));
         public static DateTime DateTime(DateTime? minValue = null, DateTime? maxValue = null) {
             DateTime min = minValue ?? System.DateTime.MinValue;
             DateTime max = maxValue ?? System.DateTime.MaxValue;
-            var ticks = Convert.ToInt64(rnd(Convert.ToDouble(min.Ticks), Convert.ToDouble(max.Ticks)));
+            var ticks = Convert.ToInt64(Rnd(Convert.ToDouble(min.Ticks), Convert.ToDouble(max.Ticks)));
             return new DateTime(ticks);
         }
         public static string String(uint minLength = 5, uint maxLength = 30) {
-            var min = getMin(minLength, maxLength);
-            var max = getMax(minLength, maxLength);
+            var min = GetMin(minLength, maxLength);
+            var max = GetMax(minLength, maxLength);
             var rnd = new Random();
             var length = Int32((int)min, (int)max); 
             byte[] bytes = new byte[length];
@@ -49,12 +49,12 @@ namespace ReservationProject.Aids {
             for (var i = 0; i < size; i++) b.Append(Char('a', 'z'));
             return b.ToString();
         }
-        internal static T getMax<T>(T x, T y) where T: IComparable => x.CompareTo(y) > 0 ? x : y;
-        internal static T getMin<T>(T x, T y) where T : IComparable => x.CompareTo(y) < 0 ? x : y;
-        internal static double rnd(double minValue, double maxValue) {
+        internal static T GetMax<T>(T x, T y) where T: IComparable => x.CompareTo(y) > 0 ? x : y;
+        internal static T GetMin<T>(T x, T y) where T : IComparable => x.CompareTo(y) < 0 ? x : y;
+        internal static double Rnd(double minValue, double maxValue) {
             var rnd = new Random().NextDouble(); 
-            var min = getMin(minValue, maxValue) / 10.0;
-            var max = getMax(minValue, maxValue) / 10.0;
+            var min = GetMin(minValue, maxValue) / 10.0;
+            var max = GetMax(minValue, maxValue) / 10.0;
             return (rnd * (max - min) + min) * 10.0;
         }
         public static bool Bool() => Int32() % 2 == 0;
@@ -68,7 +68,7 @@ namespace ReservationProject.Aids {
             var index = Int32(0, count);
             return GetEnum.ValueByIndex(t, index);
         }
-        public static TimeSpan TimeSpan() => new TimeSpan(Int64());
+        public static TimeSpan TimeSpan() => new(Int64());
         public static object ValueOf<T>() => ValueOf(typeof(T));
         public static object ValueOf(Type t) {
             var x = Nullable.GetUnderlyingType(t);

@@ -7,7 +7,7 @@ namespace ReservationProject.Infra.Common {
         public static void Initialize(ApplicationDbContext dataBase) {
             if (dataBase.Workers.Any()) return;
 
-            var workers = new WorkerData[]
+            var workers = new[]
             {
                 new WorkerData { Id = "1", FirstName = "Tiit",LastName = "Kask",
                     Salary = 1500, Email = "tka@gmail.com" },
@@ -19,7 +19,7 @@ namespace ReservationProject.Infra.Common {
             dataBase.Workers.AddRange(workers);
             dataBase.SaveChanges();
 
-            var rooms = new RoomData[]
+            var rooms = new[]
             {
                 new RoomData {Id ="1", RoomName = "Hiina Tuba", BuildingAddress = "Sütiste tee 14, Tallinn"},
                 new RoomData {Id ="2", RoomName = "Aroomi Tuba", BuildingAddress = "Sütiste tee 14, Tallinn"},
@@ -28,7 +28,7 @@ namespace ReservationProject.Infra.Common {
 
             dataBase.Rooms.AddRange(rooms);
             dataBase.SaveChanges();
-            var reservations = new ReservationData[]
+            var reservations = new[]
             {
                 new ReservationData
                 {

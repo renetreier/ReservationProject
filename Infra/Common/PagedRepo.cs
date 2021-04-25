@@ -16,20 +16,20 @@ namespace ReservationProject.Infra.Common
             get => pageIndex;
             set => pageIndex = value ?? 1;
         }
-        public override int TotalPages => getTotalPages(PageSize);
+        public override int TotalPages => GetTotalPages(PageSize);
         public override bool HasNextPage => pageIndex < TotalPages;
         public override bool HasPreviousPage => pageIndex > 1;
         public override int PageSize { get; set; } = DefaultPageSize;
-        internal int getTotalPages(in int pageSize) {
-            var count = getItemsCount();
-            var pages = countTotalPages(count, pageSize);
+        internal int GetTotalPages(in int pageSize) {
+            var count = GetItemsCount();
+            var pages = CountTotalPages(count, pageSize);
             return pages;
         }
-        internal static int countTotalPages(int count, in int pageSize) 
+        internal static int CountTotalPages(int count, in int pageSize) 
             => (int)Math.Ceiling( count / (double)pageSize);
-        internal int getItemsCount() => base.CreateSql().Count();
-        protected internal override IQueryable<TData> CreateSql() => addSkipAndTake(base.CreateSql());
-        private IQueryable<TData> addSkipAndTake(IQueryable<TData> query) {
+        internal int GetItemsCount() => base.CreateSql().Count();
+        protected internal override IQueryable<TData> CreateSql() => AddSkipAndTake(base.CreateSql());
+        private IQueryable<TData> AddSkipAndTake(IQueryable<TData> query) {
             if (pageIndex < 1) return query;
             return query
                 .Skip((pageIndex - 1) * PageSize)

@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ReservationProject.Data;
 using ReservationProject.Domain;
 using ReservationProject.Domain.Repos;
 using ReservationProject.Facade;
@@ -17,8 +16,8 @@ namespace ReservationProject.Tests.Pages
         [TestInitialize]
         public void TestInitialize()
         {
-            mockRepo = new TestReservationRepo();
-            pageModel = new ReservationsPage((IReservationsRepo) mockRepo);
+            MockRepo = new TestReservationRepo();
+            PageModel = new ReservationsPage((IReservationsRepo) MockRepo);
         }
     }
 }

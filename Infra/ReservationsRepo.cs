@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Globalization;
+using System.Linq;
 using ReservationProject.Data;
 using ReservationProject.Domain;
 using ReservationProject.Domain.Repos;
@@ -16,7 +17,7 @@ namespace ReservationProject.Infra {
         {
             if (SearchString is null) return query;
             return query.Where(
-                x => x.ReservationDate.ToString().Contains(SearchString) ||
+                x => x.ReservationDate.ToString(CultureInfo.InvariantCulture).Contains(SearchString) ||
                      x.RoomId.Contains(SearchString) ||
                      x.WorkerId.Contains(SearchString));
         }

@@ -1,5 +1,4 @@
 ﻿namespace ReservationProject.Core {
-    //DONE 9.11.04. ErrorMessages - Edinevad sõnumid delete ja edit jaoks 
     public static class ErrorMessages {
         public static string ConcurrencyOnDelete =>
             "The record you attempted to delete "

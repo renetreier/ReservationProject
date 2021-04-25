@@ -1,5 +1,4 @@
-﻿
-using ReservationProject.Data.Common;
+﻿using ReservationProject.Data.Common;
 
 namespace ReservationProject.Data
 {
