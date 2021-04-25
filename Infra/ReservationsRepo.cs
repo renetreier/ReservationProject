@@ -1,9 +1,7 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using ReservationProject.Data;
 using ReservationProject.Domain;
 using ReservationProject.Domain.Repos;
-using ReservationProject.Facade;
 using ReservationProject.Infra.Common;
 
 namespace ReservationProject.Infra {
