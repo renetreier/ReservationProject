@@ -50,11 +50,9 @@ namespace ReservationProject.Pages.Common
         protected internal abstract TEntity ToEntity(TView e);
         protected internal bool IsNull(object o) => o is null;
 
-        //TODO SIIN VAJA KUIDAGI NÜÜD MINGI NORMAALNE JAMA TEHA :)
         internal async Task<TView> Load(string id)
         {
             var item = await Repo.Get(id);
-            if (!IsNull(id)) await LoadRelatedItems(item);
             //ErrorMessage = SetConcurrencyMsg(concurrencyError);
             return ToViewModel(item);
         }

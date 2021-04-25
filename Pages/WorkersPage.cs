@@ -19,6 +19,7 @@ namespace ReservationProject.Pages
 
         protected internal override WorkerEntity ToEntity(WorkerView c)
         {
+            if (IsNull(c)) return null;
             var d = Copy.Members(c, new WorkerData());
             return new WorkerEntity(d);
         }

@@ -53,13 +53,11 @@ namespace ReservationProject.Infra.Common {
             return isOk;
         }
 
-
         public async Task<bool> Add(T obj)
         {
             var isOk = await isEntityOk(obj, true);
             if (isOk)
             {
-                obj.Id = Guid.NewGuid().ToString();
                 await Set.AddAsync(obj);
                 await Db.SaveChangesAsync();
             }
@@ -118,32 +116,6 @@ namespace ReservationProject.Infra.Common {
         public abstract string CurrentFilter { get; set; }
         public abstract string SearchString { get; set; }
         public abstract string SortOrder { get; set; }
-        //public async Task<T> Get(string id)
-        //{
-        //    if (id == "") return null;
-        //    return await Set.AsNoTracking().FirstOrDefaultAsync(m => m.Id == id);
-        //}
-
-        //public async Task<bool> Delete(T obj)
-        //{
-        //    await Task.CompletedTask;
-        //    Set.Remove(obj);
-        //    return true;
-        //}
-
-        //public async Task<bool> Add(T obj)
-        //{
-        //    obj.Id = Guid.NewGuid().ToString();
-        //    await Set.AddAsync(obj);
-        //    return true;
-        //}
-
-        //public async Task<bool> Update(T obj)
-        //{
-        //    await Task.CompletedTask;
-        //    Set.Update(obj);
-        //    return true;
-        //}
     }
 
 }

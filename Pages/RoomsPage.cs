@@ -20,6 +20,7 @@ namespace ReservationProject.Pages
 
         protected internal override RoomEntity ToEntity(RoomView c)
         {
+            if (IsNull(c)) return null;
             var d = Copy.Members(c, new RoomData());
             return new RoomEntity(d);
         }

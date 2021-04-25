@@ -29,6 +29,7 @@ namespace ReservationProject.Pages
         }
         protected internal override ReservationEntity ToEntity(ReservationView c)
         {
+            if (IsNull(c)) return null;
             var d = Copy.Members(c, new ReservationData());
             return new ReservationEntity(d);
         }
@@ -41,17 +42,6 @@ namespace ReservationProject.Pages
             new(
                 Db.Workers.OrderBy(x => x.LastName).AsNoTracking(),
                 "Id","LastName",Item?.WorkerId);
-
-        //protected internal override async Task LoadRelatedItems(ReservationEntity item)
-        //{
-        //    if (IsNull(item)) return;
-        //    if (IsNull(Db)) return;
-        //    item.RoomName = await Db.Rooms.AsNoTracking()
-        //        .FirstOrDefaultAsync(r => r.Id == item.RoomId);
-        //    item.Worker = await Db.Workers.AsNoTracking()
-        //        .FirstOrDefaultAsync(w => w.Id == item.WorkerId);
-        //}
-
 
         protected internal override bool RoomAvailable()
         {
