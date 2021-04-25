@@ -8,6 +8,5 @@ namespace ReservationProject.Data
         public string FirstName { get; set; }
         public string Email { get; set; }
         public double Salary { get; set; }
-
     }
 }
