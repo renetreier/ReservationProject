@@ -8,7 +8,7 @@ using ReservationProject.Pages;
 namespace ReservationProject.Tests.Pages
 {
     [TestClass]
-    public class WorkersModelTests : PageModelTests<WorkerEntity, WorkerView>
+    public class WorkersModelTests : BasePageTests<WorkerEntity, WorkerView>
     {
         private class TestWorkerRepo : TestRepo<WorkerEntity>, IWorkersRepo { }
 

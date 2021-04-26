@@ -9,7 +9,7 @@ namespace ReservationProject.Tests.Pages
     
 
     [TestClass]
-    public class RoomsModelTests:PageModelTests<RoomEntity, RoomView>
+    public class RoomsModelTests:BasePageTests<RoomEntity, RoomView>
     {
         private class TestRoomsRepo : TestRepo<RoomEntity>, IRoomsRepo { }
        
