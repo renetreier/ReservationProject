@@ -8,7 +8,7 @@ using ReservationProject.Core;
 //TODO Vaja lisada Igale poole Assemblyinfo, et testid ligi saaks
 namespace ReservationProject.Tests.Pages
 {
-    public class PageModelTests<TData, TView>
+    public class BasePageTests<TData, TView>
        where TData : IBaseEntity, new()
        where TView : IEntityData
     {
