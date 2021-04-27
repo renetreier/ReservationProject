@@ -14,7 +14,9 @@ namespace ReservationProject.Domain
             LazyReadRoom = new Lazy<RoomEntity>(GetRoom);
             LazyReadWorker = new Lazy<WorkerEntity>(GetWorker);
         }
-
+        //TODO ei tea kas siin või siis reservationDatas,
+        //Todo aga ta ei löö errorit kui töötaja puudu, peab ka üle vaatama teised (arvatavasti "REQUIRED" puudu kuskil)
+        
         public DateTime ReservationDate => Data?.ReservationDate ?? DateTime.MaxValue;
         public string RoomId => Data?.RoomId ?? "Unspecified";
         public string WorkerId => Data?.WorkerId ?? "Unspecified";

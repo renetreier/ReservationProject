@@ -5,7 +5,7 @@ using ReservationProject.Core;
 using ReservationProject.Data.Common;
 
 namespace ReservationProject.Infra.Common
-{
+{//TODO SIIN KA MIdAGI PEKKIS, GUNNAR PARANDAS ära, see mis kristi ka loengus mainis, peab üle vaatama
     public abstract class PagedRepo<TEntity, TData> :OrderedRepo<TEntity, TData>
         where TData : BaseEntityData, IEntityData, new() {
         private int pageIndex;

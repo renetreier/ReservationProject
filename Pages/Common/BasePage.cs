@@ -133,15 +133,20 @@ namespace ReservationProject.Pages.Common
 
         protected internal virtual void DoBeforeCreate() { }
 
+        //TODO nüüd peaks saama need RoomAvailabale asjad ära muuta
         public async Task<IActionResult> OnPostCreateAsync()
         {
             if (!ModelState.IsValid) return Page();
-            if (!RoomAvailable())
+            //if (!RoomAvailable())
+            //{
+            //    ErrorMessage = ErrorMessages.RoomNotFree;
+            //    return Page();
+            //}
+            if (await Repo.Add(ToEntity(Item)) == false)
             {
-                ErrorMessage = ErrorMessages.RoomNotFree;
+                ErrorMessage = Repo.ErrorMessage;
                 return Page();
             }
-            await Repo.Add(ToEntity(Item));
             return IndexPage();
         }
             public async Task<IActionResult> OnPostDeleteAsync(string id)

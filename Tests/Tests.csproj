@@ -28,4 +28,8 @@
     <ProjectReference Include="..\ReservationProject\Soft.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Infra\" />
+  </ItemGroup>
+
 </Project>

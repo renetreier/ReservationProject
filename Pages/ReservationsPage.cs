@@ -42,14 +42,14 @@ namespace ReservationProject.Pages
                 Db.Workers.OrderBy(x => x.LastName).AsNoTracking(),
                 "Id","LastName",Item?.WorkerId);
 
-        protected internal override bool RoomAvailable()
-        {
-            var reservationInDataBase =
-                Db?.Reservations.SingleOrDefault( //TODO siia peaks saama, et ta ei ole DB vaid REPO
-                    r => r.RoomId == Item.RoomId && r.ReservationDate == Item.ReservationDate && Item.Id != r.Id);
-            if (reservationInDataBase != null)
-                return false;
-            return true;
-        }
+        //protected internal override bool RoomAvailable()
+        //{
+        //    var reservationInDataBase =
+        //        Db?.Reservations.SingleOrDefault( //TODO siia peaks saama, et ta ei ole DB vaid REPO
+        //            r => r.RoomId == Item.RoomId && r.ReservationDate == Item.ReservationDate && Item.Id != r.Id);
+        //    if (reservationInDataBase != null)
+        //        return false;
+        //    return true;
+        //}
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
+using ReservationProject.Core;
 using ReservationProject.Data;
 using ReservationProject.Domain;
 using ReservationProject.Domain.Repos;
@@ -22,12 +24,32 @@ namespace ReservationProject.Infra {
                      x.WorkerId.Contains(SearchString));
         }
 
+
+
         //TODO Renksu kala
         //public override async Task<List<ReservationData>> Get()
         //{
         //    return await Set.AsNoTracking().OrderBy(r=>r.ReservationDate).Include(c => c.ReservedRoom)
         //        .Include(c => c.ReservedWorker).ToListAsync();
         //}
+        public override async Task<bool> Add(ReservationEntity e)
+        {
+            var reservationInDataBase =
+                Set.SingleOrDefault(
+                    r => r.RoomId == e.RoomId && r.ReservationDate == e.ReservationDate && e.Id != r.Id);
+            if (reservationInDataBase == null)
+                return await base.Add(e);
+            ErrorMessage = ErrorMessages.RoomNotFree;
+            return false;
+
+        }
+
+        public override Task<bool> Update(ReservationEntity e)
+        {
+            return base.Update(e);
+        }
+        //TODO-siia vaja need ilusasti kokku kirjutada
+        
     }
 }
 
