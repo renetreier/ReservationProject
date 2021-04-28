@@ -22,11 +22,6 @@ namespace ReservationProject.Infra {
                      x.Email.Contains(SearchString) ||
                      x.Salary.ToString(CultureInfo.InvariantCulture).Contains(SearchString));
         }
-        //TODO Renksu kala
-        //public override async Task<List<WorkerData>> Get()
-        //{
-        //    return await Set.AsNoTracking().OrderBy(r => r.LastName).ToListAsync();
-        //}
     }
 }
 
