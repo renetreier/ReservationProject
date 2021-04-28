@@ -14,7 +14,6 @@ namespace ReservationProject.Infra {
         public ReservationsRepo(ApplicationDbContext c) : base(c, c?.Reservations) { }
         protected override ReservationEntity ToEntity(ReservationData d) => new(d);
         protected override ReservationData ToData(ReservationEntity e) => e?.Data ?? new ReservationData();
-        //TODO siin ka veel kala, peaks saama x.roomname.contains ja sama workeriga
         protected internal override IQueryable<ReservationData> ApplyFilters(IQueryable<ReservationData> query)
         {
             if (SearchString is null) return query;
@@ -24,14 +23,6 @@ namespace ReservationProject.Infra {
                      x.WorkerId.Contains(SearchString));
         }
 
-
-
-        //TODO Renksu kala
-        //public override async Task<List<ReservationData>> Get()
-        //{
-        //    return await Set.AsNoTracking().OrderBy(r=>r.ReservationDate).Include(c => c.ReservedRoom)
-        //        .Include(c => c.ReservedWorker).ToListAsync();
-        //}
         public override async Task<bool> Add(ReservationEntity e)
         {
             var reservationInDataBase =

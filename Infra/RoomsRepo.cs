@@ -20,11 +20,6 @@ namespace ReservationProject.Infra {
                      x.BuildingAddress.Contains(SearchString));
         }
 
-        //TODO Renksu kala
-        //public override async Task<List<RoomData>> Get()
-        //{
-        //    return await Set.AsNoTracking().OrderBy(r => r.RoomName).ToListAsync();
-        //}
     }
 }
 

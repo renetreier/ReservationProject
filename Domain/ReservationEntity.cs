@@ -16,7 +16,7 @@ namespace ReservationProject.Domain
         }
         //TODO ei tea kas siin või siis reservationDatas,
         //Todo aga ta ei löö errorit kui töötaja puudu, peab ka üle vaatama teised (arvatavasti "REQUIRED" puudu kuskil)
-        
+        //TODO VASTUS: Required on puudu kindlasti view osas, aga võime ka panna data poole peale kui tahame et andmebaasis oleks NOT NULL
         public DateTime ReservationDate => Data?.ReservationDate ?? DateTime.MaxValue;
         public string RoomId => Data?.RoomId ?? "Unspecified";
         public string WorkerId => Data?.WorkerId ?? "Unspecified";

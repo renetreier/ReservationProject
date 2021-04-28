@@ -32,7 +32,7 @@ namespace ReservationProject.Pages
             var d = Copy.Members(c, new ReservationData());
             return new ReservationEntity(d);
         }
-
+        //todo  nendes peaks kaa DB asemel repo tegema
         public SelectList Rooms =>
             new(
                 Db.Rooms.OrderBy(x => x.RoomName).AsNoTracking(),
@@ -45,7 +45,7 @@ namespace ReservationProject.Pages
         //protected internal override bool RoomAvailable()
         //{
         //    var reservationInDataBase =
-        //        Db?.Reservations.SingleOrDefault( //TODO siia peaks saama, et ta ei ole DB vaid REPO
+        //        Db?.Reservations.SingleOrDefault(
         //            r => r.RoomId == Item.RoomId && r.ReservationDate == Item.ReservationDate && Item.Id != r.Id);
         //    if (reservationInDataBase != null)
         //        return false;
