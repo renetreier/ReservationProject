@@ -66,8 +66,11 @@ namespace ReservationProject.Infra.Common {
         public async Task<bool> Update(T obj)
         {
             var isOk = await IsEntityOk(obj, ErrorMessages.ConcurrencyOnEdit);
-            if (isOk) Set.Update(obj);
-            await Db.SaveChangesAsync();
+            if (isOk)
+            {
+                Set.Update(obj);
+                await Db.SaveChangesAsync();
+            }
             return isOk;
         }
         
