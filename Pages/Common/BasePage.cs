@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ReservationProject.Core;
@@ -43,19 +44,19 @@ namespace ReservationProject.Pages.Common
 
         //public IList<TEntity> ItemList { get; set; }
         protected internal virtual async Task LoadRelatedItems(TEntity item) { await Task.CompletedTask; }
-       // protected internal string SetConcurrencyMsg(bool isError) => isError ? ErrorMessages.ConcurrencyOnDelete : null;
+        protected internal string SetConcurrencyMsg(bool isError) => isError ? ErrorMessages.ConcurrencyOnDelete : null;
         protected internal abstract TView ToViewModel(TEntity e);
         protected internal abstract TEntity ToEntity(TView e);
         protected internal bool IsNull(object o) => o is null;
 
-        internal async Task<TView> Load(string id)
+        internal async Task<TView> Load(string id, bool concurrencyError = false)
         {
             var item = await Repo.Get(id);
-            //ErrorMessage = SetConcurrencyMsg(concurrencyError);
+            ErrorMessage = SetConcurrencyMsg(concurrencyError);
             return ToViewModel(item);
         }
-        //internal async Task<bool> remove() =>
-        //    !IsNull(Repo) && await Repo.Delete(ToEntity(Item));
+        internal async Task<bool> remove() =>
+            !IsNull(Repo) && await Repo.Delete(ToEntity(Item));
         //internal async Task<bool> add() =>
         //    !IsNull(Repo) && await Repo.Add(ToEntity(Item));
         //internal async Task<bool> update() =>
@@ -65,23 +66,23 @@ namespace ReservationProject.Pages.Common
         //    => IsNull(id) ? null : IsNull(Repo) ? null : await Repo.Get(id);
 
 
-        //internal async Task<bool> save(params Func<Task<bool>>[] actions)
-        //{
-        //    var transaction = IsNull(Db) ? null : await Db.Database.BeginTransactionAsync();
-        //    foreach (var a in actions)
-        //    {
-        //        var b = await a();
-        //        if (b) continue;
-        //        ErrorMessage = Repo?.ErrorMessage;
-        //        if (transaction != null) await transaction.RollbackAsync();
-        //        return false;
-        //    }
-        //    if (!IsNull(Db)) await Db.SaveChangesAsync();
-        //    if (transaction != null) await transaction.CommitAsync();
-        //    return true;
-        //}
+        internal async Task<bool> save(params Func<Task<bool>>[] actions)
+        {
+            var transaction = IsNull(Db) ? null : await Db.Database.BeginTransactionAsync();
+            foreach (var a in actions)
+            {
+                var b = await a();
+                if (b) continue;
+                ErrorMessage = Repo?.ErrorMessage;
+                if (transaction != null) await transaction.RollbackAsync();
+                return false;
+            }
+            if (!IsNull(Db)) await Db.SaveChangesAsync();
+            if (transaction != null) await transaction.CommitAsync();
+            return true;
+        }
         //protected internal virtual void DoBeforeCreate(TView v) { }
-        //protected internal virtual void DoBeforeDelete(TView v) { }
+        protected internal virtual void DoBeforeDelete(TView v) { }
         //protected internal virtual void DoBeforeEdit(TView v) { }
 
         internal IActionResult IndexPage() =>
@@ -115,9 +116,9 @@ namespace ReservationProject.Pages.Common
             return Page();
         }
 
-        public async Task<IActionResult> OnGetDeleteAsync(string id)
+        public async Task<IActionResult> OnGetDeleteAsync(string id, bool concurrencyError = false)
         {
-            return IsNull(Item = await Load(id)) ? NotFound() : Page();
+            return IsNull(Item = await Load(id,concurrencyError)) ? NotFound() : Page();
         }
 
         public async Task<IActionResult> OnGetDetailsAsync(string id)
@@ -143,12 +144,20 @@ namespace ReservationProject.Pages.Common
             }
             return IndexPage();
         }
-            public async Task<IActionResult> OnPostDeleteAsync(string id)
+        //    public async Task<IActionResult> OnPostDeleteAsync(string id)
+        //{
+        //    if (IsNull(id)) return NotFound();
+        //    await Repo.Delete(ToEntity(Item));
+        //    if (!IsNull(Db)) await Db.SaveChangesAsync();
+        //    return IndexPage();
+        //}
+        public async virtual Task<IActionResult> OnPostDeleteAsync(string id)
         {
-            if (IsNull(id)) return NotFound();
-            await Repo.Delete(ToEntity(Item));
-            if (!IsNull(Db)) await Db.SaveChangesAsync();
-            return IndexPage();
+            DoBeforeDelete(Item);
+            if (await save(remove)) return IndexPage();
+            if (Repo?.EntityInDb is null) return IndexPage();
+            return RedirectToPage("./Delete",
+                new { id, concurrencyError = true, handler = "Delete"});
         }
         public async Task<IActionResult> OnPostEditAsync(string id)
         {
@@ -160,9 +169,6 @@ namespace ReservationProject.Pages.Common
             }
             return IndexPage();
         }
-
-        protected internal virtual bool RoomAvailable() => true;
-
     }
 }
 
