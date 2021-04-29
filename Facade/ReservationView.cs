@@ -8,11 +8,13 @@ namespace ReservationProject.Facade
     public class ReservationView : BaseEntityView
     {
         [DataType(DataType.Date)]
-        [Display(Name = "Reservation Date")]
+        [Display(Name = "Date")]
         public DateTime ReservationDate { get; set; }
         [Display(Name = "Room")]
+        [Required]
         public string RoomId { get; set; }
         [Display(Name = "Worker")]
+        [Required]
         public string WorkerId { get; set; }
         [Display(Name="Worker Name")]
         public string WorkerName { get; set; }

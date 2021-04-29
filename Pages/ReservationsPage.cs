@@ -32,7 +32,8 @@ namespace ReservationProject.Pages
             var d = Copy.Members(c, new ReservationData());
             return new ReservationEntity(d);
         }
-        //todo  nendes peaks kaa DB asemel repo tegema
+
+        //TODO nendes peaks kaa DB asemel repo tegema
         public SelectList Rooms =>
             new(
                 Db.Rooms.OrderBy(x => x.RoomName).AsNoTracking(),
@@ -41,15 +42,5 @@ namespace ReservationProject.Pages
             new(
                 Db.Workers.OrderBy(x => x.LastName).AsNoTracking(),
                 "Id","LastName",Item?.WorkerId);
-
-        //protected internal override bool RoomAvailable()
-        //{
-        //    var reservationInDataBase =
-        //        Db?.Reservations.SingleOrDefault(
-        //            r => r.RoomId == Item.RoomId && r.ReservationDate == Item.ReservationDate && Item.Id != r.Id);
-        //    if (reservationInDataBase != null)
-        //        return false;
-        //    return true;
-        //}
     }
 }

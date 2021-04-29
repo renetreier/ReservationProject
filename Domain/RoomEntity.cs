@@ -10,6 +10,5 @@ namespace ReservationProject.Domain
 
         public string BuildingAddress => Data?.BuildingAddress ?? "Unspecified";
         public string RoomName => Data?.RoomName ?? "Unspecified";
-       
     }
 }

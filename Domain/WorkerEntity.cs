@@ -11,6 +11,7 @@ namespace ReservationProject.Domain
         public string FirstName => Data?.FirstName ?? "Unspecified";
         public string LastName => Data?.LastName ?? "Unspecified";
         public string Email => Data?.Email ?? "Unspecified";
+
         public double Salary => Data?.Salary ?? 0.0;
         public string FullName
         {

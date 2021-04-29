@@ -50,9 +50,9 @@ namespace ReservationProject.Core.Extensions {
         }
         public static List<object> HtmlStrings(object label, object value) {
             return new (){
-                new HtmlString("<dt class=\"col-sm-2\">"),
+                new HtmlString("<dd class=\"col-sm-2\">"),
                 label,
-                new HtmlString("</dt>"),
+                new HtmlString("</dd>"),
                 new HtmlString("<dd class=\"col-sm-10\">"),
                 value,
                 new HtmlString("</dd>")
