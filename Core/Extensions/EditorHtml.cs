@@ -24,9 +24,9 @@ namespace ReservationProject.Core.Extensions {
         internal static List<object> HtmlStrings<TModel, TResult>(IHtmlHelper<TModel> h,
             Expression<Func<TModel, TResult>> e, string displayName) {
             return new List<object> {
-                new HtmlString("<dt class=\"col-sm-2\">"),
+                new HtmlString("<dd class=\"col-sm-2\">"),
                 h.Raw(displayName),
-                new HtmlString("</dt>"),
+                new HtmlString("</dd>"),
                 new HtmlString("<dd class=\"col-sm-10\">"),
                 h.EditorFor(e, new {htmlAttributes = new {@class = "form-control"}}),
                 h.ValidationMessageFor(e, "", new {@class = "text-danger"}),

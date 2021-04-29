@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ReservationProject.Core;
@@ -41,73 +42,23 @@ namespace ReservationProject.Pages.Common
             set => base.Item = value;
         }
 
-        //public IList<TEntity> ItemList { get; set; }
         protected internal virtual async Task LoadRelatedItems(TEntity item) { await Task.CompletedTask; }
-       // protected internal string SetConcurrencyMsg(bool isError) => isError ? ErrorMessages.ConcurrencyOnDelete : null;
+        protected internal string SetConcurrencyMsg(bool isError) => isError ? ErrorMessages.ConcurrencyOnDelete : null;
         protected internal abstract TView ToViewModel(TEntity e);
         protected internal abstract TEntity ToEntity(TView e);
         protected internal bool IsNull(object o) => o is null;
 
-        internal async Task<TView> Load(string id)
+        internal async Task<TView> Load(string id, bool concurrencyError = false)
         {
             var item = await Repo.Get(id);
-            //ErrorMessage = SetConcurrencyMsg(concurrencyError);
+            ErrorMessage = SetConcurrencyMsg(concurrencyError);
             return ToViewModel(item);
         }
-        //internal async Task<bool> remove() =>
-        //    !IsNull(Repo) && await Repo.Delete(ToEntity(Item));
-        //internal async Task<bool> add() =>
-        //    !IsNull(Repo) && await Repo.Add(ToEntity(Item));
-        //internal async Task<bool> update() =>
-        //    !IsNull(Repo) && await Repo.Update(ToEntity(Item));
 
-        //internal async Task<TEntity> find(string id)
-        //    => IsNull(id) ? null : IsNull(Repo) ? null : await Repo.Get(id);
-
-
-        //internal async Task<bool> save(params Func<Task<bool>>[] actions)
-        //{
-        //    var transaction = IsNull(Db) ? null : await Db.Database.BeginTransactionAsync();
-        //    foreach (var a in actions)
-        //    {
-        //        var b = await a();
-        //        if (b) continue;
-        //        ErrorMessage = Repo?.ErrorMessage;
-        //        if (transaction != null) await transaction.RollbackAsync();
-        //        return false;
-        //    }
-        //    if (!IsNull(Db)) await Db.SaveChangesAsync();
-        //    if (transaction != null) await transaction.CommitAsync();
-        //    return true;
-        //}
-        //protected internal virtual void DoBeforeCreate(TView v) { }
-        //protected internal virtual void DoBeforeDelete(TView v) { }
-        //protected internal virtual void DoBeforeEdit(TView v) { }
-
-        internal IActionResult IndexPage() =>
-            RedirectToPage("./Index", new { handler = "Index" });
-        //public async Task<IActionResult> OnGetDeleteAsync(string id, bool concurrencyError = false)
-        //    => IsNull(Item = await Load(id, concurrencyError)) ? NotFound() : Page();
-        //public async Task<IActionResult> OnGetDetailsAsync(string id)
-        //    => IsNull(Item = await Load(id)) ? NotFound() : Page();
-        //public async Task<IActionResult> OnGetEditAsync(string id)
-        //    => IsNull(Item ??= await Load(id)) ? NotFound() : Page();
-
-
-        //private void SetPreviousValues(TView dbValues)
-        //{
-        //    if (IsNull(dbValues)) return;
-        //    foreach (var p in dbValues.GetType().GetProperties())
-        //    {
-        //        if (!p.CanRead) continue;
-        //        var dbValue = p.GetValue(dbValues);
-        //        var clientValue = p.GetValue(Item);
-        //        if (dbValue?.ToString() == clientValue?.ToString()) continue;
-        //        ModelState.AddModelError($"Item.{p.Name}",
-        //            $"Current value: {dbValue}");
-        //    }
-        //}
-
+        internal async Task<bool> remove() =>
+            !IsNull(Repo) && await Repo.Delete(ToEntity(Item));
+        internal async Task<bool> update() =>
+            !IsNull(Repo) && await Repo.Update(ToEntity(Item));
 
         public IActionResult OnGetCreate()
         {
@@ -115,9 +66,9 @@ namespace ReservationProject.Pages.Common
             return Page();
         }
 
-        public async Task<IActionResult> OnGetDeleteAsync(string id)
+        public async Task<IActionResult> OnGetDeleteAsync(string id, bool concurrencyError = false)
         {
-            return IsNull(Item = await Load(id)) ? NotFound() : Page();
+            return IsNull(Item = await Load(id,concurrencyError)) ? NotFound() : Page();
         }
 
         public async Task<IActionResult> OnGetDetailsAsync(string id)
@@ -131,17 +82,9 @@ namespace ReservationProject.Pages.Common
             return IsNull(Item = await Load(id)) ? NotFound() : Page();
         }
 
-        protected internal virtual void DoBeforeCreate() { }
-
-        //TODO nüüd peaks saama need RoomAvailabale asjad ära muuta
         public async Task<IActionResult> OnPostCreateAsync()
         {
             if (!ModelState.IsValid) return Page();
-            //if (!RoomAvailable())
-            //{
-            //    ErrorMessage = ErrorMessages.RoomNotFree;
-            //    return Page();
-            //}
             if (await Repo.Add(ToEntity(Item)) == false)
             {
                 ErrorMessage = Repo.ErrorMessage;
@@ -149,28 +92,60 @@ namespace ReservationProject.Pages.Common
             }
             return IndexPage();
         }
-            public async Task<IActionResult> OnPostDeleteAsync(string id)
+
+        public async virtual Task<IActionResult> OnPostDeleteAsync(string id)
         {
-            if (IsNull(id)) return NotFound();
-            await Repo.Delete(ToEntity(Item));
-            if (!IsNull(Db)) await Db.SaveChangesAsync();
-            return IndexPage();
+            if (await save(remove)) return IndexPage();
+            if (Repo?.EntityInDb is null) return IndexPage();
+            return RedirectToPage("./Delete",
+                new { id, concurrencyError = true, handler = "Delete"});
         }
         public async Task<IActionResult> OnPostEditAsync(string id)
         {
             if (IsNull(id)) return NotFound();
-            if (!RoomAvailable())
+            if (!ModelState.IsValid) return Page();
+            if (await save(update)) return IndexPage();
+
+            SetPreviousValues(ToViewModel(Repo?.EntityInDb));
+            Item.RowVersion = Repo?.EntityInDb?.RowVersion;
+            ModelState.Remove("Item.RowVersion");
+            ErrorMessage = Repo.ErrorMessage;
+            return Page();
+        }
+        protected internal virtual void DoBeforeCreate() { }
+
+        internal IActionResult IndexPage() =>
+            RedirectToPage("./Index", new { handler = "Index" });
+
+        internal async Task<bool> save(params Func<Task<bool>>[] actions)
+        {
+            var transaction = IsNull(Db) ? null : await Db.Database.BeginTransactionAsync();
+            foreach (var a in actions)
             {
-                ErrorMessage = ErrorMessages.RoomNotFree;
-                return Page();
+                var b = await a();
+                if (b) continue;
+                ErrorMessage = Repo?.ErrorMessage;
+                if (transaction != null) await transaction.RollbackAsync();
+                return false;
             }
-            await Repo.Update(ToEntity(Item));
             if (!IsNull(Db)) await Db.SaveChangesAsync();
-            return IndexPage();
+            if (transaction != null) await transaction.CommitAsync();
+            return true;
         }
 
-        protected internal virtual bool RoomAvailable() => true;
-
+        private void SetPreviousValues(TView dbValues)
+        {
+            if (IsNull(dbValues)) return;
+            foreach (var p in dbValues.GetType().GetProperties())
+            {
+                if (!p.CanRead) continue;
+                var dbValue = p.GetValue(dbValues);
+                var clientValue = p.GetValue(Item);
+                if (dbValue?.ToString() == clientValue?.ToString()) continue;
+                ModelState.AddModelError($"Item.{p.Name}",
+                    $"Current value: {dbValue}");
+            }
+        }
     }
 }
 

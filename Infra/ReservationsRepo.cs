@@ -25,22 +25,26 @@ namespace ReservationProject.Infra {
 
         public override async Task<bool> Add(ReservationEntity e)
         {
-            var reservationInDataBase =
-                Set.SingleOrDefault(
-                    r => r.RoomId == e.RoomId && r.ReservationDate == e.ReservationDate && e.Id != r.Id);
-            if (reservationInDataBase == null)
-                return await base.Add(e);
+            if (IsRoomAvailable(e)) return await base.Add(e);
             ErrorMessage = ErrorMessages.RoomNotFree;
             return false;
 
         }
 
-        public override Task<bool> Update(ReservationEntity e)
+        public override async Task<bool> Update(ReservationEntity e)
         {
-            return base.Update(e);
+            if (IsRoomAvailable(e)) return await base.Update(e);
+            ErrorMessage = ErrorMessages.RoomNotFree;
+            return false;
         }
-        //TODO-siia vaja need ilusasti kokku kirjutada
-        
+
+        internal  bool IsRoomAvailable(ReservationEntity e)
+        {
+            var reservationInDataBase = Set.SingleOrDefault(
+                r => r.RoomId == e.RoomId && r.ReservationDate == e.ReservationDate && e.Id != r.Id);
+            if (reservationInDataBase == null) return true;
+            return false;
+        }
     }
 }
 
