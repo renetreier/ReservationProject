@@ -22,6 +22,7 @@ namespace ReservationProject.Pages.Common
         public virtual bool HasPreviousPage { get; protected set; }
         public virtual bool HasNextPage { get; protected set; }
         public virtual int? PageIndex { get; set; }
+        public abstract string CurrentSort { get; }
     }
     public abstract class BasePageModel<TEntity, TView> : BasePage
         where TEntity : class, IBaseEntity, new()
@@ -55,9 +56,9 @@ namespace ReservationProject.Pages.Common
             return ToViewModel(item);
         }
 
-        internal async Task<bool> remove() =>
+        internal async Task<bool> Remove() =>
             !IsNull(Repo) && await Repo.Delete(ToEntity(Item));
-        internal async Task<bool> update() =>
+        internal async Task<bool> Update() =>
             !IsNull(Repo) && await Repo.Update(ToEntity(Item));
 
         public IActionResult OnGetCreate()
@@ -93,9 +94,9 @@ namespace ReservationProject.Pages.Common
             return IndexPage();
         }
 
-        public async virtual Task<IActionResult> OnPostDeleteAsync(string id)
+        public virtual async Task<IActionResult> OnPostDeleteAsync(string id)
         {
-            if (await save(remove)) return IndexPage();
+            if (await Save(Remove)) return IndexPage();
             if (Repo?.EntityInDb is null) return IndexPage();
             return RedirectToPage("./Delete",
                 new { id, concurrencyError = true, handler = "Delete"});
@@ -104,12 +105,12 @@ namespace ReservationProject.Pages.Common
         {
             if (IsNull(id)) return NotFound();
             if (!ModelState.IsValid) return Page();
-            if (await save(update)) return IndexPage();
+            if (await Save(Update)) return IndexPage();
 
             SetPreviousValues(ToViewModel(Repo?.EntityInDb));
             Item.RowVersion = Repo?.EntityInDb?.RowVersion;
             ModelState.Remove("Item.RowVersion");
-            ErrorMessage = Repo.ErrorMessage;
+            ErrorMessage = Repo?.ErrorMessage;
             return Page();
         }
         protected internal virtual void DoBeforeCreate() { }
@@ -117,7 +118,7 @@ namespace ReservationProject.Pages.Common
         internal IActionResult IndexPage() =>
             RedirectToPage("./Index", new { handler = "Index" });
 
-        internal async Task<bool> save(params Func<Task<bool>>[] actions)
+        internal async Task<bool> Save(params Func<Task<bool>>[] actions)
         {
             var transaction = IsNull(Db) ? null : await Db.Database.BeginTransactionAsync();
             foreach (var a in actions)

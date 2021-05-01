@@ -118,6 +118,7 @@ namespace ReservationProject.Infra.Common {
         public abstract string CurrentFilter { get; set; }
         public abstract string SearchString { get; set; }
         public abstract string SortOrder { get; set; }
+        public abstract string CurrentSort { get; }
     }
 
 }

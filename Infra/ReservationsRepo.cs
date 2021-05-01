@@ -38,12 +38,11 @@ namespace ReservationProject.Infra {
             return false;
         }
 
-        internal  bool IsRoomAvailable(ReservationEntity e)
+        internal bool IsRoomAvailable(ReservationEntity e)
         {
             var reservationInDataBase = Set.SingleOrDefault(
                 r => r.RoomId == e.RoomId && r.ReservationDate == e.ReservationDate && e.Id != r.Id);
-            if (reservationInDataBase == null) return true;
-            return false;
+            return reservationInDataBase == null;
         }
     }
 }

@@ -5,7 +5,6 @@ using ReservationProject.Aids;
 using ReservationProject.Core;
 
 
-//TODO Vaja lisada Igale poole Assemblyinfo, et testid ligi saaks
 namespace ReservationProject.Tests.Pages
 {
     public class BasePageTests<TData, TView>
@@ -169,10 +168,10 @@ namespace ReservationProject.Tests.Pages
             Assert.AreEqual($"Update {o.Id}", MockRepo.Actions[0]);
         }
         [TestMethod]
-        public void OnPostDeleteTestItemNotFound()
+        public void OnPostDeleteGetRedirected()
         {
             var result = OnPostDeleteAsync(null);
-            Assert.IsInstanceOfType(result,typeof(NotFoundResult));
+            Assert.IsInstanceOfType(result,typeof(RedirectToPageResult));
         }
         [TestMethod]
         public void OnPostEditTestItemNotFound()

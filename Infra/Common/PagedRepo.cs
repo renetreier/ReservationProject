@@ -5,20 +5,20 @@ using ReservationProject.Core;
 using ReservationProject.Data.Common;
 
 namespace ReservationProject.Infra.Common
-{//TODO SIIN KA MIdAGI PEKKIS, GUNNAR PARANDAS ära, see mis kristi ka loengus mainis, peab üle vaatama
+{
     public abstract class PagedRepo<TEntity, TData> :OrderedRepo<TEntity, TData>
         where TData : BaseEntityData, IEntityData, new() {
-        private int pageIndex;
+        private int _pageIndex;
 
         public const int DefaultPageSize = 5;
         protected PagedRepo(DbContext c = null, DbSet<TData> s = null) : base(c, s) { }
         public override int? PageIndex {
-            get => pageIndex;
-            set => pageIndex = value ?? 1;
+            get => _pageIndex;
+            set => _pageIndex = value ?? 1;
         }
         public override int TotalPages => GetTotalPages(PageSize);
-        public override bool HasNextPage => pageIndex < TotalPages;
-        public override bool HasPreviousPage => pageIndex > 1;
+        public override bool HasNextPage => _pageIndex < TotalPages;
+        public override bool HasPreviousPage => _pageIndex > 1;
         public override int PageSize { get; set; } = DefaultPageSize;
         internal int GetTotalPages(in int pageSize) {
             var count = GetItemsCount();
@@ -30,9 +30,9 @@ namespace ReservationProject.Infra.Common
         internal int GetItemsCount() => base.CreateSql().Count();
         protected internal override IQueryable<TData> CreateSql() => AddSkipAndTake(base.CreateSql());
         private IQueryable<TData> AddSkipAndTake(IQueryable<TData> query) {
-            if (pageIndex < 1) return query;
+            if (_pageIndex < 1) return query;
             return query
-                .Skip((pageIndex - 1) * PageSize)
+                .Skip((_pageIndex - 1) * PageSize)
                 .Take(PageSize);
         }
     }
