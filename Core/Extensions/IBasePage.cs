@@ -6,5 +6,7 @@ namespace ReservationProject.Core.Extensions {
         public string SearchString { get; }
         public int? PageIndex { get; }
         public string PageUrl { get; }
+        public string CurrentSort { get; }
+
     }
 }

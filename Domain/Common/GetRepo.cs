@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ReservationProject.Domain.Common {
     public sealed class GetRepo {
+    
         public readonly IServiceProvider _provider;
         public static IServiceProvider instance;
         public GetRepo() : this(null) { }

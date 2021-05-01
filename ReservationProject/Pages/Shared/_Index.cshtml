@@ -27,7 +27,7 @@
 
 <a asp-page="./Index"
    asp-route-handler="Index"
-   asp-route-sortOrder="@Model.SortOrder"
+   asp-route-sortOrder="@Model.CurrentSort"
    asp-route-pageIndex="@(Model.PageIndex - 1)"
    asp-route-currentFilter="@Model.CurrentFilter"
    class="btn btn-primary @prevDisabled">
@@ -35,7 +35,7 @@
 </a>
 <a asp-page="./Index"
    asp-route-handler="Index"
-   asp-route-sortOrder="@Model.SortOrder"
+   asp-route-sortOrder="@Model.CurrentSort"
    asp-route-pageIndex="@(Model.PageIndex + 1)"
    asp-route-currentFilter="@Model.CurrentFilter"
    class="btn btn-primary @nextDisabled">

@@ -18,6 +18,7 @@ namespace ReservationProject.Infra.Common {
         }
         protected internal virtual string GetSortOrder()
             => sortOrder?.Contains("_desc") ?? true ? RemoveDesc(sortOrder) : AddDesc(sortOrder);
+        public override string CurrentSort => sortOrder;
         protected internal virtual string AddDesc(string s) => $"{s}_desc";
         protected internal virtual string RemoveDesc(string s)
             => s?.Replace("_desc", string.Empty) ?? string.Empty;
