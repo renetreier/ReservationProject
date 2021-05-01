@@ -43,5 +43,6 @@ namespace ReservationProject.Tests.Pages
         public string CurrentFilter { get; set; }
         public string SearchString { get; set; }
         public string SortOrder { get; set; }
+        public string CurrentSort { get; }
     }
 }
