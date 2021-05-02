@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ReservationProject.Domain.ReservationEntity">
+    <Position X="4.5" Y="1.5" Width="1.5" />
+    <Members>
+      <Property Name="LazyReadRoom" Hidden="true" />
+      <Property Name="LazyReadWorker" Hidden="true" />
+      <Property Name="RoomId" Hidden="true" />
+      <Property Name="WorkerId" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAggAAADgAAAgAAAAAAAAAAAIAAAAAAAAAABAgAAAAA=</HashCode>
+      <FileName>ReservationEntity.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ReservedRoom" />
+      <Property Name="ReservedWorker" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ReservationProject.Domain.RoomEntity">
+    <Position X="1.25" Y="1.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAABAAAAA=</HashCode>
+      <FileName>RoomEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReservationProject.Domain.WorkerEntity">
+    <Position X="7.75" Y="1.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAGAAACAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>WorkerEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
