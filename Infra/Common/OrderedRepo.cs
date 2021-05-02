@@ -9,7 +9,7 @@ using ReservationProject.Data.Common;
 
 namespace ReservationProject.Infra.Common {
     public abstract class OrderedRepo<TEntity, TData> :FilteredRepo<TEntity, TData>
-        where TData : BaseEntityData, IEntityData, new() {
+        where TData : BaseData, IEntityData, new() {
         private string sortOrder;
         protected OrderedRepo(DbContext c = null, DbSet<TData> s = null) :base(c, s) { }
         public override string SortOrder {

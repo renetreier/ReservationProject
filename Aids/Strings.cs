@@ -74,11 +74,11 @@ namespace ReservationProject.Aids {
             if (string.IsNullOrEmpty(x)) return false;
             return !string.IsNullOrEmpty(y) && x.StartsWith(y);
         }
-        internal static string addStringPattern => "{0}{1}";
+        internal static string AddStringPattern => "{0}{1}";
         public static string Add(string s1, string s2) {
             s1 ??= string.Empty;
             s2 ??= string.Empty;
-            return string.Format(addStringPattern, s1, s2);
+            return string.Format(AddStringPattern, s1, s2);
         }
     }
 }

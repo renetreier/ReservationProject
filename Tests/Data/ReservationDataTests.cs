@@ -1,13 +1,16 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReservationProject.Data;
-using ReservationProject.Tests.Data.Common;
+using ReservationProject.Data.Common;
 
 namespace ReservationProject.Tests.Data
 {
     [TestClass]
-    public class ReservationDataTests : BaseDataTests<ReservationData>
+    public class ReservationDataTests : SealedClassTests<ReservationData,BaseData>
     {
-
+        [TestMethod] public void RoomIdTest() => IsReadWriteProperty<string>();
+        [TestMethod] public void ReservationDateTest() => IsReadWriteProperty<DateTime>();
+        [TestMethod] public void WorkerIdTest() => IsReadWriteProperty<string>();
 
     }
 }

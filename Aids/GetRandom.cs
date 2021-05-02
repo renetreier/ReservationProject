@@ -164,7 +164,7 @@ namespace ReservationProject.Aids {
         public static object AnyValue() {
             var i = Int32();
             return (i % 10) switch {
-                0 => (object)DateTime(),
+                0 => DateTime(),
                 1 => String(),
                 2 => Char(),
                 3 => Int32(),

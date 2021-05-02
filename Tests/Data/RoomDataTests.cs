@@ -1,13 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReservationProject.Data;
-using ReservationProject.Tests.Data.Common;
+using ReservationProject.Data.Common;
 
 namespace ReservationProject.Tests.Data
 {
     [TestClass]
-    public class RoomDataTests : BaseDataTests<RoomData>
+    public class RoomDataTests : SealedClassTests<RoomData,BaseData>
     {
-        
-
+        [TestMethod] public void RoomNameTest() => IsReadWriteProperty<string>();
+        [TestMethod] public void BuildingAddressTest() => IsReadWriteProperty<string>();
     }
 }

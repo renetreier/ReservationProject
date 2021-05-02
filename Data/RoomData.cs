@@ -2,7 +2,7 @@
 
 namespace ReservationProject.Data
 {
-    public class RoomData: BaseEntityData
+    public sealed class RoomData: BaseData
     {
         public string RoomName { get; set; }
         public string BuildingAddress { get; set; }
