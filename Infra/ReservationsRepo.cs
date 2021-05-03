@@ -22,7 +22,6 @@ namespace ReservationProject.Infra {
                      x.RoomId.Contains(SearchString) ||
                      x.WorkerId.Contains(SearchString));
         }
-
         public override async Task<bool> Add(ReservationEntity e)
         {
             if (IsRoomAvailable(e)) return await base.Add(e);
@@ -30,7 +29,6 @@ namespace ReservationProject.Infra {
             return false;
 
         }
-
         public override async Task<bool> Update(ReservationEntity e)
         {
             if (IsRoomAvailable(e)) return await base.Update(e);

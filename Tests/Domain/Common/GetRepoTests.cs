@@ -7,54 +7,54 @@ using ReservationProject.Tests.Domain.Repos;
 namespace ReservationProject.Tests.Domain.Common {
 
     [TestClass] public class GetRepoTests :SealedClassTests<GetRepo, object> {
-        private IServiceProvider provider { get; set; }
-        protected override GetRepo getObject() => new(provider);
+        private IServiceProvider Provider { get; set; }
+        protected override GetRepo GetObject() => new(Provider);
         [TestCleanup] public void TestCleanup() => GetRepo.SetProvider(null);
-        [TestMethod] public void ProviderIsNullTest() => isNull(obj._provider);
-        [TestMethod] public void InstanceIsNullTest() => isNull(GetRepo.instance);
+        [TestMethod] public void ProviderIsNullTest() => IsNull(Obj.Provider);
+        [TestMethod] public void InstanceIsNullTest() => IsNull(GetRepo.ProviderInstance);
         [TestMethod]
         public void CanCreateTest()
         {
-            initMock();
-            areNotEqual(provider, GetRepo.instance);
-            areEqual(provider, obj._provider);
+            InitMock();
+            AreNotEqual(Provider, GetRepo.ProviderInstance);
+            AreEqual(Provider, Obj.Provider);
         }
         [TestMethod]
         public void SetProviderTest()
         {
             var p = new MockServiceProvider(null);
             GetRepo.SetProvider(p);
-            isNull(obj._provider);
-            areEqual(p, GetRepo.instance);
+            IsNull(Obj.Provider);
+            AreEqual(p, GetRepo.ProviderInstance);
         }
         [TestMethod]
         public void CreateAfterSetTest()
         {
             var p = new MockServiceProvider(null);
             GetRepo.SetProvider(p);
-            obj = new GetRepo();
-            areEqual(p, GetRepo.instance);
-            areEqual(p, obj._provider);
+            Obj = new GetRepo();
+            AreEqual(p, GetRepo.ProviderInstance);
+            AreEqual(p, Obj.Provider);
         }
         [TestMethod]
         public void InstanceWithTypeTest()
         {
-            var repo = initMock();
-            var r = obj.Instance(typeof(IRoomsRepo));
-            areEqual(repo, r);
+            var repo = InitMock();
+            var r = Obj.Instance(typeof(IRoomsRepo));
+            AreEqual(repo, r);
         }
         [TestMethod]
         public void InstanceTest()
         {
-            var repo = initMock();
-            var r = obj.Instance<IRoomsRepo>();
-            areEqual(repo, r);
+            var repo = InitMock();
+            var r = Obj.Instance<IRoomsRepo>();
+            AreEqual(repo, r);
         }
-        private MockRoomsRepo initMock()
+        private MockRoomsRepo InitMock()
         {
             var r = new MockRoomsRepo();
-            provider = new MockServiceProvider(r);
-            obj = getObject();
+            Provider = new MockServiceProvider(r);
+            Obj = GetObject();
             return r;
         }
     }

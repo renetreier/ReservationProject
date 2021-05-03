@@ -4,7 +4,7 @@ using ReservationProject.Data.Common;
 
 namespace ReservationProject.Data
 {
-    public class ReservationData:BaseEntityData
+    public sealed class ReservationData:BaseData
     {
         public DateTime ReservationDate { get; set; }
         [Required]

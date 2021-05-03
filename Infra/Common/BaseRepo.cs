@@ -10,7 +10,7 @@ using ReservationProject.Domain.Repos;
 namespace ReservationProject.Infra.Common {
 
     public abstract class BaseRepo<TEntity, TData> : BaseRepo<TData>, IRepo<TEntity>
-        where TData : BaseEntityData, IEntityData, new()
+        where TData : BaseData, IEntityData, new()
     {
         protected abstract TEntity ToEntity(TData d);
         protected abstract TData ToData(TEntity e);
@@ -24,7 +24,7 @@ namespace ReservationProject.Infra.Common {
         public virtual async Task<bool> Update(TEntity e) => await Update(ToData(e));
         public new TEntity GetById(string id) => ToEntity(base.GetById(id));
     }
-    public abstract class BaseRepo<T> :IRepo<T> where T : BaseEntityData, IEntityData, new() {
+    public abstract class BaseRepo<T> :IRepo<T> where T : BaseData, IEntityData, new() {
         protected internal readonly DbSet<T> Set;
         protected internal readonly DbContext Db;
         public T EntityInDb { get; protected set; }

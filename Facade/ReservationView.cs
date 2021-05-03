@@ -5,7 +5,7 @@ using ReservationProject.Facade.Common;
 
 namespace ReservationProject.Facade
 {
-    public class ReservationView : BaseEntityView
+    public sealed class ReservationView : BaseView
     {
         [DataType(DataType.Date)]
         [Display(Name = "Date")]

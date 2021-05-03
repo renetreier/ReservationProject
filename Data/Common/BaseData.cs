@@ -2,8 +2,7 @@
 using ReservationProject.Core;
 
 namespace ReservationProject.Data.Common {
-    public abstract class BaseEntityData:IEntityData {
-        public  string Id { get; set; }
+    public abstract class BaseData:UniqueItem, IEntityData {
         [Timestamp] public byte[] RowVersion { get; set; }
     }
 }

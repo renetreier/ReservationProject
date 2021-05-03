@@ -7,6 +7,6 @@ namespace ReservationProject.Tests
         where TClass : class, new()
         where TBaseClass : class {
 
-        [TestMethod] public override void IsSealedTest() => isTrue(type.IsSealed);
+        [TestMethod] public override void IsSealedTest() => IsTrue(Type.IsSealed);
     }
 }

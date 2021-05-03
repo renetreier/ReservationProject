@@ -4,7 +4,7 @@ using ReservationProject.Aids;
 
 namespace ReservationProject.Tests.Aids {
     [TestClass]
-    public class CopyTests {
+    public class CopyTests:StaticClassTests {
         private class TestClass1 {
             public string Id { get; set; }
             public string Name { get; set; }
@@ -15,7 +15,7 @@ namespace ReservationProject.Tests.Aids {
             public string Name { get; set; }
             public DateTime DoB { get; set; }
         }
-
+        [TestInitialize] public void TestInitialize() => Type = typeof(Copy);
         [TestMethod] public void MemberTest() {
             var x = GetRandom.ObjectOf<TestClass1>();
             var y = new TestClass2();

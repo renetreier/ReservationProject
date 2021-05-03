@@ -7,7 +7,7 @@ using ReservationProject.Data.Common;
 namespace ReservationProject.Infra.Common
 {
     public abstract class PagedRepo<TEntity, TData> :OrderedRepo<TEntity, TData>
-        where TData : BaseEntityData, IEntityData, new() {
+        where TData : BaseData, IEntityData, new() {
         private int _pageIndex;
 
         public const int DefaultPageSize = 5;

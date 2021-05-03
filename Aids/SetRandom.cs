@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+
 namespace ReservationProject.Aids {
     public static class SetRandom {
 
@@ -38,7 +39,7 @@ namespace ReservationProject.Aids {
                         select method.ReturnType
                     ).Distinct().ToArray();
                 return types[0];
-            }, (Type)null);
+            }, null);
         }
     }
 }

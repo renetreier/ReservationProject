@@ -2,13 +2,13 @@
 
 namespace ReservationProject.Aids {
     public static class NonPublicFlagsFor {
-        private const BindingFlags p = BindingFlags.NonPublic;
-        private const BindingFlags i = BindingFlags.Instance;
-        private const BindingFlags s = BindingFlags.Static;
-        private const BindingFlags d = BindingFlags.DeclaredOnly;
-        public const BindingFlags All = p | i | s;
-        public const BindingFlags Instance = p | i;
-        public const BindingFlags Static = p | s;
-        public const BindingFlags Declared = p | d | i | s; 
+        private const BindingFlags Pub = BindingFlags.NonPublic;
+        private const BindingFlags Inst = BindingFlags.Instance;
+        private const BindingFlags Stat = BindingFlags.Static;
+        private const BindingFlags Decl = BindingFlags.DeclaredOnly;
+        public const BindingFlags All = Pub | Inst | Stat;
+        public const BindingFlags Instance = Pub | Inst;
+        public const BindingFlags Static = Pub | Stat;
+        public const BindingFlags Declared = Pub | Decl | Inst | Stat; 
     }
 }

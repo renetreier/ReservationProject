@@ -8,104 +8,104 @@ using ReservationProject.Aids;
 
 namespace ReservationProject.Tests {
     public abstract class StaticClassTests: BaseTests {
-        private const string notSpecified = "Class is not specified";
-        private List<string> members { get; set; }
-        protected Type type;
-        protected string typeName => getName();
-        private string getName() {
-            var s = type.Name;
+        private const string NotSpecified = "Class is not specified";
+        private List<string> Members { get; set; }
+        protected Type Type;
+        protected string TypeName => GetName();
+        private string GetName() {
+            var s = Type.Name;
             var index = s.IndexOf("`", StringComparison.Ordinal);
             if (index > -1) s = s.Substring(0, index);
             return s;
         }
         [TestMethod] public virtual void IsStaticTest() 
-            => isTrue(type.IsAbstract && type.IsClass && type.IsSealed);
+            => IsTrue(Type.IsAbstract && Type.IsClass && Type.IsSealed);
         [TestMethod] public virtual void IsTested() {
-            if (type == null) notTested(notSpecified);
-            var m = GetClass.Members(type, PublicFlagsFor.Declared);
-            members = m.Select(e => e.Name).ToList();
-            removeTested();
-            if (members.Count == 0) return;
-            notTested("<{0}> is not tested", members[0]);
+            if (Type == null) NotTested(NotSpecified);
+            var m = GetClass.Members(Type, PublicFlagsFor.Declared);
+            Members = m.Select(e => e.Name).ToList();
+            RemoveTested();
+            if (Members.Count == 0) return;
+            NotTested("<{0}> is not tested", Members[0]);
         }
         [TestMethod] public virtual void IsSpecifiedClassTested() {
-            if (type == null) Assert.Inconclusive(notSpecified);
+            if (Type == null) Assert.Inconclusive(NotSpecified);
             var className = GetType().Name;
-            isTrue(className.StartsWith(typeName));
+            IsTrue(className.StartsWith(TypeName));
         }
-        private void removeTested() {
+        private void RemoveTested() {
             var tests = GetType().GetMembers().Select(e => e.Name).ToList();
-            for (var i = members.Count; i > 0; i--) {
-                var m = members[i - 1] + "Test";
+            for (var i = Members.Count; i > 0; i--) {
+                var m = Members[i - 1] + "Test";
                 var isTested = tests.Find(o => o == m);
                 if (string.IsNullOrEmpty(isTested)) continue;
-                members.RemoveAt(i - 1);
+                Members.RemoveAt(i - 1);
             }
         }
-        protected PropertyInfo isProperty<T>(bool canWrite = true) {
-            var name = getPropertyName();
-            var propertyInfo = type.GetProperty(name);
+        protected PropertyInfo IsProperty<T>(bool canWrite = true) {
+            var name = GetPropertyName();
+            var propertyInfo = Type.GetProperty(name);
             Assert.IsNotNull(propertyInfo, "Not found");
             Assert.AreEqual(typeof(T), propertyInfo.PropertyType, "Wrong type");
             Assert.AreEqual(true, propertyInfo.CanRead, "Cant read");
             Assert.AreEqual(canWrite, propertyInfo.CanWrite, "CanWrite is wrong");
             return propertyInfo;
         }
-        protected void isReadWriteProperty<T>() {
-            var propertyInfo = isProperty<T>();
-            var actual = getPropertyValue<T>(true);
-            var expected = getValue(actual);
-            var current = getCurrentValues();
-            setPropertyValue(propertyInfo, expected);
-            actual = getPropertyValue<T>(true);
-            areEqual(expected, actual);
-            arePropertiesEqual(current, getCurrentValues(), propertyInfo.Name);
+        protected void IsReadWriteProperty<T>() {
+            var propertyInfo = IsProperty<T>();
+            var actual = GetPropertyValue<T>(true);
+            var expected = GetValue(actual);
+            var current = GetCurrentValues();
+            SetPropertyValue(propertyInfo, expected);
+            actual = GetPropertyValue<T>(true);
+            AreEqual(expected, actual);
+            ArePropertiesEqual(current, GetCurrentValues(), propertyInfo.Name);
         }
-        private static T getValue<T>(T value) {
+        private static T GetValue<T>(T value) {
             var v = (T)GetRandom.ValueOf<T>();
             while (value.Equals(v)) {
                 v = (T)GetRandom.ValueOf<T>();
             }
             return v;
         }
-        protected virtual void setPropertyValue<T>(PropertyInfo p, T newValue) { }
-        protected virtual dynamic getCurrentValues() => null;
-        protected void isReadOnlyProperty<T>() => isProperty<T>(false);
-        protected void isReadOnlyProperty<T>(T expected) {
-            var actual = getPropertyValue<T>();
-            areEqual(expected, actual);
+        protected virtual void SetPropertyValue<T>(PropertyInfo p, T newValue) { }
+        protected virtual dynamic GetCurrentValues() => null;
+        protected void IsReadOnlyProperty<T>() => IsProperty<T>(false);
+        protected void IsReadOnlyProperty<T>(T expected) {
+            var actual = GetPropertyValue<T>();
+            AreEqual(expected, actual);
         }
-        protected virtual T getPropertyValue<T>(bool canWrite = false) => default;  
+        protected virtual T GetPropertyValue<T>(bool canWrite = false) => default;  
 
-        private readonly string[] notPropertyNames = { nameof(getPropertyName), 
-            nameof(isReadOnlyProperty) , nameof(isReadWriteProperty), nameof(isProperty)
-            , nameof(getPropertyValue), nameof(getCurrentValues), 
-            nameof(setPropertyValue), nameof(getValue)};
+        private readonly string[] _notPropertyNames = { nameof(GetPropertyName), 
+            nameof(IsReadOnlyProperty) , nameof(IsReadWriteProperty), nameof(IsProperty)
+            , nameof(GetPropertyValue), nameof(GetCurrentValues), 
+            nameof(SetPropertyValue), nameof(GetValue)};
 
-        protected string getPropertyName() {
+        protected string GetPropertyName() {
             var stack = new StackTrace();
             for (var idx = 0; idx < stack.FrameCount; idx ++) {
                 var n = stack.GetFrame(idx)?.GetMethod()?.Name;
-                if (notPropertyNames.Contains(n)) continue;
+                if (_notPropertyNames.Contains(n)) continue;
                 return n?.Replace("Test", string.Empty);
             }
             return string.Empty;
         }
 
-        protected static void arePropertiesNotEqual<T>(T expected, T actual, params string[] exceptProperties) {
+        protected static void ArePropertiesNotEqual<T>(T expected, T actual, params string[] exceptProperties) {
             foreach (var p in typeof(T).GetProperties()) {
                 var expectedValue = p.GetValue(expected);
                 var actualValue = p.GetValue(actual);
-                if (exceptProperties.Contains(p.Name)) areEqual(expectedValue, actualValue);
-                else areNotEqual(expectedValue, actualValue);
+                if (exceptProperties.Contains(p.Name)) AreEqual(expectedValue, actualValue);
+                else AreNotEqual(expectedValue, actualValue);
             }
         }
-        protected static void arePropertiesEqual<T>(T expected, T actual, params string[] exceptProperties) {
+        protected static void ArePropertiesEqual<T>(T expected, T actual, params string[] exceptProperties) {
             foreach (var p in typeof(T).GetProperties()) {
                 var expectedValue = p.GetValue(expected);
                 var actualValue = p.GetValue(actual);
-                if (exceptProperties.Contains(p.Name)) areNotEqual(expectedValue, actualValue);
-                else areEqual(expectedValue, actualValue);
+                if (exceptProperties.Contains(p.Name)) AreNotEqual(expectedValue, actualValue);
+                else AreEqual(expectedValue, actualValue);
             }
         }
     }

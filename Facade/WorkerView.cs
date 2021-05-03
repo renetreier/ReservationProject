@@ -2,7 +2,7 @@
 using ReservationProject.Facade.Common;
 
 namespace ReservationProject.Facade {
-    public class WorkerView : BaseEntityView
+    public sealed class WorkerView : BaseView
     {
 
         [StringLength(50)]
@@ -19,12 +19,6 @@ namespace ReservationProject.Facade {
         public string Email { get; set; }
         public double Salary { get; set; }
         [Display(Name = "Name")]
-        public string FullName
-        {
-            get
-            {
-                return LastName + ", " + FirstName;
-            }
-        }
+        public string FullName => LastName + ", " + FirstName;
     }
 }

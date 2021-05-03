@@ -5,7 +5,7 @@ using ReservationProject.Data.Common;
 
 namespace ReservationProject.Infra.Common {
     public abstract class FilteredRepo<TEntity, TData> :CrudRepo<TEntity, TData>
-        where TData : BaseEntityData, IEntityData, new() {
+        where TData : BaseData, IEntityData, new() {
         private string currentFilter;
         private string searchString;
         protected FilteredRepo(DbContext c = null, DbSet<TData> s = null) :base(c, s) { }

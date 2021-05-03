@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ReservationProject.Infra.Common.BaseRepo&lt;TEntity, TData&gt;" Collapsed="true">
+    <Position X="7" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAABAAACAAAAAAAEAAAAAAAAEBAAAAIA=</HashCode>
+      <FileName>Common\BaseRepo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ReservationProject.Infra.Common.BaseRepo&lt;T&gt;" Collapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQYABgAAAAABRABQEACQkBAUAAEAAAAAAAAAEDAAAIA=</HashCode>
+      <FileName>Common\BaseRepo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ReservationProject.Infra.Common.CrudRepo&lt;TEntity, TData&gt;" Collapsed="true">
+    <Position X="4.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\CrudRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReservationProject.Infra.Common.OrderedRepo&lt;TEntity, TData&gt;" Collapsed="true">
+    <Position X="1.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAABAAAAAQAQIAABEAQAAAAAAABAAAQJAAAAAAABAQ=</HashCode>
+      <FileName>Common\OrderedRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReservationProject.Infra.Common.PagedRepo&lt;TEntity, TData&gt;" Collapsed="true">
+    <Position X="3.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAwgAAgABAEAAUABAAAAACAAAAEAAAAAA=</HashCode>
+      <FileName>Common\PagedRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReservationProject.Infra.Common.FilteredRepo&lt;TEntity, TData&gt;" Collapsed="true">
+    <Position X="1.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAgAAAQAAAAQAAwAAAAIIAAAAAAAEAACAAAAA=</HashCode>
+      <FileName>Common\FilteredRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReservationProject.Infra.ReservationsRepo" Collapsed="true">
+    <Position X="3.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAQAAAAAAAEAAAAAAEBAAAAAA=</HashCode>
+      <FileName>ReservationsRepo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ReservationProject.Infra.RoomsRepo" Collapsed="true">
+    <Position X="5.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAEBAAAAAA=</HashCode>
+      <FileName>RoomsRepo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ReservationProject.Infra.WorkersRepo" Collapsed="true">
+    <Position X="1.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAEBAAAAAA=</HashCode>
+      <FileName>WorkersRepo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
