@@ -3,15 +3,15 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ReservationProject.Domain.Common {
     public sealed class GetRepo {
-    
-        public readonly IServiceProvider _provider;
-        public static IServiceProvider instance;
+
+        internal readonly IServiceProvider Provider;
+        internal static IServiceProvider ProviderInstance;
         public GetRepo() : this(null) { }
-        public GetRepo(IServiceProvider p = null) => _provider = p ?? instance;
-        public static void SetProvider(IServiceProvider p) => instance = p;
+        public GetRepo(IServiceProvider p = null) => Provider = p ?? ProviderInstance;
+        public static void SetProvider(IServiceProvider p) => ProviderInstance = p;
         public dynamic Instance(Type t)
         {
-            var p = _provider;
+            var p = Provider;
             var c = p?.CreateScope();
             var s = c?.ServiceProvider;
             var r = s?.GetService(t);

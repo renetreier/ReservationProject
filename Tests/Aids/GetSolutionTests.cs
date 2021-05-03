@@ -11,7 +11,7 @@ namespace ReservationProject.Tests.Aids {
                     .Where(x => x.FullName?.StartsWith("ReservationProject") ?? false)
                     .ToList();
 
-            AreEqual(8, assemblies.Count);
+            AreEqual(7, assemblies.Count);
         }
     }
 }

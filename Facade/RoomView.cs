@@ -3,7 +3,7 @@ using ReservationProject.Facade.Common;
 
 namespace ReservationProject.Facade
 {
-    public class RoomView: BaseEntityView
+    public sealed class RoomView: BaseView
     {
         [Required]
         [StringLength(50, MinimumLength = 3)]

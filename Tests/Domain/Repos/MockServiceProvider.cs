@@ -7,8 +7,8 @@ namespace ReservationProject.Tests.Domain.Repos
         private readonly dynamic service;
         public MockServiceProvider(dynamic x) => service = x;
         public dynamic GetService(Type serviceType)
-            => serviceType == typeof(IServiceScopeFactory) ? returnScopeFactory() : returnService();
-        private dynamic returnService() => service;
-        private dynamic returnScopeFactory() => new MockServiceScopeFactory(this);
+            => serviceType == typeof(IServiceScopeFactory) ? ReturnScopeFactory() : ReturnService();
+        private dynamic ReturnService() => service;
+        private dynamic ReturnScopeFactory() => new MockServiceScopeFactory(this);
     }
 }

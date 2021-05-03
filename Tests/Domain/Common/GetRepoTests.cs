@@ -10,22 +10,22 @@ namespace ReservationProject.Tests.Domain.Common {
         private IServiceProvider Provider { get; set; }
         protected override GetRepo GetObject() => new(Provider);
         [TestCleanup] public void TestCleanup() => GetRepo.SetProvider(null);
-        [TestMethod] public void ProviderIsNullTest() => IsNull(Obj._provider);
-        [TestMethod] public void InstanceIsNullTest() => IsNull(GetRepo.instance);
+        [TestMethod] public void ProviderIsNullTest() => IsNull(Obj.Provider);
+        [TestMethod] public void InstanceIsNullTest() => IsNull(GetRepo.ProviderInstance);
         [TestMethod]
         public void CanCreateTest()
         {
             InitMock();
-            AreNotEqual(Provider, GetRepo.instance);
-            AreEqual(Provider, Obj._provider);
+            AreNotEqual(Provider, GetRepo.ProviderInstance);
+            AreEqual(Provider, Obj.Provider);
         }
         [TestMethod]
         public void SetProviderTest()
         {
             var p = new MockServiceProvider(null);
             GetRepo.SetProvider(p);
-            IsNull(Obj._provider);
-            AreEqual(p, GetRepo.instance);
+            IsNull(Obj.Provider);
+            AreEqual(p, GetRepo.ProviderInstance);
         }
         [TestMethod]
         public void CreateAfterSetTest()
@@ -33,8 +33,8 @@ namespace ReservationProject.Tests.Domain.Common {
             var p = new MockServiceProvider(null);
             GetRepo.SetProvider(p);
             Obj = new GetRepo();
-            AreEqual(p, GetRepo.instance);
-            AreEqual(p, Obj._provider);
+            AreEqual(p, GetRepo.ProviderInstance);
+            AreEqual(p, Obj.Provider);
         }
         [TestMethod]
         public void InstanceWithTypeTest()

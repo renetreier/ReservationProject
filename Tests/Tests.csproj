@@ -30,7 +30,6 @@
 
   <ItemGroup>
     <Folder Include="Infra\" />
-    <Folder Include="Core\" />
   </ItemGroup>
 
 </Project>
