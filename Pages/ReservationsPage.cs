@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ReservationProject.Aids;
 using ReservationProject.Data;
 using ReservationProject.Domain;
+using ReservationProject.Domain.Common;
 using ReservationProject.Domain.Repos;
 using ReservationProject.Facade;
 using ReservationProject.Infra;
@@ -33,14 +34,22 @@ namespace ReservationProject.Pages
             return new ReservationEntity(d);
         }
 
-        //TODO nendes peaks kaa DB asemel repo tegema
-        public SelectList Rooms =>
-            new(
-                Db.Rooms.OrderBy(x => x.RoomName).AsNoTracking(),
-                "Id","RoomName",Item?.RoomId);
-        public SelectList Workers =>
-            new(
-                Db.Workers.OrderBy(x => x.LastName).AsNoTracking(),
-                "Id","LastName",Item?.WorkerId);
+        public SelectList Rooms
+        {
+            get
+            {
+                var list = new GetRepo().Instance<IRoomsRepo>().Get().GetAwaiter().GetResult();
+                return new SelectList(list, "Id", "RoomName", Item?.RoomId);
+            }
+        }
+
+        public SelectList Workers
+        {
+            get
+            {
+                var list = new GetRepo().Instance<IWorkersRepo>().Get().GetAwaiter().GetResult();
+                return new SelectList(list, "Id", "LastName", Item?.WorkerId);
+            }
+        }
     }
 }
