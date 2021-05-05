@@ -16,15 +16,16 @@ namespace ReservationProject.Infra.Common {
         protected abstract TData ToData(TEntity e);
         protected BaseRepo(DbContext c = null, DbSet<TData> s = null) : base(c, s) { }
         public new TEntity EntityInDb => ToEntity(base.EntityInDb);
-        public new async Task<List<TEntity>> Get() => (await base.Get()).Select(ToEntity).ToList();
-        public new async Task<TEntity> Get(string id) => ToEntity(await base.Get(id));
-        public virtual async Task<bool> Delete(TEntity e) => await Delete(ToData(e));
-        public virtual async Task<bool> Add(TEntity e) => await Add(ToData(e));
+        public new async Task<List<TEntity>> GetAsync() => (await base.GetAsync()).Select(ToEntity).ToList();
+        public new async Task<TEntity> GetAsync(string id) => ToEntity(await base.GetAsync(id));
+        public virtual async Task<bool> DeleteAsync(TEntity e) => await DeleteAsync(ToData(e));
+        public virtual async Task<bool> AddAsync(TEntity e) => await AddAsync(ToData(e));
 
-        public virtual async Task<bool> Update(TEntity e) => await Update(ToData(e));
-        public new TEntity GetById(string id) => ToEntity(base.GetById(id));
+        public virtual async Task<bool> UpdateAsync(TEntity e) => await UpdateAsync(ToData(e));
+        public new TEntity Get(string id) => ToEntity(base.Get(id));
+        public List<TEntity> Get() => GetDropDownList().Select(ToEntity).ToList();
     }
-    public abstract class BaseRepo<T> :IRepo<T> where T : BaseData, IEntityData, new() {
+    public abstract class BaseRepo<T>  where T : BaseData, IEntityData, new() {
         protected internal readonly DbSet<T> Set;
         protected internal readonly DbContext Db;
         public T EntityInDb { get; protected set; }
@@ -34,17 +35,17 @@ namespace ReservationProject.Infra.Common {
             Set = s;
             Db = c;
         }
-        public async Task<List<T>> Get() => await CreateSql().ToListAsync();
+        public async Task<List<T>> GetAsync() => await CreateSql().ToListAsync();
         protected internal virtual IQueryable<T> CreateSql() => Set.AsNoTracking();
 
-        public async Task<T> Get(string id)
+        public async Task<T> GetAsync(string id)
         {
             if (id is null) return null;
             if (Set is null) return null;
             return await Set.AsNoTracking().FirstOrDefaultAsync(m => m.Id == id);
         }
 
-        public async Task<bool> Delete(T obj)
+        public async Task<bool> DeleteAsync(T obj)
         {
             var isOk = await IsEntityOk(obj, ErrorMessages.ConcurrencyOnDelete);
             if (isOk) Set.Remove(obj);
@@ -52,7 +53,7 @@ namespace ReservationProject.Infra.Common {
             return isOk;
         }
 
-        public async Task<bool> Add(T obj)
+        public async Task<bool> AddAsync(T obj)
         {
             var isOk = await IsEntityOk(obj, true);
             if (isOk)
@@ -63,7 +64,7 @@ namespace ReservationProject.Infra.Common {
             return isOk;
         }
 
-        public async Task<bool> Update(T obj)
+        public async Task<bool> UpdateAsync(T obj)
         {
             var isOk = await IsEntityOk(obj, ErrorMessages.ConcurrencyOnEdit);
             if (isOk)
@@ -94,7 +95,7 @@ namespace ReservationProject.Infra.Common {
         {
             if (obj is null) return SetErrorMessage("Item is null");
             if (Set is null) return SetErrorMessage("DbSet is null");
-            EntityInDb = await Get(obj.Id);
+            EntityInDb = await GetAsync(obj.Id);
             return (EntityInDb is null) == isNewItem
                    || SetErrorMessage(
                        isNewItem
@@ -109,7 +110,8 @@ namespace ReservationProject.Infra.Common {
                    || SetErrorMessage(concurrencyErrorMsg);
         }
 
-        public T GetById(string id) => Get(id).GetAwaiter().GetResult();
+        public T Get(string id) => GetAsync(id).GetAwaiter().GetResult();
+        protected internal List<T> GetDropDownList() => CreateSql().ToList();
         public abstract int? PageIndex { get; set; }
         public abstract int TotalPages { get; }
         public abstract bool HasNextPage { get; }

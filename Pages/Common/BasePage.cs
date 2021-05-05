@@ -51,15 +51,15 @@ namespace ReservationProject.Pages.Common
 
         internal async Task<TView> Load(string id, bool concurrencyError = false)
         {
-            var item = await Repo.Get(id);
+            var item = await Repo.GetAsync(id);
             ErrorMessage = SetConcurrencyMsg(concurrencyError);
             return ToViewModel(item);
         }
 
         internal async Task<bool> Remove() =>
-            !IsNull(Repo) && await Repo.Delete(ToEntity(Item));
+            !IsNull(Repo) && await Repo.DeleteAsync(ToEntity(Item));
         internal async Task<bool> Update() =>
-            !IsNull(Repo) && await Repo.Update(ToEntity(Item));
+            !IsNull(Repo) && await Repo.UpdateAsync(ToEntity(Item));
 
         public IActionResult OnGetCreate()
         {
@@ -86,7 +86,7 @@ namespace ReservationProject.Pages.Common
         public async Task<IActionResult> OnPostCreateAsync()
         {
             if (!ModelState.IsValid) return Page();
-            if (await Repo.Add(ToEntity(Item)) == false)
+            if (await Repo.AddAsync(ToEntity(Item)) == false)
             {
                 ErrorMessage = Repo.ErrorMessage;
                 return Page();

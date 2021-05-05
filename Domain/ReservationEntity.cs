@@ -23,11 +23,11 @@ namespace ReservationProject.Domain
         public RoomEntity ReservedRoom => LazyReadRoom.Value;
         internal Lazy<RoomEntity> LazyReadRoom { get; }
         private RoomEntity GetRoom()
-            => new GetRepo().Instance<IRoomsRepo>()?.GetById(RoomId);
+            => new GetRepo().Instance<IRoomsRepo>()?.Get(RoomId);
 
         public WorkerEntity ReservedWorker => LazyReadWorker.Value;
         internal Lazy<WorkerEntity> LazyReadWorker { get; }
         private WorkerEntity GetWorker()
-            => new GetRepo().Instance<IWorkersRepo>()?.GetById(WorkerId);
+            => new GetRepo().Instance<IWorkersRepo>()?.Get(WorkerId);
     }
 }

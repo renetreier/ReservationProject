@@ -11,12 +11,18 @@ namespace ReservationProject.Tests.Pages
         public TClass EntityInDb { get; set; }
         public object Result { get; set; } = null;
         public List<string> Actions { get; } = new();
-        public async Task<bool> Add(TClass obj) => await Complete($"Add {obj?.Id}");
-        public async Task<bool> Delete(TClass obj) => await Complete($"Delete {obj?.Id}");
-        public async Task<bool> Update(TClass obj) => await Complete($"Update {obj?.Id}");
-        public async Task<List<TClass>> Get() => await GetList("List");
-        public async Task<TClass> Get(string id) => await Item($"Get {id}");
-        public TClass GetById(string id) => GetWithId($"GetById {id}");
+        public async Task<bool> AddAsync(TClass obj) => await Complete($"Add {obj?.Id}");
+        public async Task<bool> DeleteAsync(TClass obj) => await Complete($"Delete {obj?.Id}");
+        public async Task<bool> UpdateAsync(TClass obj) => await Complete($"Update {obj?.Id}");
+
+        public List<TClass> Get()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<List<TClass>> GetAsync() => await GetList("List");
+        public async Task<TClass> GetAsync(string id) => await Item($"Get {id}");
+        public TClass Get(string id) => GetWithId($"Get {id}");
         private async Task<TClass> Item(string v) => await Complete(v, (TClass)Result);
         private async Task<List<TClass>> GetList(string v) => await Complete(v, (List<TClass>)Result);
         private async Task<TResult> Complete<TResult>(string s, TResult r)

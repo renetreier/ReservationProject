@@ -38,7 +38,7 @@ namespace ReservationProject.Pages
         {
             get
             {
-                var list = new GetRepo().Instance<IRoomsRepo>().Get().GetAwaiter().GetResult();
+                var list = new GetRepo().Instance<IRoomsRepo>().Get();
                 return new SelectList(list, "Id", "RoomName", Item?.RoomId);
             }
         }
@@ -47,7 +47,7 @@ namespace ReservationProject.Pages
         {
             get
             {
-                var list = new GetRepo().Instance<IWorkersRepo>().Get().GetAwaiter().GetResult();
+                var list = new GetRepo().Instance<IWorkersRepo>().Get();
                 return new SelectList(list, "Id", "LastName", Item?.WorkerId);
             }
         }

@@ -22,16 +22,16 @@ namespace ReservationProject.Infra {
                      x.RoomId.Contains(SearchString) ||
                      x.WorkerId.Contains(SearchString));
         }
-        public override async Task<bool> Add(ReservationEntity e)
+        public override async Task<bool> AddAsync(ReservationEntity e)
         {
-            if (IsRoomAvailable(e)) return await base.Add(e);
+            if (IsRoomAvailable(e)) return await base.AddAsync(e);
             ErrorMessage = ErrorMessages.RoomNotFree;
             return false;
 
         }
-        public override async Task<bool> Update(ReservationEntity e)
+        public override async Task<bool> UpdateAsync(ReservationEntity e)
         {
-            if (IsRoomAvailable(e)) return await base.Update(e);
+            if (IsRoomAvailable(e)) return await base.UpdateAsync(e);
             ErrorMessage = ErrorMessages.RoomNotFree;
             return false;
         }
