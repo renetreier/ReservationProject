@@ -6,12 +6,14 @@ namespace ReservationProject.Domain.Repos {
     {
         string ErrorMessage { get; }
         public T EntityInDb { get; }
-        Task<List<T>> Get();
-        Task<T> Get(string id);
-        Task<bool> Delete(T obj);
-        Task<bool> Add(T obj);
-        Task<bool> Update(T obj);
-        T GetById(string id);
+        Task<List<T>> GetAsync();
+        Task<T> GetAsync(string id);
+        Task<bool> DeleteAsync(T obj);
+        Task<bool> AddAsync(T obj);
+        Task<bool> UpdateAsync(T obj);
+        T Get(string id);
+        List<T> Get();
+
     }
 }
 
