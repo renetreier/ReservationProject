@@ -4,7 +4,6 @@ using ReservationProject.Facade.Common;
 namespace ReservationProject.Facade {
     public sealed class WorkerView : BaseView
     {
-
         [StringLength(50)]
         [RegularExpression(@"^[A-Z]+[a-zA-Z]*$")]
         [Display(Name = "Last Name")]
@@ -18,7 +17,6 @@ namespace ReservationProject.Facade {
         [Required]
         public string Email { get; set; }
         public double Salary { get; set; }
-        [Display(Name = "Name")]
-        public string FullName => LastName + ", " + FirstName;
+        [Display(Name = "Name")] public string FullName =>LastName + ", " + FirstName; // TODO siin kala kahe testiga
     }
 }

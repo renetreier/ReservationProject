@@ -26,12 +26,11 @@
     <ProjectReference Include="..\Facade\Facade.csproj" />
     <ProjectReference Include="..\Infra\Infra.csproj" />
     <ProjectReference Include="..\Pages\Pages.csproj" />
-    <ProjectReference Include="..\ReservationProject\Soft.csproj" />
+    <ProjectReference Include="..\Soft\Soft.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Infra\" />
-    <Folder Include="Soft\" />
   </ItemGroup>
 
 </Project>
