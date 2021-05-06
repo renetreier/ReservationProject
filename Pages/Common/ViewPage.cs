@@ -17,7 +17,7 @@ namespace ReservationProject.Pages.Common {
             SearchString = searchString;
             CurrentFilter = currentFilter;
             SortOrder = sortOrder;
-            ItemList = (await Repo.Get()).Select(ToViewModel).ToList();
+            ItemList = (await Repo.GetAsync()).Select(ToViewModel).ToList();
             return Page();
         }
     }

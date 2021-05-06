@@ -25,5 +25,6 @@ namespace ReservationProject.Domain
 
         public WorkerEntity ReservedWorker => LazyReadWorker.Value;
         internal Lazy<WorkerEntity> LazyReadWorker { get; }
+
     }
 }
