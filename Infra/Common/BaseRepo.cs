@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Formats.Asn1;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +28,6 @@ namespace ReservationProject.Infra.Common {
     }
     public abstract class BaseRepo<T>  where T : BaseData, IEntityData, new() 
     {
-        //TODO muutsin Set ja Db publicuks, Muidu ei saanud kasutada. Äkki saab kuidagi tagasi protected internal hiljem
         public readonly DbSet<T> Set;
         public readonly DbContext Db;
         public T EntityInDb { get; protected set; }
