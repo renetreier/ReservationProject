@@ -25,9 +25,11 @@ namespace ReservationProject.Infra.Common {
         public new TEntity Get(string id) => ToEntity(base.Get(id));
         public List<TEntity> Get() => GetDropDownList().Select(ToEntity).ToList();
     }
-    public abstract class BaseRepo<T>  where T : BaseData, IEntityData, new() {
-        protected internal readonly DbSet<T> Set;
-        protected internal readonly DbContext Db;
+    public abstract class BaseRepo<T>  where T : BaseData, IEntityData, new() 
+    {
+        //TODO muutsin Set ja Db publicuks, Muidu ei saanud kasutada. Äkki saab kuidagi tagasi protected internal hiljem
+        public readonly DbSet<T> Set;
+        public readonly DbContext Db;
         public T EntityInDb { get; protected set; }
         public string ErrorMessage { get; protected set; }
 
