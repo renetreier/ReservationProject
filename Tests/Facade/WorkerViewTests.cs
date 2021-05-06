@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ReservationProject.Facade;
-using ReservationProject.Facade.Common;
+using ReservationProject.Aids;
+using ReservationProject.Data;
 
 namespace ReservationProject.Tests.Facade
 {

@@ -4,11 +4,11 @@ using ReservationProject.Aids;
 
 namespace ReservationProject.Tests {
     public class EnumBaseTests<T> : BaseTests where T: Enum {
-        protected T value;
-        protected Type type;
+        protected T Value;
+        protected Type Type;
         [TestInitialize] public void TestInitialize() {
-            type = typeof(T);
-            value = GetRandom.EnumOf<T>();
+            Type = typeof(T);
+            Value = GetRandom.EnumOf<T>();
         }
     }
 }

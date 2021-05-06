@@ -11,8 +11,8 @@ namespace ReservationProject.Domain
 
         public ReservationEntity(ReservationData d) : base(d)
         {
-            LazyReadRoom = new Lazy<RoomEntity>(GetRoom);
-            LazyReadWorker = new Lazy<WorkerEntity>(GetWorker);
+            LazyReadRoom = GetLazy<RoomEntity, IRoomsRepo>(x => x?.GetById(RoomId));
+            LazyReadWorker = GetLazy<WorkerEntity,IWorkersRepo>(x => x?.GetById(WorkerId));
         }
        
         public DateTime ReservationDate => Data?.ReservationDate ?? DateTime.MaxValue;
@@ -22,12 +22,9 @@ namespace ReservationProject.Domain
 
         public RoomEntity ReservedRoom => LazyReadRoom.Value;
         internal Lazy<RoomEntity> LazyReadRoom { get; }
-        private RoomEntity GetRoom()
-            => new GetRepo().Instance<IRoomsRepo>()?.Get(RoomId);
 
         public WorkerEntity ReservedWorker => LazyReadWorker.Value;
         internal Lazy<WorkerEntity> LazyReadWorker { get; }
-        private WorkerEntity GetWorker()
-            => new GetRepo().Instance<IWorkersRepo>()?.Get(WorkerId);
+
     }
 }

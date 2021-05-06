@@ -22,5 +22,6 @@ namespace ReservationProject.Tests.Domain
         [TestMethod] public void ReservationDateTest() => IsReadOnlyProperty(Obj.Data.ReservationDate);
         [TestMethod] public void WorkerIdTest() => IsReadOnlyProperty(Obj.Data.WorkerId);
         [TestMethod] public void RoomIdTest() => IsReadOnlyProperty(Obj.Data.RoomId);
+        
     }
 }
