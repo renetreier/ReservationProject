@@ -12,9 +12,9 @@ namespace ReservationProject.Infra {
     public sealed class ReservationsRepo : PagedRepo<ReservationEntity,ReservationData>, IReservationsRepo
     {
         public ReservationsRepo(ApplicationDbContext c) : base(c, c?.Reservations) { }
-        protected override ReservationEntity ToEntity(ReservationData d) => new(d);
-        protected override ReservationData ToData(ReservationEntity e) => e?.Data ?? new ReservationData();
-        protected internal override IQueryable<ReservationData> ApplyFilters(IQueryable<ReservationData> query)
+        public override ReservationEntity ToEntity(ReservationData d) => new(d);
+        public override ReservationData ToData(ReservationEntity e) => e?.Data ?? new ReservationData();
+        public override IQueryable<ReservationData> ApplyFilters(IQueryable<ReservationData> query)
         {
             if (SearchString is null) return query;
             return query.Where(

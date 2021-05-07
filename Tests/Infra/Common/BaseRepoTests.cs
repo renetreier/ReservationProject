@@ -18,8 +18,8 @@ namespace ReservationProject.Tests.Infra.Common
         {
             public TestRepo(ApplicationDbContext c = null)
                 : base(c, c?.Rooms) { }
-            protected override RoomEntity ToEntity(RoomData d) => new(d);
-            protected override RoomData ToData(RoomEntity e) => e.Data;
+            public override RoomEntity ToEntity(RoomData d) => new(d);
+            public override RoomData ToData(RoomEntity e) => e.Data;
 
             public override int? PageIndex { get; set; }
             public override int TotalPages { get; }

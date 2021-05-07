@@ -10,10 +10,10 @@ namespace ReservationProject.Infra {
     public sealed class WorkersRepo : PagedRepo<WorkerEntity,WorkerData>, IWorkersRepo
     {
         public WorkersRepo(ApplicationDbContext c) : base(c, c?.Workers) { }
-        protected override WorkerEntity ToEntity(WorkerData d) => new(d);
-        protected override WorkerData ToData(WorkerEntity e) => e?.Data ?? new WorkerData();
+        public override WorkerEntity ToEntity(WorkerData d) => new(d);
+        public override WorkerData ToData(WorkerEntity e) => e?.Data ?? new WorkerData();
 
-        protected internal override IQueryable<WorkerData> ApplyFilters(IQueryable<WorkerData> query)
+        public override IQueryable<WorkerData> ApplyFilters(IQueryable<WorkerData> query)
         {
             if (SearchString is null) return query;
             return query.Where(
