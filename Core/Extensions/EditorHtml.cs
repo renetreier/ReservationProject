@@ -23,7 +23,8 @@ namespace ReservationProject.Core.Extensions {
         }
         internal static List<object> HtmlStrings<TModel, TResult>(IHtmlHelper<TModel> h,
             Expression<Func<TModel, TResult>> e, string displayName) {
-            return new List<object> {
+            return new()
+            {
                 new HtmlString("<dd class=\"col-sm-2\">"),
                 h.Raw(displayName),
                 new HtmlString("</dd>"),

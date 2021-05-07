@@ -11,7 +11,6 @@ namespace ReservationProject.Aids
                 return valueOnException;
             }
         }
-
         public static void Run(Action action) {
             try {
                 action();
