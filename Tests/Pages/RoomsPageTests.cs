@@ -3,13 +3,14 @@ using ReservationProject.Domain;
 using ReservationProject.Domain.Repos;
 using ReservationProject.Facade;
 using ReservationProject.Pages;
+using ReservationProject.Tests.Pages.Common;
 
 namespace ReservationProject.Tests.Pages
 {
     
 
     [TestClass]
-    public class RoomsModelTests:BasePageTests<RoomEntity, RoomView>
+    public class RoomsPageTests:BasePageTests<RoomEntity, RoomView>
     {
         private class TestRoomsRepo : TestRepo<RoomEntity>, IRoomsRepo { }
        

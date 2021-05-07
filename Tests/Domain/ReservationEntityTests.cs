@@ -10,14 +10,14 @@ namespace ReservationProject.Tests.Domain
     public class ReservationEntityTests:SealedClassTests<ReservationEntity,BaseEntity<ReservationData>>
     {
         protected override ReservationEntity GetObject() => new(GetRandom.ObjectOf<ReservationData>());
+        
         [TestMethod]
-        public void ReservedRoomTest() => LazyTest(() => Obj.LazyReadRoom.IsValueCreated,
+        public void LazyReadRoomTest() => LazyTest(() => Obj.LazyReadRoom.IsValueCreated,
             () => Obj.ReservedRoom);
-
         [TestMethod]
-        public void ReservedWorkerTest()
-            => LazyTest(() => Obj.LazyReadWorker.IsValueCreated,
-                () => Obj.ReservedWorker);
+        public void LazyReadWorkerTest() => LazyTest(() => Obj.LazyReadRoom.IsValueCreated,
+            () => Obj.ReservedRoom);
+       
        
         [TestMethod] public void ReservationDateTest() => IsReadOnlyProperty(Obj.Data.ReservationDate);
         [TestMethod] public void WorkerIdTest() => IsReadOnlyProperty(Obj.Data.WorkerId);

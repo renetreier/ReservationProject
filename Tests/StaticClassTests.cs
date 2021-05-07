@@ -24,6 +24,7 @@ namespace ReservationProject.Tests {
             if (Type == null) NotTested(NotSpecified);
             var m = GetClass.Members(Type, PublicFlagsFor.Declared);
             Members = m.Select(e => e.Name).ToList();
+            RemoveSurrogates();
             RemoveTested();
             if (Members.Count == 0) return;
             NotTested("<{0}> is not tested", Members[0]);
@@ -108,5 +109,13 @@ namespace ReservationProject.Tests {
                 else AreEqual(expectedValue, actualValue);
             }
         }
+        private void RemoveSurrogates()//TODO tõin selle meetodi siia ja mudisin seda, siis kadusid IsTested rämpsasjad ära
+        {
+            Members.RemoveAll(o => o.Contains("<"));
+            Members.RemoveAll(o => o.Contains(">"));
+            Members.RemoveAll(o => o.Contains("Migrations"));
+            Members.RemoveAll(o => o.Contains("BackingField"));
+        }
+
     }
 }

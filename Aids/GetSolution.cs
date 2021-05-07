@@ -5,10 +5,6 @@ using System.Reflection;
 
 namespace ReservationProject.Aids {
     public static class GetSolution {
-        public static AppDomain Domain => AppDomain.CurrentDomain;
-        public static List<Assembly> Assemblies =>
-            Safe.Run(() => Domain.GetAssemblies().ToList(),
-                new List<Assembly>());
         public static List<Assembly> ReferenceAssemblies(string assemblyName) =>
             Safe.Run(() => {
                 var a = AssemblyByName(assemblyName);
@@ -24,7 +20,5 @@ namespace ReservationProject.Aids {
         public static List<string> TypeNamesForAssembly(string assemblyName) 
            => Safe.Run(() => TypesForAssembly(assemblyName).Select(t => t.FullName).ToList()
                , new List<string>());
-        public static string Name =>
-            GetClass.Namespace(typeof(GetSolution)).GetHead();
     }
 }

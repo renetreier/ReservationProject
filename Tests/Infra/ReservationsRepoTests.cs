@@ -46,6 +46,14 @@ namespace ReservationProject.Tests.Infra
             IsFalse(await Obj.UpdateAsync(o2));
         }
         //TODO ei oska hetkel välja mõelda
-        [TestMethod] public void IsRoomAvailableTest() { }
+        [TestMethod]
+        public async Task IsRoomAvailableTest()
+        {
+            var d1 = GetRandom.ObjectOf<ReservationData>();
+            await Obj.AddAsync(d1);
+            IsFalse(await Obj.AddAsync(d1));
+        }
+
+       
     }
 }

@@ -5,6 +5,10 @@ using ReservationProject.Data;
 namespace ReservationProject.Infra
 {
     public class ApplicationDbContext :IdentityDbContext {
+        public ApplicationDbContext() : this(
+            new DbContextOptionsBuilder<ApplicationDbContext>().Options)
+        { }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) {
         }
