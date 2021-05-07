@@ -11,6 +11,7 @@ namespace ReservationProject.Infra {
 
     public sealed class ReservationsRepo : PagedRepo<ReservationEntity,ReservationData>, IReservationsRepo
     {
+        public ReservationsRepo(){}
         public ReservationsRepo(ApplicationDbContext c) : base(c, c?.Reservations) { }
         public override ReservationEntity ToEntity(ReservationData d) => new(d);
         public override ReservationData ToData(ReservationEntity e) => e?.Data ?? new ReservationData();

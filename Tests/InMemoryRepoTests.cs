@@ -49,23 +49,5 @@ namespace ReservationProject.Tests
             var actual = Obj.CreateSql().Expression.ToString();
             AreEqual(expected, actual);
         }
-
-        protected void GetListByIdTest(Func<string, List<TEntity>> getById, Action<TData, string> setId) {
-            var l = getById(null);
-            AreEqual(0, l.Count);
-
-            var id = GetRandom.String();
-            l = getById(id);
-            AreEqual(0, l.Count);
-            var count = GetRandom.UInt8(10, 20);
-            for (var i = 1; i <= count; i++) {
-                var d = GetRandom.ObjectOf<TData>();
-                if (i % 4 == 0) setId(d, id);
-                Obj.Set.Add(d);
-            }
-            Obj.Db.SaveChanges();
-            l = getById(id);
-            AreEqual(count / 4, l.Count);
-        }
     }
 }

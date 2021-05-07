@@ -23,11 +23,6 @@ namespace ReservationProject.Infra {
                      x.Email.Contains(SearchString) ||
                      x.Salary.ToString(CultureInfo.InvariantCulture).Contains(SearchString));
         }
-
-        public WorkerEntity GetById(string workerId)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }
 
