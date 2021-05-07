@@ -9,6 +9,7 @@ namespace ReservationProject.Infra {
     
     public sealed class WorkersRepo : PagedRepo<WorkerEntity,WorkerData>, IWorkersRepo
     {
+        public WorkersRepo(){}
         public WorkersRepo(ApplicationDbContext c) : base(c, c?.Workers) { }
         public override WorkerEntity ToEntity(WorkerData d) => new(d);
         public override WorkerData ToData(WorkerEntity e) => e?.Data ?? new WorkerData();
