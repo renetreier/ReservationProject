@@ -24,7 +24,7 @@ namespace ReservationProject.Pages.Common
         public virtual int? PageIndex { get; set; }
         public abstract string CurrentSort { get; }
     }
-    public abstract class BasePageModel<TEntity, TView> : BasePage
+    public abstract class BasePage<TEntity, TView> : BasePage
         where TEntity : class, IBaseEntity, new()
         where TView : class, IEntityData, new()
     {
@@ -32,7 +32,7 @@ namespace ReservationProject.Pages.Common
         protected readonly IRepo<TEntity> Repo;
        
 
-        protected BasePageModel(IRepo<TEntity> r, ApplicationDbContext c = null)
+        protected BasePage(IRepo<TEntity> r, ApplicationDbContext c = null)
         {
             Db = c;
             Repo = r;

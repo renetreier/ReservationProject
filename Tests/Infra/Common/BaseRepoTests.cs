@@ -10,11 +10,11 @@ using ReservationProject.Infra.Common;
 namespace ReservationProject.Tests.Infra.Common
 {
     [TestClass]
-    public class BaseRepoTests : AbstractClassTests<CrudRepo<RoomEntity, RoomData>
-        , BaseRepo<RoomEntity, RoomData>>
+    public abstract class BaseRepoTests : AbstractClassTests<BaseRepo<RoomEntity, RoomData>
+        ,object>
     {
 
-        private class TestRepo : CrudRepo<RoomEntity, RoomData>
+        private class TestRepo : BaseRepo<RoomEntity, RoomData>
         {
             public TestRepo(ApplicationDbContext c = null)
                 : base(c, c?.Rooms) { }
@@ -38,7 +38,7 @@ namespace ReservationProject.Tests.Infra.Common
             Obj.Set.RemoveRange(Obj.Set);
             Obj.Db.SaveChanges();
         }
-        protected override CrudRepo<RoomEntity, RoomData> GetObject()
+        protected override BaseRepo<RoomEntity, RoomData> GetObject()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase("TestDb").Options;

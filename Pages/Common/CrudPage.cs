@@ -5,7 +5,7 @@ using ReservationProject.Infra;
 
 namespace ReservationProject.Pages.Common {
 
-    public abstract class CrudPage<TEntity, TView> :BasePageModel<TEntity, TView>
+    public abstract class CrudPage<TEntity, TView> :BasePage<TEntity, TView>
         where TEntity : class, IBaseEntity, new()
         where TView : class, IEntityData, new() {
         protected CrudPage(IRepo<TEntity> r, ApplicationDbContext c = null) :base(r, c) { }
