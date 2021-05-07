@@ -9,8 +9,8 @@ namespace ReservationProject.Infra.Common {
         private string currentFilter;
         private string searchString;
         protected FilteredRepo(DbContext c = null, DbSet<TData> s = null) :base(c, s) { }
-        protected internal override IQueryable<TData> CreateSql() => ApplyFilters(base.CreateSql());
-        protected internal virtual IQueryable<TData> ApplyFilters(IQueryable<TData> query) => query;
+        public override IQueryable<TData> CreateSql() => ApplyFilters(base.CreateSql());
+        public virtual IQueryable<TData> ApplyFilters(IQueryable<TData> query) => query;
         public override string CurrentFilter {
             get => currentFilter;
             set => SetFilter(value, searchString);

@@ -28,7 +28,7 @@ namespace ReservationProject.Infra.Common
         internal static int CountTotalPages(int count, in int pageSize) 
             => (int)Math.Ceiling( count / (double)pageSize);
         internal int GetItemsCount() => base.CreateSql().Count();
-        protected internal override IQueryable<TData> CreateSql() => AddSkipAndTake(base.CreateSql());
+        public override IQueryable<TData> CreateSql() => AddSkipAndTake(base.CreateSql());
         private IQueryable<TData> AddSkipAndTake(IQueryable<TData> query) {
             if (_pageIndex < 1) return query;
             return query

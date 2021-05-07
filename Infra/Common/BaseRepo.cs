@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Formats.Asn1;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -13,8 +12,8 @@ namespace ReservationProject.Infra.Common {
     public abstract class BaseRepo<TEntity, TData> : BaseRepo<TData>, IRepo<TEntity>
         where TData : BaseData, IEntityData, new()
     {
-        protected abstract TEntity ToEntity(TData d);
-        protected abstract TData ToData(TEntity e);
+        public abstract TEntity ToEntity(TData d);
+        public abstract TData ToData(TEntity e);
         protected BaseRepo(DbContext c = null, DbSet<TData> s = null) : base(c, s) { }
         public new TEntity EntityInDb => ToEntity(base.EntityInDb);
         public new async Task<List<TEntity>> GetAsync() => (await base.GetAsync()).Select(ToEntity).ToList();
@@ -38,7 +37,7 @@ namespace ReservationProject.Infra.Common {
             Db = c;
         }
         public async Task<List<T>> GetAsync() => await CreateSql().ToListAsync();
-        protected internal virtual IQueryable<T> CreateSql() => Set.AsNoTracking();
+        public virtual IQueryable<T> CreateSql() => Set.AsNoTracking();
 
         public async Task<T> GetAsync(string id)
         {

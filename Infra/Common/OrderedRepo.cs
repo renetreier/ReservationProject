@@ -22,7 +22,7 @@ namespace ReservationProject.Infra.Common {
         protected internal virtual string AddDesc(string s) => $"{s}_desc";
         protected internal virtual string RemoveDesc(string s)
             => s?.Replace("_desc", string.Empty) ?? string.Empty;
-        protected internal override IQueryable<TData> CreateSql() => AddSorting(base.CreateSql());
+        public override IQueryable<TData> CreateSql() => AddSorting(base.CreateSql());
         protected internal IQueryable<TData> AddSorting(IQueryable<TData> query) {
             var expression = CreateExpression();
             var r = expression is null ? query : AddOrderBy(query, expression);
