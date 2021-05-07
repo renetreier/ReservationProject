@@ -1,13 +1,9 @@
-﻿
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReservationProject.Aids;
 using ReservationProject.Data;
-using ReservationProject.Data.Common;
 using ReservationProject.Domain;
-using ReservationProject.Domain.Common;
 using ReservationProject.Infra;
 using ReservationProject.Infra.Common;
 
@@ -36,8 +32,7 @@ namespace ReservationProject.Tests.Infra.Common
             public override string CurrentSort { get; }
         }
 
-        [TestInitialize]
-        public override void TestInitialize()
+        [TestInitialize] public override void TestInitialize()
         {
             base.TestInitialize();
             Obj.Set.RemoveRange(Obj.Set);
@@ -51,8 +46,7 @@ namespace ReservationProject.Tests.Infra.Common
             return new TestRepo(c);
         }
 
-        [TestMethod]
-        public async Task GetTest()
+        [TestMethod] public async Task GetAsyncTest()
         {
             var d = GetRandom.ObjectOf<RoomData>();
             var o = await Obj.GetAsync(d.Id);
@@ -66,8 +60,7 @@ namespace ReservationProject.Tests.Infra.Common
             ArePropertiesEqual(d, o.Data, nameof(d.RowVersion));
         }
 
-        [TestMethod]
-        public async Task DeleteTest()
+        [TestMethod] public async Task DeleteAsyncTest()
         {
 
             var d = GetRandom.ObjectOf<RoomData>();
@@ -82,8 +75,7 @@ namespace ReservationProject.Tests.Infra.Common
             ArePropertiesNotEqual(d, o.Data);
         }
 
-        [TestMethod]
-        public async Task AddTest()
+        [TestMethod] public async Task AddAsyncTest()
         {
             var d = GetRandom.ObjectOf<RoomData>();
             var o = await Obj.GetAsync(d.Id);
@@ -96,29 +88,26 @@ namespace ReservationProject.Tests.Infra.Common
             Assert.IsInstanceOfType(o, typeof(RoomEntity));
             ArePropertiesEqual(d, o.Data, nameof(d.RowVersion));
         }
-        //TODO Update testi loogika nagu vale mu arust, üritasin muuta jne, aga ei saanud tööle
-        //TODO Gunnaril samas toimib
-        [TestMethod]
-        public async Task UpdateTest()
+
+        [TestMethod] public async Task UpdateAsyncTest()
         {
             var d = GetRandom.ObjectOf<RoomData>();
             await Obj.Set.AddAsync(d);
             await Obj.Db.SaveChangesAsync();
             var o = await Obj.GetAsync(d.Id);
             ArePropertiesEqual(d, o.Data, nameof(d.RowVersion));
-            var d1 = GetRandom.ObjectOf<RoomData>();
-            d1.Id = o.Id;
-            d1.RowVersion = o.RowVersion;
 
-            await Obj.UpdateAsync(new RoomEntity(d1));
-            
-            o = await Obj.GetAsync(d.Id);
-            ArePropertiesEqual(d1, o.Data, nameof(d.RowVersion));
-            ArePropertiesEqual(d, d1);
+            var newObj = GetRandom.ObjectOf<RoomData>();
+            d.BuildingAddress = newObj.BuildingAddress;
+            d.RoomName = newObj.RoomName;
+            d.RowVersion = newObj.RowVersion;
+
+            await Obj.UpdateAsync(d);
+
+            ArePropertiesEqual(d, newObj, nameof(d.Id));
         }
 
-        [TestMethod]
-        public async Task GetListTest()
+        [TestMethod] public async Task GetListTest()
         {
             var l = await Obj.GetAsync();
             AreEqual(0, l.Count);
@@ -130,8 +119,7 @@ namespace ReservationProject.Tests.Infra.Common
             AreEqual((int)count, l.Count);
         }
 
-        [TestMethod]
-        public async Task GetByIdTest()
+        [TestMethod] public async Task GetTest()
         {
             var d = GetRandom.ObjectOf<RoomData>();
             var o = Obj.Get(d.Id);
