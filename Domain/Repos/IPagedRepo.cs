@@ -1,5 +1,4 @@
-﻿
-namespace ReservationProject.Domain.Repos {
+﻿namespace ReservationProject.Domain.Repos {
     public interface IPagedRepo {
         public int? PageIndex { get; set; }
         public int TotalPages { get; }

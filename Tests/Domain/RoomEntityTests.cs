@@ -7,9 +7,9 @@ using ReservationProject.Domain.Common;
 namespace ReservationProject.Tests.Domain
 {
     [TestClass]
-    public class RoomEntityTests:SealedClassTests<RoomEntity,BaseEntity<RoomData>>
+    public class RoomEntityTests:SealedClassTests<Room,BaseEntity<RoomData>>
     {
-        protected override RoomEntity GetObject() => new(GetRandom.ObjectOf<RoomData>());
+        protected override Room GetObject() => new(GetRandom.ObjectOf<RoomData>());
         [TestMethod] public void RoomNameTest() => IsReadOnlyProperty(Obj.Data.RoomName ?? "Unspecified");
         [TestMethod] public void BuildingAddressTest() => IsReadOnlyProperty(Obj.Data.BuildingAddress ?? "Unspecified");
         

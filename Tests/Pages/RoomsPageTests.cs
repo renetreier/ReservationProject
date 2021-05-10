@@ -10,9 +10,9 @@ namespace ReservationProject.Tests.Pages
     
 
     [TestClass]
-    public class RoomsPageTests:BasePageTests<RoomEntity, RoomView>
+    public class RoomsPageTests:BasePageTests<Room, RoomView>
     {
-        private class TestRoomsRepo : TestRepo<RoomEntity>, IRoomsRepo { }
+        private class TestRoomsRepo : TestRepo<Room>, IRoomsRepo { }
        
         
         [TestInitialize]

@@ -43,7 +43,6 @@ namespace ReservationProject.Pages.Common
             set => base.Item = value;
         }
 
-        protected internal virtual async Task LoadRelatedItems(TEntity item) { await Task.CompletedTask; }
         protected internal string SetConcurrencyMsg(bool isError) => isError ? ErrorMessages.ConcurrencyOnDelete : null;
         protected internal abstract TView ToViewModel(TEntity e);
         protected internal abstract TEntity ToEntity(TView e);
@@ -86,12 +85,9 @@ namespace ReservationProject.Pages.Common
         public async Task<IActionResult> OnPostCreateAsync()
         {
             if (!ModelState.IsValid) return Page();
-            if (await Repo.AddAsync(ToEntity(Item)) == false)
-            {
-                ErrorMessage = Repo.ErrorMessage;
-                return Page();
-            }
-            return IndexPage();
+            if (await Repo.AddAsync(ToEntity(Item))) return IndexPage();
+            ErrorMessage = Repo.ErrorMessage;
+            return Page();
         }
 
         public virtual async Task<IActionResult> OnPostDeleteAsync(string id)

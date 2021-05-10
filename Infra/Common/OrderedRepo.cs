@@ -10,15 +10,15 @@ using ReservationProject.Data.Common;
 namespace ReservationProject.Infra.Common {
     public abstract class OrderedRepo<TEntity, TData> :FilteredRepo<TEntity, TData>
         where TData : BaseData, IEntityData, new() {
-        private string sortOrder;
+        private string _sortOrder;
         protected OrderedRepo(DbContext c = null, DbSet<TData> s = null) :base(c, s) { }
         public override string SortOrder {
             get => GetSortOrder();
-            set => sortOrder = value;
+            set => _sortOrder = value;
         }
         protected internal virtual string GetSortOrder()
-            => sortOrder?.Contains("_desc") ?? true ? RemoveDesc(sortOrder) : AddDesc(sortOrder);
-        public override string CurrentSort => sortOrder;
+            => _sortOrder?.Contains("_desc") ?? true ? RemoveDesc(_sortOrder) : AddDesc(_sortOrder);
+        public override string CurrentSort => _sortOrder;
         protected internal virtual string AddDesc(string s) => $"{s}_desc";
         protected internal virtual string RemoveDesc(string s)
             => s?.Replace("_desc", string.Empty) ?? string.Empty;
@@ -43,8 +43,8 @@ namespace ReservationProject.Infra.Common {
             return typeof(TData).GetProperty(name);
         }
         internal string GetName() {
-            if (string.IsNullOrEmpty(sortOrder)) return string.Empty;
-            var s = RemoveDesc(sortOrder);
+            if (string.IsNullOrEmpty(_sortOrder)) return string.Empty;
+            var s = RemoveDesc(_sortOrder);
             return s;
         }
         internal IQueryable<TData> AddOrderBy(IQueryable<TData> query, Expression<Func<TData, object>> e) {
@@ -55,6 +55,6 @@ namespace ReservationProject.Infra.Common {
                 : query.OrderBy(e), query);
         }
         internal bool IsDescending() =>
-            !string.IsNullOrEmpty(sortOrder) && sortOrder.EndsWith("_desc");
+            !string.IsNullOrEmpty(_sortOrder) && _sortOrder.EndsWith("_desc");
     }
 }

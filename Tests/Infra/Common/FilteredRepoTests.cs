@@ -6,7 +6,7 @@ using ReservationProject.Infra.Common;
 namespace ReservationProject.Tests.Infra.Common
 {
     [TestClass]
-    public class FilteredRepoTests :AbstractClassTests<FilteredRepo<RoomEntity, RoomData>
-        , CrudRepo<RoomEntity, RoomData>> {
+    public class FilteredRepoTests :AbstractClassTests<FilteredRepo<Room, RoomData>
+        , CrudRepo<Room, RoomData>> {
     }
 }

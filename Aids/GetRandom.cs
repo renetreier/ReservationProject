@@ -127,59 +127,6 @@ namespace ReservationProject.Aids {
             SetRandom.Values(o);
             return o;
         }
-        public static string Email()
-            => $"{Text()}.{Text()}@{Text()}.{Text()}";
-        public static string Password()
-            => $"{Text()}{Char('\x20', '\x2f')}{UInt32()}.{Text().ToUpper()}";
-        public static List<T> List<T>(Func<T> func) {
-            var list = new List<T>();
-            for (var i = 0; i < UInt8(2, 10); i++) list.Add(func());
-            return list;
-        }
-        public static object AnyDouble(byte minValue = 0, byte maxValue = 100) {
-            var i = UInt8();
-            return (i % 10) switch {
-                0 => Int32(minValue, maxValue),
-                1 => UInt32(minValue, maxValue),
-                2 => Float(minValue, maxValue),
-                3 => Int8(0),
-                4 => UInt8(minValue, maxValue),
-                5 => Int16(minValue, maxValue),
-                6 => UInt16(minValue, maxValue),
-                7 => Int64(minValue, maxValue),
-                8 => UInt64(minValue, maxValue),
-                _ => Double(minValue, maxValue)
-            };
-        }
-        public static object AnyInt(byte minValue = 0, byte maxValue = 100) {
-            var i = UInt8();
-            return (i % 5) switch {
-                0 => Int8(0),
-                1 => UInt8(minValue, maxValue),
-                2 => Int16(minValue, maxValue),
-                4 => UInt16(minValue, maxValue),
-                _ => Int32(minValue, maxValue)
-            };
-        }
-        public static object AnyValue() {
-            var i = Int32();
-            return (i % 10) switch {
-                0 => DateTime(),
-                1 => String(),
-                2 => Char(),
-                3 => Int32(),
-                4 => Double(),
-                5 => Decimal(),
-                6 => UInt32(),
-                7 => Float(),
-                8 => Int8(),
-                9 => UInt8(),
-                10 => Int16(),
-                11 => UInt16(),
-                12 => Int64(),
-                13 => UInt64(),
-                _ => String()
-            };
-        }
+        
     }
 }

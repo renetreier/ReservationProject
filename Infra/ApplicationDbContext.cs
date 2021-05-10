@@ -24,9 +24,6 @@ namespace ReservationProject.Infra
             modelBuilder.Entity<RoomData>().ToTable("Room");
             modelBuilder.Entity<WorkerData>().ToTable("Worker");
             modelBuilder.Entity<ReservationData>().ToTable("Reservation");
-
-           
-
         }
     }
 }

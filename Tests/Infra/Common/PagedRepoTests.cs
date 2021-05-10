@@ -6,8 +6,8 @@ using ReservationProject.Infra.Common;
 namespace ReservationProject.Tests.Infra.Common
 {
     [TestClass]
-    public class PagedRepoTests :AbstractClassTests<PagedRepo<RoomEntity, RoomData>
-        , OrderedRepo<RoomEntity, RoomData>>
+    public class PagedRepoTests :AbstractClassTests<PagedRepo<Room, RoomData>
+        , OrderedRepo<Room, RoomData>>
     {
         [TestMethod] public void PageIndexTest() => IsProperty<int?>();
         [TestMethod] public void TotalPagesTest() => IsReadOnlyProperty<int>();

@@ -6,12 +6,12 @@ using ReservationProject.Infra.Common;
 
 namespace ReservationProject.Infra {
 
-    public sealed class RoomsRepo : PagedRepo<RoomEntity, RoomData>, IRoomsRepo
+    public sealed class RoomsRepo : PagedRepo<Room, RoomData>, IRoomsRepo
     {
         public RoomsRepo(){}
         public RoomsRepo(ApplicationDbContext c) : base(c, c?.Rooms) { }
-        public override RoomEntity ToEntity(RoomData d) => new(d);
-        public override RoomData ToData(RoomEntity e) =>  e?.Data ?? new RoomData() ;
+        public override Room ToEntity(RoomData d) => new(d);
+        public override RoomData ToData(Room e) =>  e?.Data ?? new RoomData() ;
 
         public override IQueryable<RoomData> ApplyFilters(IQueryable<RoomData> query)
         {

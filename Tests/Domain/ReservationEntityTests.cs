@@ -7,9 +7,9 @@ using ReservationProject.Domain.Common;
 namespace ReservationProject.Tests.Domain
 {
     [TestClass]
-    public class ReservationEntityTests:SealedClassTests<ReservationEntity,BaseEntity<ReservationData>>
+    public class ReservationEntityTests:SealedClassTests<Reservation,BaseEntity<ReservationData>>
     {
-        protected override ReservationEntity GetObject() => new(GetRandom.ObjectOf<ReservationData>());
+        protected override Reservation GetObject() => new(GetRandom.ObjectOf<ReservationData>());
         
         [TestMethod]
         public void LazyReadRoomTest() => LazyTest(() => Obj.LazyReadRoom.IsValueCreated,
