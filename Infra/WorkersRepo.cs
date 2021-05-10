@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Linq;
+﻿using System.Linq;
 using ReservationProject.Data;
 using ReservationProject.Domain;
 using ReservationProject.Domain.Repos;
@@ -18,10 +17,9 @@ namespace ReservationProject.Infra {
         {
             if (SearchString is null) return query;
             return query.Where(
-                x => x.FirstName.Contains(SearchString) || 
-                     x.LastName.Contains(SearchString) || 
-                     x.Email.Contains(SearchString) ||
-                     x.Salary.ToString(CultureInfo.InvariantCulture).Contains(SearchString));
+                x => x.FirstName.Contains(SearchString) ||
+                     x.LastName.Contains(SearchString) ||
+                     x.Email.Contains(SearchString));
         }
     }
 }

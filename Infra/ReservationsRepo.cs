@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using ReservationProject.Core;
 using ReservationProject.Data;
@@ -15,14 +14,7 @@ namespace ReservationProject.Infra {
         public ReservationsRepo(ApplicationDbContext c) : base(c, c?.Reservations) { }
         public override ReservationEntity ToEntity(ReservationData d) => new(d);
         public override ReservationData ToData(ReservationEntity e) => e?.Data ?? new ReservationData();
-        public override IQueryable<ReservationData> ApplyFilters(IQueryable<ReservationData> query)
-        {
-            if (SearchString is null) return query;
-            return query.Where(
-                x => x.ReservationDate.ToString(CultureInfo.InvariantCulture).Contains(SearchString) ||
-                     x.RoomId.Contains(SearchString) ||
-                     x.WorkerId.Contains(SearchString));
-        }
+       
         public override async Task<bool> AddAsync(ReservationEntity e)
         {
             if (IsRoomAvailable(e)) return await base.AddAsync(e);

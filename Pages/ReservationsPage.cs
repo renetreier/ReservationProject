@@ -46,7 +46,7 @@ namespace ReservationProject.Pages
             get
             {
                 var list = new GetRepo().Instance<IWorkersRepo>().Get();
-                return new SelectList(list, "Id", "LastName", Item?.WorkerId);
+                return new SelectList(list, "Id", "FullName", Item?.WorkerId);
             }
         }
     }

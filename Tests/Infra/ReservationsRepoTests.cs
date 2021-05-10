@@ -45,7 +45,6 @@ namespace ReservationProject.Tests.Infra
             Assert.IsNotNull(o2);
             IsFalse(await Obj.UpdateAsync(o2));
         }
-        //TODO ei oska hetkel välja mõelda
         [TestMethod]
         public async Task IsRoomAvailableTest()
         {
