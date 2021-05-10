@@ -64,7 +64,6 @@ namespace ReservationProject.Tests {
             l.RemoveAll(o => o.Contains("<"));
             l.RemoveAll(o => o.Contains(">"));
             l.RemoveAll(o => o.Contains("Migrations"));
-            l.RemoveAll(o => o.Contains("BackingField"));//TODO lisasin selle, huvitav kas õige?
         }
         private void RemoveTested() {
             var tests = GetTestClasses();

@@ -60,24 +60,7 @@ namespace ReservationProject.Core.Extensions {
             };
             return l;
         }
-        public static IHtmlContent RowData<TModel>(
-            this IHtmlHelper<TModel> h,
-            string data) {
-            var s = TableData(h.Raw(data));
-            return new HtmlContentBuilder(s);
-        }
-        public static IHtmlContent RowImage<TModel>(
-            this IHtmlHelper<TModel> _,
-            string imageStr, int? height = null) {
-            var s = TableData(
-                new HtmlString(
-                    $"<img src=\"{imageStr}\" alt=\"not uploaded\" "+
-                    $"height={height??DefaultHeight} />"
-                    )
-                );
-            return new HtmlContentBuilder(s);
-        }
-
+        
         internal static string[] SetDefaultLabels(string[] handlers) {
             var l = new List<string>(handlers);
             if (l.Count == 0) l.Add(null);

@@ -3,10 +3,10 @@ using ReservationProject.Domain.Common;
 
 namespace ReservationProject.Domain
 {
-    public sealed class WorkerEntity : BaseEntity<WorkerData>
+    public sealed class Worker : BaseEntity<WorkerData>
     {
-        public WorkerEntity() : this(null) { }
-        public WorkerEntity(WorkerData d) : base(d) { }
+        public Worker() : this(null) { }
+        public Worker(WorkerData d) : base(d) { }
 
         public string FirstName => Data?.FirstName ?? "Unspecified";
         public string LastName => Data?.LastName ?? "Unspecified";

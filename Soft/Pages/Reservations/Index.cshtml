@@ -8,22 +8,22 @@
 
 <table class="table">
     <thead>
-        <tr>
-            @Html.TableSortHeader(model => model.Item.ReservationDate, Model)
-            @Html.TableHeader(model => model.Item.RoomName)
-            @Html.TableHeader(model => model.Item.WorkerName)
-            <th></th>
-        </tr>
+    <tr>
+        @Html.TableSortHeader(model => model.Item.ReservationDate, Model)
+        @Html.TableHeader(model => model.Item.RoomName)
+        @Html.TableHeader(model => model.Item.WorkerName)
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.ItemList)
-        {
-            <tr>
-                @Html.RowData(modelItem => item.ReservationDate)
-                @Html.RowData(modelItem => item.RoomName)
-                @Html.RowData(modelItem => item.WorkerName)
-                @Html.RowButtons(Model.PageUrl, $"{item.Id}")
-            </tr>
-        }
+    @foreach (var item in Model.ItemList)
+    {
+        <tr>
+            @Html.RowData(modelItem => item.ReservationDate)
+            @Html.RowData(modelItem => item.RoomName)
+            @Html.RowData(modelItem => item.WorkerName)
+            @Html.RowButtons(Model.PageUrl, $"{item.Id}")
+        </tr>
+    }
     </tbody>
 </table>

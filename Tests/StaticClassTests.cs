@@ -52,7 +52,7 @@ namespace ReservationProject.Tests {
             Assert.AreEqual(canWrite, propertyInfo.CanWrite, "CanWrite is wrong");
             return propertyInfo;
         }
-        protected void IsReadWriteProperty<T>() {
+        protected virtual void IsReadWriteProperty<T>() {
             var propertyInfo = IsProperty<T>();
             var actual = GetPropertyValue<T>(true);
             var expected = GetValue(actual);
@@ -62,7 +62,8 @@ namespace ReservationProject.Tests {
             AreEqual(expected, actual);
             ArePropertiesEqual(current, GetCurrentValues(), propertyInfo.Name);
         }
-        private static T GetValue<T>(T value) {
+
+        protected static T GetValue<T>(T value) {
             var v = (T)GetRandom.ValueOf<T>();
             while (value.Equals(v)) {
                 v = (T)GetRandom.ValueOf<T>();

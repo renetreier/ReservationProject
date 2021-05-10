@@ -9,11 +9,11 @@ using ReservationProject.Tests.Pages.Common;
 namespace ReservationProject.Tests.Pages
 {
     [TestClass]
-    public class WorkersPageTests : BasePageTests<WorkerEntity, WorkerView>
+    public class WorkersPageTests : BasePageTests<Worker, WorkerView>
     {
-        private class TestWorkerRepo : TestRepo<WorkerEntity>, IWorkersRepo
+        private class TestWorkerRepo : TestRepo<Worker>, IWorkersRepo
         {
-            public WorkerEntity GetById(string workerId)
+            public Worker GetById(string workerId)
             {
                 throw new System.NotImplementedException();
             }

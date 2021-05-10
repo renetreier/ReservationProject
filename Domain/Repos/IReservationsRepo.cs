@@ -1,7 +1,6 @@
-﻿
-namespace ReservationProject.Domain.Repos
+﻿namespace ReservationProject.Domain.Repos
 {
-    public interface IReservationsRepo : IRepo<ReservationEntity>
+    public interface IReservationsRepo : IRepo<Reservation>
     {
 
     }

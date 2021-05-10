@@ -10,16 +10,16 @@ using ReservationProject.Infra.Common;
 namespace ReservationProject.Tests.Infra.Common
 {
     [TestClass]
-    public abstract class BaseRepoTests : AbstractClassTests<BaseRepo<RoomEntity, RoomData>
+    public abstract class BaseRepoTests : AbstractClassTests<BaseRepo<Room, RoomData>
         ,object>
     {
 
-        private class TestRepo : BaseRepo<RoomEntity, RoomData>
+        private class TestRepo : BaseRepo<Room, RoomData>
         {
             public TestRepo(ApplicationDbContext c = null)
                 : base(c, c?.Rooms) { }
-            public override RoomEntity ToEntity(RoomData d) => new(d);
-            public override RoomData ToData(RoomEntity e) => e.Data;
+            public override Room ToEntity(RoomData d) => new(d);
+            public override RoomData ToData(Room e) => e.Data;
 
             public override int? PageIndex { get; set; }
             public override int TotalPages { get; }
@@ -38,7 +38,7 @@ namespace ReservationProject.Tests.Infra.Common
             Obj.Set.RemoveRange(Obj.Set);
             Obj.Db.SaveChanges();
         }
-        protected override BaseRepo<RoomEntity, RoomData> GetObject()
+        protected override BaseRepo<Room, RoomData> GetObject()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase("TestDb").Options;
@@ -85,7 +85,7 @@ namespace ReservationProject.Tests.Infra.Common
             await Obj.AddAsync(d);
 
             o = await Obj.GetAsync(d.Id);
-            Assert.IsInstanceOfType(o, typeof(RoomEntity));
+            Assert.IsInstanceOfType(o, typeof(Room));
             ArePropertiesEqual(d, o.Data, nameof(d.RowVersion));
         }
 
@@ -146,7 +146,7 @@ namespace ReservationProject.Tests.Infra.Common
             var d1 = GetRandom.ObjectOf<RoomData>();
             d1.Id = o.Id;
  
-            AreEqual(false, await Obj.UpdateAsync(new RoomEntity(d1)));
+            AreEqual(false, await Obj.UpdateAsync(new Room(d1)));
 
             ArePropertiesEqual(d, Obj.EntityInDb.Data, nameof(d.RowVersion));
         }

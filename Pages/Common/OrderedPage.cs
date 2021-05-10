@@ -8,16 +8,13 @@ namespace ReservationProject.Pages.Common
         where TEntity : class, IBaseEntity, new()
         where TView : class, IEntityData, new()
     {
-        protected OrderedPage(IRepo<TEntity> r, ApplicationDbContext c = null) : base(r, c)
-        {
-        }
+        protected OrderedPage(IRepo<TEntity> r, ApplicationDbContext c = null) : base(r, c) { }
 
         public override string SortOrder
         {
             get => Repo.SortOrder;
             set => Repo.SortOrder = value;
         }
-
         public override string CurrentSort => Repo.CurrentSort;
     }
 }

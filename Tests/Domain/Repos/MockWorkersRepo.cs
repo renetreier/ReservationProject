@@ -4,9 +4,9 @@ using ReservationProject.Domain;
 
 namespace ReservationProject.Tests.Domain.Repos
 {
-    public class MockWorkersRepo : TestRepo<WorkerEntity>, IWorkersRepo
+    public class MockWorkersRepo : TestRepo<Worker>, IWorkersRepo
     {
-        public WorkerEntity GetById(string workerId)
+        public Worker GetById(string workerId)
         {
             throw new System.NotImplementedException();
         }

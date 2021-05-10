@@ -9,9 +9,9 @@ using ReservationProject.Tests.Pages.Common;
 namespace ReservationProject.Tests.Pages
 {
     [TestClass]
-    public class ReservationsPageTests : BasePageTests<ReservationEntity, ReservationView>
+    public class ReservationsPageTests : BasePageTests<Reservation, ReservationView>
     {
-        private class TestReservationRepo : TestRepo<ReservationEntity>, IReservationsRepo { }
+        private class TestReservationRepo : TestRepo<Reservation>, IReservationsRepo { }
 
         [TestInitialize]
         public void TestInitialize()

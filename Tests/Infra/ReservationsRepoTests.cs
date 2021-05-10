@@ -9,9 +9,9 @@ namespace ReservationProject.Tests.Infra
 {
     [TestClass]
     public class ReservationsRepoTests
-        : InMemoryRepoTests<ReservationsRepo, ReservationEntity, ReservationData>
+        : InMemoryRepoTests<ReservationsRepo, Reservation, ReservationData>
     {
-        protected override ReservationEntity CreateEntity(ReservationData d) => new(d);
+        protected override Reservation CreateEntity(ReservationData d) => new(d);
 
         protected override ReservationsRepo CreateRepo(ApplicationDbContext c) => new(c);
 
