@@ -13,10 +13,8 @@ namespace ReservationProject.Tests.Pages
     public class RoomsPageTests:BasePageTests<Room, RoomView>
     {
         private class TestRoomsRepo : TestRepo<Room>, IRoomsRepo { }
-       
         
-        [TestInitialize]
-        public void TestInitialize()
+        [TestInitialize] public void TestInitialize()
         {
             MockRepo = new TestRoomsRepo();
             PageModel = new RoomsPage((IRoomsRepo)MockRepo);

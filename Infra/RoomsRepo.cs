@@ -8,7 +8,7 @@ namespace ReservationProject.Infra {
 
     public sealed class RoomsRepo : PagedRepo<Room, RoomData>, IRoomsRepo
     {
-        public RoomsRepo(){}
+        public RoomsRepo() {}
         public RoomsRepo(ApplicationDbContext c) : base(c, c?.Rooms) { }
         public override Room ToEntity(RoomData d) => new(d);
         public override RoomData ToData(Room e) =>  e?.Data ?? new RoomData() ;
@@ -20,7 +20,6 @@ namespace ReservationProject.Infra {
                 x => x.RoomName.Contains(SearchString) ||
                      x.BuildingAddress.Contains(SearchString));
         }
-
     }
 }
 

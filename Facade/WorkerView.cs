@@ -17,6 +17,6 @@ namespace ReservationProject.Facade {
         [Required]
         public string Email { get; set; }
         public double Salary { get; set; }
-        [Display(Name = "Name")] public string FullName =>LastName + ", " + FirstName; // TODO siin kala kahe testiga
+        [Display(Name = "Name")] public string FullName => LastName + ", " + FirstName;
     }
 }

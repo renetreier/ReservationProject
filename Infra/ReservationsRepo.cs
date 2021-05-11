@@ -10,7 +10,7 @@ namespace ReservationProject.Infra {
 
     public sealed class ReservationsRepo : PagedRepo<Reservation,ReservationData>, IReservationsRepo
     {
-        public ReservationsRepo(){}
+        public ReservationsRepo() {}
         public ReservationsRepo(ApplicationDbContext c) : base(c, c?.Reservations) { }
         public override Reservation ToEntity(ReservationData d) => new(d);
         public override ReservationData ToData(Reservation e) => e?.Data ?? new ReservationData();
@@ -20,7 +20,6 @@ namespace ReservationProject.Infra {
             if (IsRoomAvailable(e)) return await base.AddAsync(e);
             ErrorMessage = ErrorMessages.RoomNotFree;
             return false;
-
         }
         public override async Task<bool> UpdateAsync(Reservation e)
         {

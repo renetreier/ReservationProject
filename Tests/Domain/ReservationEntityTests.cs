@@ -11,11 +11,9 @@ namespace ReservationProject.Tests.Domain
     {
         protected override Reservation GetObject() => new(GetRandom.ObjectOf<ReservationData>());
         
-        [TestMethod]
-        public void LazyReadRoomTest() => LazyTest(() => Obj.LazyReadRoom.IsValueCreated,
+        [TestMethod] public void LazyReadRoomTest() => LazyTest(() => Obj.LazyReadRoom.IsValueCreated,
             () => Obj.ReservedRoom);
-        [TestMethod]
-        public void LazyReadWorkerTest() => LazyTest(() => Obj.LazyReadRoom.IsValueCreated,
+        [TestMethod] public void LazyReadWorkerTest() => LazyTest(() => Obj.LazyReadRoom.IsValueCreated,
             () => Obj.ReservedRoom);
        
        

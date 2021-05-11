@@ -5,9 +5,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReservationProject.Aids;
 
 namespace ReservationProject.Tests {
-    public abstract class AssemblyBaseTests: BaseTests  {
+    public abstract class AssemblyBaseTests: BaseTests  
+    {
         protected AssemblyBaseTests(string assemblyName = null, 
-            string testAssemblyName = null) {
+            string testAssemblyName = null) 
+        {
             Assembly = assemblyName ?? "ReservationProject";
             var head = Assembly.GetHead();
             var tail = Assembly.GetTail();
@@ -28,7 +30,8 @@ namespace ReservationProject.Tests {
         private static string Shell32Class => "Shell32.";
         private List<string> _list;
         protected virtual string NameSpace(string name) => $"{Assembly}.{name}";
-        protected void IsAllTested(string assemblyName, string namespaceName = null) {
+        protected void IsAllTested(string assemblyName, string namespaceName = null) 
+        {
             namespaceName ??= assemblyName;
             var l = GetTypes(assemblyName);
             RemoveInterfaces(l);
@@ -40,12 +43,14 @@ namespace ReservationProject.Tests {
             if (_list.Count == 0) return;
             NotTested(IsNotTested, _list[0]);
         }
-        private static List<Type> GetTypes(string assembly) {
+        private static List<Type> GetTypes(string assembly)
+        {
             var l = GetSolution.TypesForAssembly(assembly);
             if (l.Count == 0) NotTested(NoClassesInAssembly, assembly);
             return l;
         }
-        private static void RemoveInterfaces(IList<Type> types) {
+        private static void RemoveInterfaces(IList<Type> types)
+        {
             for (var i = types.Count; i > 0; i--) {
                 var e = types[i - 1];
                 if (!e.IsInterface) continue;
@@ -53,11 +58,13 @@ namespace ReservationProject.Tests {
             }
         }
         private static List<string> GetNames(IEnumerable<Type> l) => l.Select(o => o.FullName).ToList();
-        private static void RemoveNotIn(List<string> l,  string namespaceName) {
+        private static void RemoveNotIn(List<string> l,  string namespaceName) 
+        {
             if (string.IsNullOrEmpty(namespaceName)) return;
             l.RemoveAll(o => !o.StartsWith(namespaceName + '.'));
         }
-        private static void RemoveSurrogates(List<string> l) {
+        private static void RemoveSurrogates(List<string> l)
+        {
             l.RemoveAll(o => o.Contains(Shell32Class));
             l.RemoveAll(o => o.Contains(InternalClass));
             l.RemoveAll(o => o.Contains(DisplayClass));
@@ -65,9 +72,11 @@ namespace ReservationProject.Tests {
             l.RemoveAll(o => o.Contains(">"));
             l.RemoveAll(o => o.Contains("Migrations"));
         }
-        private void RemoveTested() {
+        private void RemoveTested() 
+        {
             var tests = GetTestClasses();
-            for (var i = _list.Count; i > 0; i--) {
+            for (var i = _list.Count; i > 0; i--) 
+            {
                 var className = _list[i - 1];
                 var testName = ToTestName(className);
                 var t = tests.Find(o => o.EndsWith(testName));
@@ -75,18 +84,21 @@ namespace ReservationProject.Tests {
                 _list.RemoveAt(i - 1);
             }
         }
-        private List<string> GetTestClasses() {
+        private List<string> GetTestClasses()
+        {
             var tests = GetSolution.TypeNamesForAssembly(TestAssembly);
             RemoveNotIn(tests, TestNamespace);
             RemoveSurrogates(tests);
             return tests.Select(RemoveGenericsChars).ToList();
         }
-        private string ToTestName(string className) {
+        private string ToTestName(string className)
+        {
             className = RemoveAssemblyName(className);
             className = RemoveGenericsChars(className);
             return className + "Tests";
         }
-        private static string RemoveGenericsChars(string className) {
+        private static string RemoveGenericsChars(string className)
+        {
             var idx = className.IndexOf(GenericsClass);
             if (idx > 0) className = className.Substring(0, idx);
             return className;

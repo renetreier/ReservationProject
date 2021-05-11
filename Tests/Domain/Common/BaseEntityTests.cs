@@ -5,15 +5,17 @@ using ReservationProject.Domain.Common;
 
 namespace ReservationProject.Tests.Domain.Common {
 
-    [TestClass]
-    public class BaseEntityTests : AbstractClassTests<BaseEntity<RoomData>, object> {
-        private class TestClass :BaseEntity<RoomData> {
+    [TestClass] public class BaseEntityTests : AbstractClassTests<BaseEntity<RoomData>, object>
+    {
+        private class TestClass :BaseEntity<RoomData>
+        {
             public TestClass(RoomData d = null) : base(d) { }
         }
 
         protected override BaseEntity<RoomData> GetObject() => new TestClass(GetRandom.ObjectOf<RoomData>());
         
-        [TestMethod] public void DataTest() {
+        [TestMethod] public void DataTest() 
+        {
             IsReadOnlyProperty<RoomData>();
             Assert.AreNotSame(Obj.Data, Obj.Data);
             Assert.AreNotEqual(Obj.Data, Obj.Data);

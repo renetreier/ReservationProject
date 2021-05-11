@@ -7,6 +7,5 @@ namespace ReservationProject.Tests.Infra.Common
 {
     [TestClass]
     public class OrderedRepoTests :AbstractClassTests<OrderedRepo<Room, RoomData>
-        , FilteredRepo<Room, RoomData>> {
-    }
+        , FilteredRepo<Room, RoomData>> { }
 }

@@ -9,8 +9,7 @@ using ReservationProject.Infra.Common;
 
 namespace ReservationProject.Tests.Infra.Common
 {
-    [TestClass]
-    public abstract class BaseRepoTests : AbstractClassTests<BaseRepo<Room, RoomData>
+    [TestClass] public abstract class BaseRepoTests : AbstractClassTests<BaseRepo<Room, RoomData>
         ,object>
     {
 
@@ -135,8 +134,7 @@ namespace ReservationProject.Tests.Infra.Common
         }
         [TestMethod] public void ErrorMessageTest() => IsProperty<string>();
 
-        [TestMethod]
-        public async Task EntityInDbTest()
+        [TestMethod] public async Task EntityInDbTest()
         {
             var d = GetRandom.ObjectOf<RoomData>();
             await Obj.Set.AddAsync(d);

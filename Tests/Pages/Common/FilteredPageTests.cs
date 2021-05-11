@@ -2,7 +2,5 @@
 
 namespace ReservationProject.Tests.Pages.Common
 {
-    [TestClass]
-    public class FilteredPageTests {
-    }
+    [TestClass] public class FilteredPageTests { }
 }

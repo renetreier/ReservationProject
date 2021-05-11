@@ -1,7 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ReservationProject.Tests.Aids {
-    [TestClass]
-    public class SetRandomTests {
-    }
+    [TestClass] public class SetRandomTests { }
 }

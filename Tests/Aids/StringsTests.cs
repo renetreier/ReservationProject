@@ -2,7 +2,5 @@
 
 namespace ReservationProject.Tests.Aids
 {
-    [TestClass]
-    public class StringsTests {
-    }
+    [TestClass] public class StringsTests { }
 }

@@ -6,12 +6,10 @@ namespace ReservationProject.Infra
 {
     public class ApplicationDbContext :IdentityDbContext {
         public ApplicationDbContext() : this(
-            new DbContextOptionsBuilder<ApplicationDbContext>().Options)
-        { }
+            new DbContextOptionsBuilder<ApplicationDbContext>().Options) { }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options) {
-        }
+            : base(options) { }
         public DbSet<WorkerData> Workers { get; set; }
         public DbSet<ReservationData> Reservations { get; set; }
         public DbSet<RoomData> Rooms { get; set; }

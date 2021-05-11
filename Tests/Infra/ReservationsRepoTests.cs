@@ -7,8 +7,7 @@ using ReservationProject.Infra;
 
 namespace ReservationProject.Tests.Infra
 {
-    [TestClass]
-    public class ReservationsRepoTests
+    [TestClass] public class ReservationsRepoTests
         : InMemoryRepoTests<ReservationsRepo, Reservation, ReservationData>
     {
         protected override Reservation CreateEntity(ReservationData d) => new(d);
@@ -45,8 +44,7 @@ namespace ReservationProject.Tests.Infra
             Assert.IsNotNull(o2);
             IsFalse(await Obj.UpdateAsync(o2));
         }
-        [TestMethod]
-        public async Task IsRoomAvailableTest()
+        [TestMethod] public async Task IsRoomAvailableTest()
         {
             var d1 = GetRandom.ObjectOf<ReservationData>();
             await Obj.AddAsync(d1);

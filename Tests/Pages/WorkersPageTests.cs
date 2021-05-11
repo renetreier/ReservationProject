@@ -8,19 +8,11 @@ using ReservationProject.Tests.Pages.Common;
 
 namespace ReservationProject.Tests.Pages
 {
-    [TestClass]
-    public class WorkersPageTests : BasePageTests<Worker, WorkerView>
+    [TestClass] public class WorkersPageTests : BasePageTests<Worker, WorkerView>
     {
-        private class TestWorkerRepo : TestRepo<Worker>, IWorkersRepo
-        {
-            public Worker GetById(string workerId)
-            {
-                throw new System.NotImplementedException();
-            }
-        }
+        private class TestWorkerRepo : TestRepo<Worker>, IWorkersRepo { }
 
-        [TestInitialize]
-        public void TestInitialize()
+        [TestInitialize] public void TestInitialize()
         {
             MockRepo = new TestWorkerRepo();
             PageModel = new WorkersPage((IWorkersRepo)MockRepo);

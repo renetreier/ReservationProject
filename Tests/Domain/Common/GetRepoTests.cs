@@ -6,29 +6,27 @@ using ReservationProject.Tests.Domain.Repos;
 
 namespace ReservationProject.Tests.Domain.Common {
 
-    [TestClass] public class GetRepoTests :SealedClassTests<GetRepo, object> {
+    [TestClass] public class GetRepoTests :SealedClassTests<GetRepo, object> 
+    {
         private IServiceProvider Provider { get; set; }
         protected override GetRepo GetObject() => new(Provider);
         [TestCleanup] public void TestCleanup() => GetRepo.SetProvider(null);
         [TestMethod] public void ProviderIsNullTest() => IsNull(Obj.Provider);
         [TestMethod] public void InstanceIsNullTest() => IsNull(GetRepo.ProviderInstance);
-        [TestMethod]
-        public void CanCreateTest()
+        [TestMethod] public void CanCreateTest()
         {
             InitMock();
             AreNotEqual(Provider, GetRepo.ProviderInstance);
             AreEqual(Provider, Obj.Provider);
         }
-        [TestMethod]
-        public void SetProviderTest()
+        [TestMethod] public void SetProviderTest()
         {
             var p = new MockServiceProvider(null);
             GetRepo.SetProvider(p);
             IsNull(Obj.Provider);
             AreEqual(p, GetRepo.ProviderInstance);
         }
-        [TestMethod]
-        public void CreateAfterSetTest()
+        [TestMethod] public void CreateAfterSetTest()
         {
             var p = new MockServiceProvider(null);
             GetRepo.SetProvider(p);
@@ -36,15 +34,13 @@ namespace ReservationProject.Tests.Domain.Common {
             AreEqual(p, GetRepo.ProviderInstance);
             AreEqual(p, Obj.Provider);
         }
-        [TestMethod]
-        public void InstanceWithTypeTest()
+        [TestMethod] public void InstanceWithTypeTest()
         {
             var repo = InitMock();
             var r = Obj.Instance(typeof(IRoomsRepo));
             AreEqual(repo, r);
         }
-        [TestMethod]
-        public void InstanceTest()
+        [TestMethod] public void InstanceTest()
         {
             var repo = InitMock();
             var r = Obj.Instance<IRoomsRepo>();

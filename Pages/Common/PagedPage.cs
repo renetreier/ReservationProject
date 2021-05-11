@@ -9,7 +9,8 @@ namespace ReservationProject.Pages.Common {
         protected PagedPage(IRepo<TEntity> r, ApplicationDbContext c = null) :base(r, c) { }
         public override bool HasNextPage => Repo.HasNextPage;
         public override bool HasPreviousPage => Repo.HasPreviousPage;
-        public override int? PageIndex {
+        public override int? PageIndex 
+        {
             get => Repo.PageIndex;
             set => Repo.PageIndex = value;
         }

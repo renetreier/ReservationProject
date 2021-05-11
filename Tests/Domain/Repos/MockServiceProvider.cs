@@ -3,7 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ReservationProject.Tests.Domain.Repos
 {
-    public class MockServiceProvider :IServiceProvider {
+    public class MockServiceProvider :IServiceProvider
+    {
         private readonly dynamic service;
         public MockServiceProvider(dynamic x) => service = x;
         public dynamic GetService(Type serviceType)

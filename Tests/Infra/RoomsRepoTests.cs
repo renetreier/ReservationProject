@@ -8,7 +8,8 @@ namespace ReservationProject.Tests.Infra
 {
     [TestClass]
     public class RoomsRepoTests
-        :InMemoryRepoTests<RoomsRepo, Room, RoomData> {
+        :InMemoryRepoTests<RoomsRepo, Room, RoomData>
+    {
         protected override Room CreateEntity(RoomData d) => new (d);
 
         protected override RoomsRepo CreateRepo(ApplicationDbContext c) => new (c);

@@ -32,7 +32,8 @@ namespace ReservationProject.Infra.Common {
         public T EntityInDb { get; protected set; }
         public string ErrorMessage { get; protected set; }
 
-        protected BaseRepo(DbContext c = null, DbSet<T> s = null) {
+        protected BaseRepo(DbContext c = null, DbSet<T> s = null) 
+        {
             Set = s;
             Db = c;
         }

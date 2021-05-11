@@ -5,6 +5,5 @@ using ReservationProject.Infra;
 namespace ReservationProject.Tests.Infra {
     [TestClass]
     public class ApplicationDbContextTests
-        : ClassTests<ApplicationDbContext, IdentityDbContext> {
-    }
+        : ClassTests<ApplicationDbContext, IdentityDbContext> { }
 }
