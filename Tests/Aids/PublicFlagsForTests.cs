@@ -2,7 +2,5 @@
 
 namespace ReservationProject.Tests.Aids
 {
-    [TestClass]
-    public class PublicFlagsForTests {
-    }
+    [TestClass] public class PublicFlagsForTests { }
 }

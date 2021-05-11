@@ -7,7 +7,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReservationProject.Aids;
 
 namespace ReservationProject.Tests {
-    public abstract class StaticClassTests: BaseTests {
+    public abstract class StaticClassTests: BaseTests 
+    {
         private const string NotSpecified = "Class is not specified";
         private List<string> Members { get; set; }
         protected Type Type;
@@ -18,9 +19,9 @@ namespace ReservationProject.Tests {
             if (index > -1) s = s.Substring(0, index);
             return s;
         }
-        [TestMethod] public virtual void IsStaticTest() 
-            => IsTrue(Type.IsAbstract && Type.IsClass && Type.IsSealed);
-        [TestMethod] public virtual void IsTested() {
+        [TestMethod] public virtual void IsStaticTest() => IsTrue(Type.IsAbstract && Type.IsClass && Type.IsSealed);
+        [TestMethod] public virtual void IsTested() 
+        {
             if (Type == null) NotTested(NotSpecified);
             var m = GetClass.Members(Type, PublicFlagsFor.Declared);
             Members = m.Select(e => e.Name).ToList();
@@ -29,21 +30,25 @@ namespace ReservationProject.Tests {
             if (Members.Count == 0) return;
             NotTested("<{0}> is not tested", Members[0]);
         }
-        [TestMethod] public virtual void IsSpecifiedClassTested() {
+        [TestMethod] public virtual void IsSpecifiedClassTested()
+        {
             if (Type == null) Assert.Inconclusive(NotSpecified);
             var className = GetType().Name;
             IsTrue(className.StartsWith(TypeName));
         }
-        private void RemoveTested() {
+        private void RemoveTested() 
+        {
             var tests = GetType().GetMembers().Select(e => e.Name).ToList();
-            for (var i = Members.Count; i > 0; i--) {
+            for (var i = Members.Count; i > 0; i--) 
+            {
                 var m = Members[i - 1] + "Test";
                 var isTested = tests.Find(o => o == m);
                 if (string.IsNullOrEmpty(isTested)) continue;
                 Members.RemoveAt(i - 1);
             }
         }
-        protected PropertyInfo IsProperty<T>(bool canWrite = true) {
+        protected PropertyInfo IsProperty<T>(bool canWrite = true)
+        {
             var name = GetPropertyName();
             var propertyInfo = Type.GetProperty(name);
             Assert.IsNotNull(propertyInfo, "Not found");
@@ -52,7 +57,8 @@ namespace ReservationProject.Tests {
             Assert.AreEqual(canWrite, propertyInfo.CanWrite, "CanWrite is wrong");
             return propertyInfo;
         }
-        protected virtual void IsReadWriteProperty<T>() {
+        protected virtual void IsReadWriteProperty<T>()
+        {
             var propertyInfo = IsProperty<T>();
             var actual = GetPropertyValue<T>(true);
             var expected = GetValue(actual);
@@ -63,9 +69,11 @@ namespace ReservationProject.Tests {
             ArePropertiesEqual(current, GetCurrentValues(), propertyInfo.Name);
         }
 
-        protected static T GetValue<T>(T value) {
+        protected static T GetValue<T>(T value) 
+        {
             var v = (T)GetRandom.ValueOf<T>();
-            while (value.Equals(v)) {
+            while (value.Equals(v)) 
+            {
                 v = (T)GetRandom.ValueOf<T>();
             }
             return v;
@@ -73,7 +81,8 @@ namespace ReservationProject.Tests {
         protected virtual void SetPropertyValue<T>(PropertyInfo p, T newValue) { }
         protected virtual dynamic GetCurrentValues() => null;
         protected void IsReadOnlyProperty<T>() => IsProperty<T>(false);
-        protected void IsReadOnlyProperty<T>(T expected) {
+        protected void IsReadOnlyProperty<T>(T expected) 
+        {
             var actual = GetPropertyValue<T>();
             AreEqual(expected, actual);
         }
@@ -84,9 +93,11 @@ namespace ReservationProject.Tests {
             , nameof(GetPropertyValue), nameof(GetCurrentValues), 
             nameof(SetPropertyValue), nameof(GetValue)};
 
-        protected string GetPropertyName() {
+        protected string GetPropertyName() 
+        {
             var stack = new StackTrace();
-            for (var idx = 0; idx < stack.FrameCount; idx ++) {
+            for (var idx = 0; idx < stack.FrameCount; idx ++) 
+            {
                 var n = stack.GetFrame(idx)?.GetMethod()?.Name;
                 if (_notPropertyNames.Contains(n)) continue;
                 return n?.Replace("Test", string.Empty);
@@ -94,29 +105,32 @@ namespace ReservationProject.Tests {
             return string.Empty;
         }
 
-        protected static void ArePropertiesNotEqual<T>(T expected, T actual, params string[] exceptProperties) {
-            foreach (var p in typeof(T).GetProperties()) {
+        protected static void ArePropertiesNotEqual<T>(T expected, T actual, params string[] exceptProperties) 
+        {
+            foreach (var p in typeof(T).GetProperties()) 
+            {
                 var expectedValue = p.GetValue(expected);
                 var actualValue = p.GetValue(actual);
                 if (exceptProperties.Contains(p.Name)) AreEqual(expectedValue, actualValue);
                 else AreNotEqual(expectedValue, actualValue);
             }
         }
-        protected static void ArePropertiesEqual<T>(T expected, T actual, params string[] exceptProperties) {
-            foreach (var p in typeof(T).GetProperties()) {
+        protected static void ArePropertiesEqual<T>(T expected, T actual, params string[] exceptProperties) 
+        {
+            foreach (var p in typeof(T).GetProperties()) 
+            {
                 var expectedValue = p.GetValue(expected);
                 var actualValue = p.GetValue(actual);
                 if (exceptProperties.Contains(p.Name)) AreNotEqual(expectedValue, actualValue);
                 else AreEqual(expectedValue, actualValue);
             }
         }
-        private void RemoveSurrogates()//TODO tõin selle meetodi siia ja mudisin seda, siis kadusid IsTested rämpsasjad ära
+        private void RemoveSurrogates()
         {
             Members.RemoveAll(o => o.Contains("<"));
             Members.RemoveAll(o => o.Contains(">"));
             Members.RemoveAll(o => o.Contains("Migrations"));
             Members.RemoveAll(o => o.Contains("BackingField"));
         }
-
     }
 }

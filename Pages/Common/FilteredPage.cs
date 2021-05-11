@@ -7,11 +7,13 @@ namespace ReservationProject.Pages.Common {
         where TEntity : class, IBaseEntity, new()
         where TView : class, IEntityData, new() {
         protected FilteredPage(IRepo<TEntity> r, ApplicationDbContext c = null) :base(r, c) { }
-        public override string CurrentFilter {
+        public override string CurrentFilter 
+        {
             get => Repo.CurrentFilter;
             set => Repo.CurrentFilter = value;
         }
-        public override string SearchString {
+        public override string SearchString 
+        {
             get => Repo.SearchString;
             set => Repo.SearchString = value;
         }

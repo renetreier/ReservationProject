@@ -12,8 +12,5 @@ namespace ReservationProject.Tests.Data.Common
         private class TestClass : BaseData { }
         protected override BaseData GetObject() => GetRandom.ObjectOf<TestClass>();
         [TestMethod] public void RowVersionTest() => IsReadWriteProperty<byte[]>();
-
-
-
     }
 }

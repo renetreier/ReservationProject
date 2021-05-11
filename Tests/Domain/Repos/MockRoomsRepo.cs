@@ -4,6 +4,5 @@ using ReservationProject.Domain;
 
 namespace ReservationProject.Tests.Domain.Repos
 {
-    public class MockRoomsRepo :TestRepo<Room>, IRoomsRepo {
-    }
+    public class MockRoomsRepo :TestRepo<Room>, IRoomsRepo { }
 }

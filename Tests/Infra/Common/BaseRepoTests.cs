@@ -9,8 +9,7 @@ using ReservationProject.Infra.Common;
 
 namespace ReservationProject.Tests.Infra.Common
 {
-    [TestClass]
-    public abstract class BaseRepoTests : AbstractClassTests<BaseRepo<Room, RoomData>
+    [TestClass] public abstract class BaseRepoTests : AbstractClassTests<BaseRepo<Room, RoomData>
         ,object>
     {
 

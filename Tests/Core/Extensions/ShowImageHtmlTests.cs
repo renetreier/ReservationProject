@@ -1,7 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ReservationProject.Tests.Core.Extensions {
-    [TestClass]
-    public class ShowImageHtmlTests {
-    }
+    [TestClass] public class ShowImageHtmlTests { }
 }

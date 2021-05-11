@@ -3,7 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ReservationProject.Tests.Domain.Repos
 {
-    public class MockServiceScopeFactory :IServiceScopeFactory {
+    public class MockServiceScopeFactory :IServiceScopeFactory 
+    {
         private readonly IServiceProvider provider;
         public MockServiceScopeFactory(IServiceProvider p) => provider = p;
 
