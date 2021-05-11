@@ -135,8 +135,7 @@ namespace ReservationProject.Tests.Infra.Common
         }
         [TestMethod] public void ErrorMessageTest() => IsProperty<string>();
 
-        [TestMethod]
-        public async Task EntityInDbTest()
+        [TestMethod] public async Task EntityInDbTest()
         {
             var d = GetRandom.ObjectOf<RoomData>();
             await Obj.Set.AddAsync(d);
