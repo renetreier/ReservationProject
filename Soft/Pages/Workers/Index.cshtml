@@ -9,7 +9,8 @@
 <table class="table">
     <thead>
         <tr>
-            @Html.TableSortHeader(model => model.Item.FullName, Model)
+            @Html.TableSortHeader(model => model.Item.FirstName, Model)
+            @Html.TableSortHeader(model => model.Item.LastName, Model)
             @Html.TableSortHeader(model => model.Item.Email, Model)
             @Html.TableSortHeader(model => model.Item.Salary, Model)
             <th></th>
@@ -18,12 +19,13 @@
     <tbody>
         @foreach (var item in Model.ItemList)
         {
-            <tr>
-                @Html.RowData(modelItem => item.FullName)
-                @Html.RowData(modelItem => item.Email)
-                @Html.RowData(modelItem => item.Salary)
-                @Html.RowButtons(Model.PageUrl, $"{item.Id}")
-            </tr>
+        <tr>
+            @Html.RowData(modelItem => item.FirstName)
+            @Html.RowData(modelItem => item.LastName)
+            @Html.RowData(modelItem => item.Email)
+            @Html.RowData(modelItem => item.Salary)
+            @Html.RowButtons(Model.PageUrl, $"{item.Id}")
+        </tr>
         }
     </tbody>
 </table>
